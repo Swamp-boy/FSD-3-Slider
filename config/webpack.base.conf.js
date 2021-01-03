@@ -3,7 +3,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 // const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-// const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');//to check size
+
 const webpack = require('webpack');
 
 const PATHS = {
@@ -142,25 +142,19 @@ module.exports = {
       filename: 'index.html',
     }),
 
-    /*    //automatization HtmlWebpackPlugin
-    ...PAGES.map((page) => new HtmlWebpackPlugin({
-      template: `${PAGES_DIR}/${page}`,
-      filename: `./${page.replace(/\.pug/, '.html')}`,
-      excludeChunks: ['app'],
-    })),
-    */
     new CopyWebpackPlugin({
       patterns: [
         { from: `${PATHS.src}/assets/fonts`, to: `${PATHS.assets}fonts` },
-        { from: `${PATHS.src}/assets/img`, to: `${PATHS.assets}img` },
+        // { from: `${PATHS.src}/assets/img`, to: `${PATHS.assets}img` },
       ],
     }),
+
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery',
       'window.jQuery': 'jquery',
     }),
     // new CleanWebpackPlugin(),
-    // new BundleAnalyzerPlugin(),  //to check size
+
   ],
 }
