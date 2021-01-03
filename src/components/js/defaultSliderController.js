@@ -24,10 +24,13 @@ export default class MainController {
 
     numCircle.style.left = `${leftPush}px`;
     numCircle.style.display = 'block';
+
+    numCircle.innerHTML = Math.round(value);
   }
 
   mouseOut() {
-    $('.js-num-circle').hide();
+    const numCircle = document.querySelector('.js-num-circle');
+    numCircle.style.display = 'none';
   }
 
   slider() {
