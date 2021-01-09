@@ -20,9 +20,20 @@ export default class MainView {
   }
 
   createNumCircle() {
+    // criating bunner with slider value
+    // conntainer for banner
+    const circleContainer = document.createElement('div');
+    circleContainer.classList.add('js-circle-container');
+    // banner
     const numCircle = document.createElement('div');
     numCircle.classList.add('js-num-circle');
-    this.container.appendChild(numCircle)
+
+    const numCircleArrow = document.createElement('div');
+    numCircleArrow.classList.add('js-numcircle-arrow');
+
+    this.container.appendChild(circleContainer);
+    circleContainer.appendChild(numCircle);
+    circleContainer.appendChild(numCircleArrow);
   }
 
   render(model) {

@@ -1,0 +1,3 @@
+interface baseView {
+    container: HTMLElement;
+}

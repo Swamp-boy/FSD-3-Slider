@@ -8,7 +8,7 @@ const element = document.querySelector('#slider1');
 const view = new MainView(element);
 const model = new MainModel({
   min: 0,
-  max: 1000,
+  max: 100000,
   step: 0.1,
   value: 0,
 });

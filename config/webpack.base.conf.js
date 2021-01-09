@@ -21,7 +21,7 @@ module.exports = {
     paths: PATHS,
   },
   entry: {
-    app: ['@babel/polyfill', PATHS.src],
+    app: ['@babel/polyfill', `${PATHS.src}/index.ts`],
   },
   output: {
     filename: `${PATHS.assets}js/[name].js`,
@@ -33,6 +33,7 @@ module.exports = {
       '@': path.resolve(__dirname, 'src'),
       '~': path.resolve(__dirname, 'node_modules'),
     },
+    extensions: ['.ts', '.tsx', '.js'],
   },
 
   optimization: { // libraries
@@ -49,6 +50,16 @@ module.exports = {
   },
   module: {
     rules: [
+      {
+        test: /\.ts$/,
+        enforce: 'pre',
+        loader: 'tslint-loader',
+        options: {/* Loader options go here */},
+      },
+      {
+        test: /\.tsx?$/,
+        loader: 'ts-loader',
+      },
       {
         test: /\.js$/,
         loader: 'babel-loader',

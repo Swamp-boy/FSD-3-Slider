@@ -15,22 +15,31 @@ export default class MainController {
     const { min } = this.view.slider;
     const { max } = this.view.slider;
     const { value } = this.view.slider;
-    const numCircle = document.querySelector('.js-num-circle');
+    // get container with value banner
+    const circleContainer = this.view.container.querySelector('.js-circle-container');
+    // get banner
+    const numCircle = circleContainer.querySelector('.js-num-circle');
+    // get arrow
+    const numCircleArrow = circleContainer.querySelector('.js-numcircle-arrow');
 
-    this.inputWidth = this.view.slider.offsetWidth - 20;
+    // get slider width
+    this.inputWidth = this.view.slider.offsetWidth - numCircle.offsetWidth / 2; // REWORK
 
     const procent = (value - min) / (max - min);
-    const leftPush = procent * this.inputWidth - 7; // 7 need to set num field on center
 
+    const leftPush = procent * this.inputWidth - numCircle.offsetWidth / 4; // 7 need to set num field on center
+    console.log(numCircle.offsetWidth);
     numCircle.style.left = `${leftPush}px`;
-    numCircle.style.display = 'block';
+    numCircleArrow.style.left = `${leftPush + numCircle.offsetWidth / 2 - numCircleArrow.offsetWidth / 2}px`;
+    circleContainer.style.display = 'block';
 
     numCircle.innerHTML = Math.round(value);
   }
 
   mouseOut() {
-    const numCircle = document.querySelector('.js-num-circle');
-    numCircle.style.display = 'none';
+    // get container with value banner and hide it
+    const circleContainer = this.view.container.querySelector('.js-circle-container')
+    circleContainer.style.display = 'none';
   }
 
   slider() {
