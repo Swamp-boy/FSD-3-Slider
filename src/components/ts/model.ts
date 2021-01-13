@@ -1,4 +1,4 @@
-/// <reference path="options.d.ts" />
+/// <reference path="Options.d.ts" />
 
 export default class Model {
     min: string;
