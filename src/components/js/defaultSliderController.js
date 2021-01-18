@@ -2,8 +2,6 @@ export default class MainController {
   constructor(view, model) {
     this.view = view;
     this.model = model;
-
-    this.i = 0;
   }
 
   initialize() {
