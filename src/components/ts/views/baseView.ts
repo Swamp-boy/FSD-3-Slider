@@ -18,10 +18,14 @@ export default class BaseView {
     }
 
     mouseOnElement(e: MouseEvent) {}
-
+    
     mouseOut(e: MouseEvent) {}
 
-    mouseOnField(e: MouseEvent) {}
+    mouseOnField(e: MouseEvent) { }
+    
+    elementDrag(e: MouseEvent) { }
+    
+   
 
     createBaseSlider(model:Model) {
         this.sliderField = document.createElement('div');
@@ -40,6 +44,9 @@ export default class BaseView {
         this.toddler.addEventListener('mousedown', this.mouseOnElement);
         this.toddler.addEventListener('mouseup', this.mouseOut);
         this.sliderField.addEventListener('mousedown', this.mouseOnField);
+        // this.sliderField.addEventListener('mousemove', this.elementDrag);
+        document.addEventListener('mouseup', this.mouseOut);
+        document.addEventListener('mousemove', this.elementDrag);
     }
 
     render(model:Model) {

@@ -1,17 +1,24 @@
-import './scss/main.scss';
-import MainView from './components/js/defaultSliderView';
-import MainModel from './components/js/defaultSliderModel';
-import MainController from './components/js/defaultSliderController';
+import BaseView from './components/ts/views/BaseView';
+import Model from './components/ts/Model';
+import Presenter from './components/ts/Presenter';
 
-const element = document.querySelector('#slider1');
+(function ($) {
+  jQuery.fn.slider = function (options) {
+    return this.each(function () {
+      if (!$.data(this, 'slider')) {
+        $.data(this, 'slider', new Presenter(this, options))
+      }
+    });
 
-const view = new MainView(element);
-const model = new MainModel({
-  min: 0,
-  max: 100000,
-  step: 0.1,
-  value: 0,
-});
-const controller = new MainController(view, model);
+    /*
+        const htmlel: HTMLElement = this[0];
+        console.log(htmlel)
+        const view = new BaseView(htmlel);
+        const model = new Model({});
+        const presenter = new Presenter(view, model);
+        presenter.slider();
+        */
+  };
+}(jQuery));
 
-controller.slider();
+$('#slider1').slider();
