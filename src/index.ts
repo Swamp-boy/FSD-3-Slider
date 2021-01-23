@@ -1,6 +1,6 @@
 import './scss/main.scss';
 
-/// <reference path="./../src/components/ts/@types/jquery/jquery.index.d.ts"/>
+/// <reference path="jquery.index.d.ts"/>
 /// <reference path="./components/ts/Options.d.ts"/>
 
 import BaseView from './components/ts/views/BaseView';
@@ -16,7 +16,7 @@ import Presenter from './components/ts/Presenter';
             }
         });
         */
-        //const htmlel: HTMLElement = this[0];
+        // const htmlel: HTMLElement = this[0];
         
         const view = new BaseView(this[0]);
         const model = new Model({});

@@ -35,8 +35,17 @@ export default class Presenter {
 
     elementDrag(e: MouseEvent) {
         if (this.toddlerPushed) {
-            const mousePos = e.clientX - this.baseView.sliderField.getBoundingClientRect().left - this.toddlerWidth / 2;
-            this.baseView.toddler.style.left = `${mousePos}px`;
+            const sliderFieldRect = this.baseView.sliderField.getBoundingClientRect();
+            const startFieldX = sliderFieldRect.left;
+            let toddlerPath = e.pageX - startFieldX - this.toddlerWidth / 2;
+
+            if (toddlerPath >= sliderFieldRect.width - this.toddlerWidth / 2)
+                toddlerPath = sliderFieldRect.width - this.toddlerWidth / 2;
+
+            if (toddlerPath <= 0)
+                toddlerPath = 0;
+
+            this.baseView.toddler.style.left = `${toddlerPath}px`;
         }
     }
 
@@ -54,14 +63,13 @@ export default class Presenter {
         const sliderFieldRect = this.baseView.sliderField.getBoundingClientRect();
         const startFieldX = sliderFieldRect.left;
         // get toddlerr width and distance from sliders start
-        const toddlerWidth = this.baseView.toddler.getBoundingClientRect().width;
         const toddlerPath = e.pageX - startFieldX - this.toddlerWidth / 2;
 
         this.baseView.toddler.style.left = `${toddlerPath}px`;
 
         this.setModelValue(toddlerPath);
         this.setViewValue();
-
+        this.toddlerPushed = true;
         this.mouseDownOnElement(e);
     }
 
@@ -89,7 +97,7 @@ export default class Presenter {
         this.baseView.mouseOnElement = this.mouseDownOnElement.bind(this);
         this.baseView.mouseOut = this.mouseOut.bind(this);
         this.baseView.mouseOnField = this.mouseOnField.bind(this);
-        
+
         this.baseView.elementDrag = this.elementDrag.bind(this);
     }
 
