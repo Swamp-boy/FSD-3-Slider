@@ -18,14 +18,12 @@ export default class BaseView {
     }
 
     mouseOnElement(e: MouseEvent) {}
-    
+
     mouseOut(e: MouseEvent) {}
 
     mouseOnField(e: MouseEvent) { }
-    
+
     elementDrag(e: MouseEvent) { }
-    
-   
 
     createBaseSlider(model:Model) {
         this.sliderField = document.createElement('div');

@@ -19,7 +19,9 @@ import Presenter from './components/ts/Presenter';
         // const htmlel: HTMLElement = this[0];
         
         const view = new BaseView(this[0]);
-        const model = new Model({});
+        const model = new Model({
+            step: 20,
+        });
         const presenter = new Presenter(view, model);
         presenter.slider();
     };

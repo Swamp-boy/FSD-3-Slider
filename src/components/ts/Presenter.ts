@@ -33,22 +33,27 @@ export default class Presenter {
         const pos1 = e.clientX;
     }
 
+    getToddlerPath(e: MouseEvent) : number {
+        const sliderFieldRect = this.baseView.sliderField.getBoundingClientRect();
+        const startFieldX = sliderFieldRect.left;
+        const toddlerPath = e.pageX - startFieldX - this.toddlerWidth / 2;
+
+        const intervalsNum = (Number(this.model.max) - Number(this.model.min)) / Number(this.model.step);
+        const visualStep = sliderFieldRect.width / intervalsNum;
+        let pathWithStep = Math.floor(toddlerPath / visualStep) * visualStep;
+
+        if (pathWithStep >= sliderFieldRect.width - this.toddlerWidth / 2)
+            pathWithStep = sliderFieldRect.width - this.toddlerWidth / 2;
+
+        if (pathWithStep <= 0)
+            pathWithStep = 0;
+
+        return pathWithStep;
+    }
+
     elementDrag(e: MouseEvent) {
         if (this.toddlerPushed) {
-            const sliderFieldRect = this.baseView.sliderField.getBoundingClientRect();
-            const startFieldX = sliderFieldRect.left;
-            const toddlerPath = e.pageX - startFieldX - this.toddlerWidth / 2;
-
-            const intervalsNum = (Number(this.model.max) - Number(this.model.min)) / Number(this.model.step);
-            const visualStep = sliderFieldRect.width / intervalsNum;
-            let pathWithStep = Math.floor(toddlerPath / visualStep) * visualStep;
-
-            if (pathWithStep >= sliderFieldRect.width - this.toddlerWidth / 2)
-                pathWithStep = sliderFieldRect.width - this.toddlerWidth / 2;
-
-            if (pathWithStep <= 0)
-                pathWithStep = 0;
-
+            const pathWithStep = this.getToddlerPath(e);
             this.baseView.toddler.style.left = `${pathWithStep}px`;
         }
     }
@@ -63,15 +68,9 @@ export default class Presenter {
 
     mouseOnField(e: MouseEvent) {
         // get slider fiel left edge
-        const sliderFieldRect = this.baseView.sliderField.getBoundingClientRect();
-        const startFieldX = sliderFieldRect.left;
-        // get toddlerr width and distance from sliders start
-        const toddlerPath = e.pageX - startFieldX - this.toddlerWidth / 2;
+        const pathWithStep = this.getToddlerPath(e);
+        this.baseView.toddler.style.left = `${pathWithStep}px`;
 
-        this.baseView.toddler.style.left = `${toddlerPath}px`;
-
-        this.setModelValue(toddlerPath);
-        this.setViewValue();
         this.toddlerPushed = true;
         this.elementDrag(e);
     }
