@@ -14,6 +14,7 @@ export default class Presenter {
     step: string;
 
     toddlerPushed: boolean;
+    currentPosition: number;
 
     constructor(view: BaseView, model: Model) {
         this.baseView = view;
@@ -23,35 +24,37 @@ export default class Presenter {
         this.min = model.min;
         this.max = model.max;
         this.step = model.step;
+
+        this.currentPosition = Number(model.value);
     }
 
     mouseDownOnElement(e: MouseEvent) {
         this.toddlerPushed = true;
         const pos1 = e.clientX;
-
-        
-
     }
 
     elementDrag(e: MouseEvent) {
         if (this.toddlerPushed) {
             const sliderFieldRect = this.baseView.sliderField.getBoundingClientRect();
             const startFieldX = sliderFieldRect.left;
-            let toddlerPath = e.pageX - startFieldX - this.toddlerWidth / 2;
+            const toddlerPath = e.pageX - startFieldX - this.toddlerWidth / 2;
 
-            if (toddlerPath >= sliderFieldRect.width - this.toddlerWidth / 2)
-                toddlerPath = sliderFieldRect.width - this.toddlerWidth / 2;
+            const intervalsNum = (Number(this.model.max) - Number(this.model.min)) / Number(this.model.step);
+            const visualStep = sliderFieldRect.width / intervalsNum;
+            let pathWithStep = Math.floor(toddlerPath / visualStep) * visualStep;
 
-            if (toddlerPath <= 0)
-                toddlerPath = 0;
+            if (pathWithStep >= sliderFieldRect.width - this.toddlerWidth / 2)
+                pathWithStep = sliderFieldRect.width - this.toddlerWidth / 2;
 
-            this.baseView.toddler.style.left = `${toddlerPath}px`;
+            if (pathWithStep <= 0)
+                pathWithStep = 0;
+
+            this.baseView.toddler.style.left = `${pathWithStep}px`;
         }
     }
 
     mouseOut(e: MouseEvent) {
         this.toddlerPushed = false;
-        console.log('out');
     }
 
     mouseOutOfField(e: MouseEvent) {
@@ -70,7 +73,7 @@ export default class Presenter {
         this.setModelValue(toddlerPath);
         this.setViewValue();
         this.toddlerPushed = true;
-        this.mouseDownOnElement(e);
+        this.elementDrag(e);
     }
 
 
@@ -97,7 +100,6 @@ export default class Presenter {
         this.baseView.mouseOnElement = this.mouseDownOnElement.bind(this);
         this.baseView.mouseOut = this.mouseOut.bind(this);
         this.baseView.mouseOnField = this.mouseOnField.bind(this);
-
         this.baseView.elementDrag = this.elementDrag.bind(this);
     }
 
