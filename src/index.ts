@@ -3,7 +3,7 @@ import './scss/main.scss';
 /// <reference path="jquery.index.d.ts"/>
 /// <reference path="./components/ts/Options.d.ts"/>
 
-import BaseView from './components/ts/views/BaseView';
+import BaseView from './components/ts/views/MainView';
 import Model from './components/ts/Model';
 import Presenter from './components/ts/Presenter';
 
@@ -19,9 +19,7 @@ import Presenter from './components/ts/Presenter';
         // const htmlel: HTMLElement = this[0];
         
         const view = new BaseView(this[0]);
-        const model = new Model({
-            step: 20,
-        });
+        const model = new Model({});
         const presenter = new Presenter(view, model);
         presenter.slider();
     };
