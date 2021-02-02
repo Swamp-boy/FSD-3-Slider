@@ -1,4 +1,4 @@
-/// <reference path="Options.d.ts" />
+import './interfaces/Options';
 
 export default class Model {
     options: options;
@@ -17,13 +17,13 @@ export default class Model {
         this.type = options.type === undefined ? 'base' : options.type;
     }
 
-    setMinMaxStep() {
+    setMinMaxStep(): void {
         this.min = String(this.options.min === undefined ? 0 : this.options.min);
         this.max = String(this.options.max === undefined ? 100 : this.options.max);
         this.step = String(this.options.step === undefined ? 1 : this.options.step);
     }
 
-    setClass() {
+    setClass(): void {
         this.class = 'defaul-slider';
     }
     

@@ -1,26 +1,45 @@
 import Model from './Model';
-import BaseView from './views/MainView';
+import MainView from './views/MainView';
 
 export default class Presenter {
-    baseView: BaseView;
+    mainView: MainView;
     model: Model;
 
-    constructor(view: BaseView, model: Model) {
-        this.baseView = view;
+    value: number;
+
+    constructor(view: MainView, model: Model) {
+        this.mainView = view;
         this.model = model;
     }
 
-    /*
-    initialize() {
-        this.baseView.PresenterEvent = this.PresenterEvent.bind(this);
+
+    initialize():void {
+        this.mainView.baseSlider.givePresenterInfo = this.getViewPath.bind(this);
     }
 
-    PresenterEvent() {
+    getViewPath(e: MouseEvent): string {
+        const path = this.mainView.baseSlider.getValueFromPath(e);
+        const value = this.calcValue(path);
+        return value
     }
-    */
-    slider() {
+
+    calcValue(path: number): string {
+        const max = this.model.max;
+        const min = this.model.min;
+        const width = this.mainView.sliderWidth;
+
+        const value = String(Math.floor((Number(max) - Number(min)) * (path / width)));
+
+        return value;
+    }
+
+    private setModelValue() {}
+
+    slider():void {
         this.model.setMinMaxStep();
-        this.baseView.setModelParams(this.model);
-        this.baseView.createBaseSlider();
+        this.mainView.setModelParams(this.model);
+        this.mainView.createBaseSlider();
+        this.mainView.createProgressBar();
+        this.initialize();
     }
 }

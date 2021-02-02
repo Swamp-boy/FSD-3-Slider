@@ -2,52 +2,60 @@ class DefaultToddlerField {
     toddler: HTMLElement;
     sliderField: HTMLElement;
     toddlerPushed: boolean;
-    
+
     private min: string;
     private max: string;
     private step: string;
+
+    private toddlerWidth: number;
+    private toddlerHeigth: number;
+    private fieldHeigth: number;
 
     constructor(min:string, max:string, step:string) {
         this.min = min;
         this.max = max;
         this.step = step;
     }
-    work() {
+    work(): void {
         this.crteateField();
         this.createToddler();
         this.initializeEvents();
     }
     // creating HTML Elements
-    createToddler() {
+    createToddler(): void {
         this.toddler = document.createElement('div');
         this.toddler.classList.add('slider-toddler');
+
+        this.toddler.style.width = this.toddlerWidth === undefined ? `${20}px` : `${this.toddlerWidth}px`;
+        this.toddler.style.width = this.toddlerHeigth === undefined ? `${20}px` : `${this.toddlerHeigth}px`;
+        // доделать автоположение слайдера
     }
 
-    crteateField() {
+    crteateField(): void {
         this.sliderField = document.createElement('div');
         this.sliderField.classList.add('slider-field');
+
+        this.sliderField.style.height = this.fieldHeigth === undefined ? `${30}px` : `${this.fieldHeigth}px`;
     }
 
-    initializeEvents() {
+    initializeEvents(): void {
         this.toddler.addEventListener('mousedown', this.mouseOnElement.bind(this));
         this.sliderField.addEventListener('mousedown', this.mouseOnField.bind(this));
         document.addEventListener('mouseup', this.mouseOut.bind(this));
         document.addEventListener('mousemove',this.elementDrag.bind(this));
     }
     // Events
-    mouseOnElement(e: MouseEvent) {
+    mouseOnElement(): void {
         this.toddlerPushed = true;
     }
 
-    mouseOut(e: MouseEvent) {
+    mouseOut(): void {
         this.toddlerPushed = false;
     }
 
-    mouseOnField(e: MouseEvent) {
+    mouseOnField(e: MouseEvent): void {
         // get slider fiel left edge
         this.toddlerPushed = true;
-        const path = this.getToddlerPath(e);
-        this.toddler.style.left = `${path}px`;
         this.elementDrag(e);
     }
     // Events Funtions
@@ -69,13 +77,24 @@ class DefaultToddlerField {
         return pathWithStep;
     }
 
-    elementDrag(e: MouseEvent) {
+    elementDrag(e: MouseEvent): void {
         if (this.toddlerPushed) {
             const path = this.getToddlerPath(e);
             this.toddler.style.left = `${path}px`;
+            this.givePresenterInfo(e);
         }
+
     }
 
+    getValueFromPath(e: MouseEvent): number {
+        let path = this.getToddlerPath(e);
+        path = Math.floor(path + this.toddler.getBoundingClientRect().width / 2);
+        return path;
+    }
+
+    givePresenterInfo(e:MouseEvent):void {
+        console.log('defaultToddlerPath')
+    }
 }
 
 export default DefaultToddlerField;

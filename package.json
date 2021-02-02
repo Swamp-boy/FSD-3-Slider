@@ -7,7 +7,9 @@
 		"dev": "webpack serve --config config/webpack.dev.conf.js",
 		"build": "webpack --config config/webpack.build.conf.js",
 		"lint": "eslint ./src",
-		"lint:fix": "eslint ./src --fix"
+		"lint:fix": "eslint ./src --fix",
+		"eslint": "eslint --cache --ext .js,.jsx,.ts,.tsx src",
+		"eslint:dump": "eslint --print-config ./.eslintrc.json"
 	},
 	"browserslist": [
 		"> 0.25%, not dead",
@@ -20,6 +22,8 @@
 		"@babel/preset-env": "^7.12.10",
 		"@types/jquery": "^3.5.5",
 		"@types/node": "^14.14.21",
+		"@typescript-eslint/eslint-plugin": "^4.14.1",
+		"@typescript-eslint/parser": "^4.14.1",
 		"autoprefixer": "9.0.0",
 		"babel-loader": "^8.2.2",
 		"copy-webpack-plugin": "^7.0.0",
