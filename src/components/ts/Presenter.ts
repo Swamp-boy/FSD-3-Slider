@@ -28,18 +28,26 @@ export default class Presenter {
         const min = this.model.min;
         const width = this.mainView.sliderWidth;
 
-        const value = String(Math.floor((Number(max) - Number(min)) * (path / width)));
+        const value = String(Math.floor((max - min) * (path / width)));
 
         return value;
     }
 
-    private setModelValue() {}
+    setModelParams(model: Model): void {
+        this.mainView.min = model.min;
+        this.mainView.max = model.max;
+        this.mainView.value = model.value;
+        this.mainView.step = model.step;
+    }
+
 
     slider():void {
         this.model.setMinMaxStep();
-        this.mainView.setModelParams(this.model);
+        this.setModelParams(this.model);
         this.mainView.createBaseSlider();
         this.mainView.createProgressBar();
         this.initialize();
     }
+
+    
 }

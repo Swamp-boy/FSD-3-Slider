@@ -8,10 +8,10 @@ import './../interfaces/containerParams';
 export default class BaseView {
     container: HTMLElement;
 
-    public min: string;
-    public max: string;
-    public step: string;
-    private value: string;
+    public min: number;
+    public max: number;
+    public step: number;
+    public value: number;
 
     public sliderWidth: number;
 
@@ -27,32 +27,50 @@ export default class BaseView {
         this.container = container;
     }
 
-    setModelParams(model: Model): void {
-        this.min = model.min;
-        this.max = model.max;
-        this.value = model.value;
-        this.step = model.step;
-    }
-
-    getElements(field?: HTMLElement, toddler?: HTMLElement):void {
-        this.slederField = field!;
-        this.toddler = toddler!;
-    }
-
     createBaseSlider(): void {
-        this.baseSlider = new DefaultToddlerField(this.min, this.max, this.step);
+        this.baseSlider = new DefaultToddlerField(this.min, this.max, this.step, this.value);
         this.baseSlider.work();
-        this.getElements(this.baseSlider.sliderField, this.baseSlider.toddler);
+
+        this.slederField = this.baseSlider.sliderField;
+        this.toddler = this.baseSlider.toddler;
+        
         // append elements
         this.container.appendChild(this.slederField);
         this.container.appendChild(this.toddler);
         // for this slider type range is
         this.sliderWidth = this.baseSlider.sliderField.getBoundingClientRect().width;
+        // calc toddler star position
+        this.setToddlerStartPosition();
     }
 
     createProgressBar(): void {
-        this.progressBar = new ProgressBar(this.slederField);
+        const scopeArray: number[] = [this.slederField.getBoundingClientRect().left,
+            this.toddler.getBoundingClientRect().right - this.toddler.getBoundingClientRect().width / 2];
+        
+        this.progressBar = new ProgressBar(this.slederField, scopeArray);
+        
         this.progressBar.createProgressBar();
         this.slederField.appendChild(this.progressBar.progressBar);
+    }
+
+    private setToddlerStartPosition() {
+        // get height of elements
+        const fieldHeight = this.slederField.offsetHeight;
+        const toddlerHeigth = this.toddler.offsetHeight;
+        // calc margin top
+        const marginTop = fieldHeight / 2 - toddlerHeigth / 2;
+        this.toddler.style.top = String(marginTop) + 'px';
+
+        // calac margin left drom value
+        const fieldWidth = this.slederField.offsetWidth;
+        const intervalsNum = (this.max - this.min) / this.step;
+        const visualStep = fieldWidth / intervalsNum;
+        const visualstepsNum = fieldWidth / visualStep;
+        const procent = this.value / (this.max - this.min);
+        const path = procent * fieldWidth
+        
+        const marginLeft = Math.floor(path / visualstepsNum) * visualstepsNum;
+        this.toddler.style.left = String(marginLeft) + 'px';
+        
     }
 }

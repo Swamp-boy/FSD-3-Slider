@@ -3,22 +3,25 @@ class DefaultToddlerField {
     sliderField: HTMLElement;
     toddlerPushed: boolean;
 
-    private min: string;
-    private max: string;
-    private step: string;
+    private min: number;
+    private max: number;
+    private step: number;
+    public value: number;
 
     private toddlerWidth: number;
     private toddlerHeigth: number;
     private fieldHeigth: number;
 
-    constructor(min:string, max:string, step:string) {
+    constructor(min:number, max:number, step:number, value:number) {
         this.min = min;
         this.max = max;
         this.step = step;
+        this.value = value;
     }
     work(): void {
         this.crteateField();
         this.createToddler();
+        
         this.initializeEvents();
     }
     // creating HTML Elements
@@ -26,16 +29,19 @@ class DefaultToddlerField {
         this.toddler = document.createElement('div');
         this.toddler.classList.add('slider-toddler');
 
-        this.toddler.style.width = this.toddlerWidth === undefined ? `${20}px` : `${this.toddlerWidth}px`;
-        this.toddler.style.width = this.toddlerHeigth === undefined ? `${20}px` : `${this.toddlerHeigth}px`;
-        // доделать автоположение слайдера
+        this.toddlerWidth = this.toddlerWidth === undefined ? 20 : this.toddlerWidth;
+        this.toddlerHeigth = this.toddlerHeigth === undefined ? 20 : this.toddlerHeigth;
+
+        this.toddler.style.width = String(this.toddlerWidth) + 'px';
+        this.toddler.style.height = String(this.toddlerHeigth) + 'px';
     }
 
     crteateField(): void {
         this.sliderField = document.createElement('div');
         this.sliderField.classList.add('slider-field');
 
-        this.sliderField.style.height = this.fieldHeigth === undefined ? `${30}px` : `${this.fieldHeigth}px`;
+        this.fieldHeigth = this.fieldHeigth === undefined ? 30 : this.fieldHeigth;
+        this.sliderField.style.height = String(this.fieldHeigth) + 'px';
     }
 
     initializeEvents(): void {
@@ -60,16 +66,16 @@ class DefaultToddlerField {
     }
     // Events Funtions
     getToddlerPath(e: MouseEvent): number {
-        const sliderFieldRect = this.sliderField.getBoundingClientRect();
-        const startFieldX = sliderFieldRect.left;
-        const toddlerPath = e.pageX - startFieldX - this.toddler.getBoundingClientRect().width / 2;
+        const fieldWidth = this.getFieldWidth();
+        const startFieldLeft = this.sliderField.getBoundingClientRect().left;
+        const toddlerPath = e.pageX - startFieldLeft - this.toddlerWidth / 2;
 
-        const intervalsNum = (Number(this.max) - Number(this.min)) / Number(this.step);
-        const visualStep = sliderFieldRect.width / intervalsNum;
+        const intervalsNum = (this.max - this.min) / this.step;
+        const visualStep = fieldWidth / intervalsNum;
         let pathWithStep = Math.floor(toddlerPath / visualStep) * visualStep;
 
-        if (pathWithStep >= sliderFieldRect.width - this.toddler.getBoundingClientRect().width / 2)
-            pathWithStep = sliderFieldRect.width - this.toddler.getBoundingClientRect().width / 2;
+        if (pathWithStep >= fieldWidth - this.toddlerWidth / 2)
+            pathWithStep = fieldWidth - this.toddlerWidth / 2;
 
         if (pathWithStep <= 0)
             pathWithStep = 0;
@@ -84,6 +90,10 @@ class DefaultToddlerField {
             this.givePresenterInfo(e);
         }
 
+    }
+
+    private getFieldWidth(): number {
+        return this.sliderField.getBoundingClientRect().width;
     }
 
     getValueFromPath(e: MouseEvent): number {
