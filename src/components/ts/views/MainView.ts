@@ -61,7 +61,7 @@ export default class BaseView {
         const marginTop = fieldHeight / 2 - toddlerHeigth / 2;
         this.toddler.style.top = String(marginTop) + 'px';
 
-        // calac margin left drom value
+        // calac margin left from value
         const fieldWidth = this.slederField.offsetWidth;
         const intervalsNum = (this.max - this.min) / this.step;
         const visualStep = fieldWidth / intervalsNum;
@@ -71,6 +71,5 @@ export default class BaseView {
         
         const marginLeft = Math.floor(path / visualstepsNum) * visualstepsNum;
         this.toddler.style.left = String(marginLeft) + 'px';
-        
     }
 }

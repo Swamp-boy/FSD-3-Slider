@@ -14,9 +14,9 @@ export default class ProgressBar {
     }
     
     setBarScope(scopeArray: Array<number>): void {
-        const left: number = scopeArray[1];
-        const right: number = scopeArray[0];
-
+        const left = 0;
+        const right: number = this.sliderField.getBoundingClientRect().width - (scopeArray[1] - scopeArray[0]);
+        console.log(scopeArray[1])
         this.progressBar.style.left = String(left) + 'px';
         this.progressBar.style.right = String(right) + 'px';
     }
