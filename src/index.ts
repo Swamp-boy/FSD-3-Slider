@@ -7,6 +7,8 @@ import BaseView from './components/ts/views/MainView';
 import Model from './components/ts/Model';
 import Presenter from './components/ts/Presenter';
 
+
+
 (function ($) {
     jQuery.fn.slider = function () {
         /*
@@ -28,4 +30,8 @@ import Presenter from './components/ts/Presenter';
 })(jQuery);
 
 $('#slider1').slider();
+
+
+
+
 

@@ -16,12 +16,11 @@ export default class ProgressBar {
     setBarScope(scopeArray: Array<number>): void {
         const left = 0;
         const right: number = this.sliderField.getBoundingClientRect().width - (scopeArray[1] - scopeArray[0]);
-        console.log(scopeArray[1])
         this.progressBar.style.left = String(left) + 'px';
         this.progressBar.style.right = String(right) + 'px';
     }
     
-    createProgressBar():void {
+    createSingleProgressBar():void {
         this.progressBar = document.createElement('div');
 
         if (this.backgroundColor !== undefined){
@@ -34,5 +33,12 @@ export default class ProgressBar {
         this.progressBar.classList.add('slider-progres-bar');
 
         this.setBarScope(this.scopeArray);
+    }
+
+    progressBarChange(path: number): void {
+        
+        const right: number = this.sliderField.getBoundingClientRect().width - path;
+        this.progressBar.style.right = String(right) + 'px';
+        
     }
 }

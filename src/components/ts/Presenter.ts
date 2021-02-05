@@ -1,9 +1,13 @@
 import Model from './Model';
 import MainView from './views/MainView';
+// Patterns
+import EventObserver from './ObserverPattern';
 
 export default class Presenter {
     mainView: MainView;
     model: Model;
+
+    pathChangeObserver: EventObserver;
 
     value: number;
 
@@ -12,34 +16,35 @@ export default class Presenter {
         this.model = model;
     }
 
+    initialize(): void {
+        this.pathChangeObserver = new EventObserver();
+        this.pathChangeObserver.subscribe(this.getValueFromPath.bind(this));
+        this.pathChangeObserver.subscribe(this.mainView.progressBar.progressBarChange.bind(this.mainView.progressBar));
 
-    initialize():void {
-        this.mainView.baseSlider.givePresenterInfo = this.getViewPath.bind(this);
+        this.mainView.baseSlider.givePresenterInfo = this.reactOnPacthChange.bind(this);
     }
 
-    getViewPath(e: MouseEvent): string {
-        const path = this.mainView.baseSlider.getValueFromPath(e);
-        const value = this.calcValue(path);
-        return value
+    reactOnPacthChange(path: number):void {
+        this.pathChangeObserver.broadcast(path);
     }
 
-    calcValue(path: number): string {
+    getValueFromPath(path: number): void {
         const max = this.model.max;
         const min = this.model.min;
-        const width = this.mainView.sliderWidth;
+        const width = this.mainView.sliderWidth - (this.mainView.toddler.getBoundingClientRect().width / 2);
 
-        const value = String(Math.floor((max - min) * (path / width)));
-
-        return value;
+        const value = Math.floor((max - min) * (path / width));
+        this.value = value;
+        this.model.value = value;
+        this.mainView.value = value;
     }
-
+    
     setModelParams(model: Model): void {
         this.mainView.min = model.min;
         this.mainView.max = model.max;
         this.mainView.value = model.value;
         this.mainView.step = model.step;
     }
-
 
     slider():void {
         this.model.setMinMaxStep();
@@ -48,6 +53,4 @@ export default class Presenter {
         this.mainView.createProgressBar();
         this.initialize();
     }
-
-    
 }

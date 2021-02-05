@@ -1,4 +1,3 @@
-import Model from '../Model';
 // Views imports
 import DefaultToddlerField from './DefaultToddlerField';
 import ProgressBar from './ProgressBar';
@@ -43,13 +42,15 @@ export default class BaseView {
         this.setToddlerStartPosition();
     }
 
+    
+
     createProgressBar(): void {
         const scopeArray: number[] = [this.slederField.getBoundingClientRect().left,
             this.toddler.getBoundingClientRect().right - this.toddler.getBoundingClientRect().width / 2];
         
         this.progressBar = new ProgressBar(this.slederField, scopeArray);
         
-        this.progressBar.createProgressBar();
+        this.progressBar.createSingleProgressBar();
         this.slederField.appendChild(this.progressBar.progressBar);
     }
 

@@ -9,7 +9,6 @@ class DefaultToddlerField {
     public value: number;
 
     private toddlerWidth: number;
-    private toddlerHeigth: number;
     private fieldHeigth: number;
 
     constructor(min:number, max:number, step:number, value:number) {
@@ -28,19 +27,11 @@ class DefaultToddlerField {
     createToddler(): void {
         this.toddler = document.createElement('div');
         this.toddler.classList.add('slider-toddler');
-
-        this.toddlerWidth = this.toddlerWidth === undefined ? 20 : this.toddlerWidth;
-        this.toddlerHeigth = this.toddlerHeigth === undefined ? 20 : this.toddlerHeigth;
-
-        this.toddler.style.width = String(this.toddlerWidth) + 'px';
-        this.toddler.style.height = String(this.toddlerHeigth) + 'px';
     }
 
     crteateField(): void {
         this.sliderField = document.createElement('div');
         this.sliderField.classList.add('slider-field');
-
-        this.fieldHeigth = this.fieldHeigth === undefined ? 30 : this.fieldHeigth;
         this.sliderField.style.height = String(this.fieldHeigth) + 'px';
     }
 
@@ -66,16 +57,22 @@ class DefaultToddlerField {
     }
     // Events Funtions
     getToddlerPath(e: MouseEvent): number {
+        // get width od elements 
         const fieldWidth = this.getFieldWidth();
+        const toddlerWidth = this.getToddlerWidth();
+        // get left side of sliders field
         const startFieldLeft = this.sliderField.getBoundingClientRect().left;
-        const toddlerPath = e.pageX - startFieldLeft - this.toddlerWidth / 2;
-
+        // calc distanse from left side of field to mouse
+        const toddlerPath = e.pageX - startFieldLeft - toddlerWidth / 2;
+        // calc number of intervals
         const intervalsNum = (this.max - this.min) / this.step;
+        // calc length of interval in pixels
         const visualStep = fieldWidth / intervalsNum;
+        // calc distanse in pixels
         let pathWithStep = Math.floor(toddlerPath / visualStep) * visualStep;
-
-        if (pathWithStep >= fieldWidth - this.toddlerWidth / 2)
-            pathWithStep = fieldWidth - this.toddlerWidth / 2;
+        // if mouse out of field
+        if (pathWithStep >= fieldWidth - toddlerWidth / 2)
+            pathWithStep = fieldWidth - toddlerWidth / 2;
 
         if (pathWithStep <= 0)
             pathWithStep = 0;
@@ -87,7 +84,7 @@ class DefaultToddlerField {
         if (this.toddlerPushed) {
             const path = this.getToddlerPath(e);
             this.toddler.style.left = `${path}px`;
-            this.givePresenterInfo(e);
+            this.givePresenterInfo(path);
         }
 
     }
@@ -96,15 +93,18 @@ class DefaultToddlerField {
         return this.sliderField.getBoundingClientRect().width;
     }
 
+    private getToddlerWidth(): number {
+        return this.toddler.getBoundingClientRect().width;
+    }
+    /*
     getValueFromPath(e: MouseEvent): number {
         let path = this.getToddlerPath(e);
-        path = Math.floor(path + this.toddler.getBoundingClientRect().width / 2);
+        path = Math.floor(path + this.getToddlerWidth() / 2);
         return path;
     }
-
-    givePresenterInfo(e:MouseEvent):void {
-        console.log('defaultToddlerPath')
-    }
+    */
+    givePresenterInfo(path: number):void {}
+        
 }
 
 export default DefaultToddlerField;
