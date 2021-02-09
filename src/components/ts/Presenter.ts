@@ -65,7 +65,7 @@ export default class Presenter {
         this.mainView.createBaseSlider();
         this.mainView.createProgressBar();
         this.mainView.createBanner();
-        // this.mainView.createMinMax();
+        this.mainView.createMinMax();
         this.initialize();
     }
 }

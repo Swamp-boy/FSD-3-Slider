@@ -75,7 +75,7 @@ class MainView {
         this.container.appendChild(this.valueBanner.valueBannerContainer);
 
         this.valueBanner.setStartPosition(this.getPathFromValue());
-        
+
         this.banner = this.valueBanner.valueBannerContainer;
     }
 
@@ -83,11 +83,12 @@ class MainView {
         this.minmaxField = new MinMaxFields(this.sliderField, this.min, this.max);
         this.minmaxField.work();
 
+        this.container.appendChild(this.minmaxField.minField);
+        this.container.appendChild(this.minmaxField.maxField);
+        this.minmaxField.setFieldsWidth(this.minmaxField.minSpan, this.minmaxField.maxSpan);
+
         this.minField = this.minmaxField.minField;
         this.maxField = this.minmaxField.maxField;
-
-        this.container.appendChild(this.minField);
-        this.container.appendChild(this.maxField);
     }
 
     private getPathFromValue() {
