@@ -2,4 +2,13 @@
 //fonts
 
 //colors
-$default-calor: #e75735;
+$default-color: #e75735;
+
+//font
+$def-font: 'Conv_Lato-Black';
+
+@mixin def-font {
+    font-size: 13px;
+    font-family: $def-font;
+    color: #ffffff;
+}

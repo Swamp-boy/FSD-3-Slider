@@ -1,13 +1,13 @@
 import Model from './Model';
 import MainView from './views/MainView';
 // Patterns
-import EventObserver from './ObserverPattern';
+import PathEventObserver from './ObserverPattern';
 
 export default class Presenter {
     mainView: MainView;
     model: Model;
 
-    pathChangeObserver: EventObserver;
+    pathChangeObserver: PathEventObserver;
 
     value: number;
 
@@ -17,11 +17,23 @@ export default class Presenter {
     }
 
     initialize(): void {
-        this.pathChangeObserver = new EventObserver();
+        this.pathChangeObserver = new PathEventObserver();
+        this.checkSliderElements();
         this.pathChangeObserver.subscribe(this.getValueFromPath.bind(this));
-        this.pathChangeObserver.subscribe(this.mainView.progressBar.progressBarChange.bind(this.mainView.progressBar));
-
+        
         this.mainView.baseSlider.givePresenterInfo = this.reactOnPacthChange.bind(this);
+    }
+
+    private checkSliderElements(): void {
+        if (this.mainView.valueBanner !== undefined) {
+            this.pathChangeObserver.subscribe(this.mainView.valueBanner.bannerMove.bind(this.mainView.valueBanner));
+            // send value to sabview
+            this.pathChangeObserver.subscribe(this.mainView.sendValueToElements.bind(this.mainView));
+        }
+
+        if (this.mainView.progressBar !== undefined) {
+            this.pathChangeObserver.subscribe(this.mainView.progressBar.progressBarSingleChange.bind(this.mainView.progressBar));
+        }
     }
 
     reactOnPacthChange(path: number):void {
@@ -31,7 +43,8 @@ export default class Presenter {
     getValueFromPath(path: number): void {
         const max = this.model.max;
         const min = this.model.min;
-        const width = this.mainView.sliderWidth - (this.mainView.toddler.getBoundingClientRect().width / 2);
+        // need to stop toddler on half
+        const width = this.mainView.sliderWidth - this.mainView.toddler.offsetWidth / 2;
 
         const value = Math.floor((max - min) * (path / width));
         this.value = value;
@@ -46,11 +59,13 @@ export default class Presenter {
         this.mainView.step = model.step;
     }
 
-    slider():void {
-        this.model.setMinMaxStep();
+    slider(): void {
+        this.model.work();
         this.setModelParams(this.model);
         this.mainView.createBaseSlider();
         this.mainView.createProgressBar();
+        this.mainView.createBanner();
+        // this.mainView.createMinMax();
         this.initialize();
     }
 }

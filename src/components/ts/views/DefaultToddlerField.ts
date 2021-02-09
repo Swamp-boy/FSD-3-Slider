@@ -3,13 +3,10 @@ class DefaultToddlerField {
     sliderField: HTMLElement;
     toddlerPushed: boolean;
 
-    private min: number;
-    private max: number;
-    private step: number;
+    public min: number;
+    public max: number;
+    public step: number;
     public value: number;
-
-    private toddlerWidth: number;
-    private fieldHeigth: number;
 
     constructor(min:number, max:number, step:number, value:number) {
         this.min = min;
@@ -17,53 +14,55 @@ class DefaultToddlerField {
         this.step = step;
         this.value = value;
     }
-    work(): void {
+
+    public work(): void {
         this.crteateField();
         this.createToddler();
-        
         this.initializeEvents();
     }
+    
+    givePresenterInfo(path: number):void {}
     // creating HTML Elements
-    createToddler(): void {
+    private createToddler(): void {
         this.toddler = document.createElement('div');
         this.toddler.classList.add('slider-toddler');
     }
 
-    crteateField(): void {
+    private crteateField(): void {
         this.sliderField = document.createElement('div');
         this.sliderField.classList.add('slider-field');
-        this.sliderField.style.height = String(this.fieldHeigth) + 'px';
     }
 
-    initializeEvents(): void {
+    private initializeEvents(): void {
         this.toddler.addEventListener('mousedown', this.mouseOnElement.bind(this));
         this.sliderField.addEventListener('mousedown', this.mouseOnField.bind(this));
         document.addEventListener('mouseup', this.mouseOut.bind(this));
-        document.addEventListener('mousemove',this.elementDrag.bind(this));
+        document.addEventListener('mousemove', this.elementDrag.bind(this));
+        
     }
     // Events
-    mouseOnElement(): void {
+    private mouseOnElement(): void {
         this.toddlerPushed = true;
     }
 
-    mouseOut(): void {
+    private mouseOut(): void {
         this.toddlerPushed = false;
     }
 
-    mouseOnField(e: MouseEvent): void {
+    private mouseOnField(e: MouseEvent): void {
         // get slider fiel left edge
         this.toddlerPushed = true;
         this.elementDrag(e);
     }
     // Events Funtions
-    getToddlerPath(e: MouseEvent): number {
+    private getToddlerPath(e: MouseEvent): number {
         // get width od elements 
-        const fieldWidth = this.getFieldWidth();
         const toddlerWidth = this.getToddlerWidth();
+        const fieldWidth = this.getFieldWidth() - toddlerWidth / 2;
         // get left side of sliders field
         const startFieldLeft = this.sliderField.getBoundingClientRect().left;
         // calc distanse from left side of field to mouse
-        const toddlerPath = e.pageX - startFieldLeft - toddlerWidth / 2;
+        const toddlerPath = e.clientX - startFieldLeft - toddlerWidth / 2 + 1;
         // calc number of intervals
         const intervalsNum = (this.max - this.min) / this.step;
         // calc length of interval in pixels
@@ -72,7 +71,7 @@ class DefaultToddlerField {
         let pathWithStep = Math.floor(toddlerPath / visualStep) * visualStep;
         // if mouse out of field
         if (pathWithStep >= fieldWidth - toddlerWidth / 2)
-            pathWithStep = fieldWidth - toddlerWidth / 2;
+            pathWithStep = fieldWidth;
 
         if (pathWithStep <= 0)
             pathWithStep = 0;
@@ -80,7 +79,7 @@ class DefaultToddlerField {
         return pathWithStep;
     }
 
-    elementDrag(e: MouseEvent): void {
+    private elementDrag(e: MouseEvent): void {
         if (this.toddlerPushed) {
             const path = this.getToddlerPath(e);
             this.toddler.style.left = `${path}px`;
@@ -96,15 +95,6 @@ class DefaultToddlerField {
     private getToddlerWidth(): number {
         return this.toddler.getBoundingClientRect().width;
     }
-    /*
-    getValueFromPath(e: MouseEvent): number {
-        let path = this.getToddlerPath(e);
-        path = Math.floor(path + this.getToddlerWidth() / 2);
-        return path;
-    }
-    */
-    givePresenterInfo(path: number):void {}
-        
 }
 
 export default DefaultToddlerField;

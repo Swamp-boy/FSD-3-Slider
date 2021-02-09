@@ -1,0 +1,30 @@
+@import './vars/vars.scss';
+
+.js-slider-min-field {
+    position: absolute;
+    left: 0;
+    top: -30px;
+    z-index: -2;
+    background-color: $default-color;
+    @include def-font;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-radius: 50%;
+    width: 40px;
+    text-align: center;
+    user-select: none;
+}
+.js-slider-max-field {
+    position: absolute;
+    right: 0;
+    top: -30px;
+    z-index: -2;
+    background-color: $default-color;
+    @include def-font;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    width: 40px;
+    border-radius: 50%;
+    text-align: center;
+    user-select: none;
+}

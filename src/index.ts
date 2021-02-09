@@ -1,9 +1,9 @@
 import './scss/main.scss';
 
 /// <reference path="jquery.index.d.ts"/>
-/// <reference path="./components/ts/Options.d.ts"/>
+import Options from './components/ts/interfaces/Options';
 
-import BaseView from './components/ts/views/MainView';
+import MainView from './components/ts/views/MainView';
 import Model from './components/ts/Model';
 import Presenter from './components/ts/Presenter';
 
@@ -20,9 +20,12 @@ import Presenter from './components/ts/Presenter';
         */
         // const htmlel: HTMLElement = this[0];
 
-        const view = new BaseView(this[0]);
+        const view = new MainView(this[0]);
         const model = new Model({
-            value: 50,
+            min: 0,
+            max: 100000,
+            step: 1,
+            value: 0,
         });
         const presenter = new Presenter(view, model);
         presenter.slider();

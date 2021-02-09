@@ -1,0 +1,24 @@
+.js-circle-container {
+    position: relative;
+    bottom: 45px;
+    left: -6px;
+}
+.js-num-circle {
+    cursor: pointer;
+    background: $default-color;
+    border-radius: 5px;
+    padding: 5px 0px 6px 0px;
+    width: 35px;
+    text-align: center;
+    user-select: none;
+    @include def-font;
+}
+.js-numcircle-arrow {
+    cursor: pointer;
+    width: 0;
+    height: 0;
+    border: 4px solid transparent; /* Прозрачные границы */
+    border-top: 4px solid $default-color; /* Добавляем треугольник */
+    position: absolute;
+    left: 13px;
+}

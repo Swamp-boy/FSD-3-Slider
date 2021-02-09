@@ -1,20 +1,19 @@
-
-export default class EventObserver {
-    observers: any[];
+export default class PathEventObserver {
+    observers: Array<(path: number) => void>;
 
     constructor () {
       this.observers = []
     }
   
-    subscribe (fn: any) {
+    public subscribe (fn: (path: number) => void): void {
       this.observers.push(fn)
     }
   
-    unsubscribe (fn: any) {
+    public unsubscribe (fn: (path: number) => void): void {
       this.observers = this.observers.filter(subscriber => subscriber !== fn)
     }
   
-    broadcast (data: number) {
+    public broadcast (data: number): void {
       this.observers.forEach(subscriber => subscriber(data))
     }
 }
