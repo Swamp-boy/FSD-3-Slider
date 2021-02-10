@@ -1,3 +1,3 @@
 interface JQuery {
-    slider(): void;
+    slider(options: Options): void;
 }

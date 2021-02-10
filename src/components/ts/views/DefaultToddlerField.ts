@@ -30,7 +30,7 @@ class DefaultToddlerField {
 
     private crteateField(): void {
         this.sliderField = document.createElement('div');
-        this.sliderField.classList.add('slider-field');
+        this.sliderField.classList.add('slider-field-horizontal');
     }
 
     private initializeEvents(): void {

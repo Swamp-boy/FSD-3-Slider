@@ -1,6 +1,7 @@
 @import 'vars/vars';
 @import './reset';
 
+@import './container.scss';
 @import './defaultSlider.scss';
 @import './progress-bar.scss';
 @import './value-banner.scss';
@@ -14,12 +15,17 @@
     margin-left: 300px;
     width: 700px;
 }
+.test-block2 {
+    margin-top: 150px;
+    margin-left: 300px;
+    width: 700px;
+}
+#slider2 {
+    height: 400px;
+    width: 50px;
+}
 #slider1 {
     width: 400px;
-    cursor: pointer;
-    color: transparent;
-    text-shadow: 0 0 0 #000;
-    position: relative;
 }
 #value1 {
     margin-top: 150px;

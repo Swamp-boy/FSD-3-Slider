@@ -16,18 +16,51 @@ export default class Presenter {
         this.model = model;
     }
 
-    initialize(): void {
+    public initialize(): void {
         this.pathChangeObserver = new PathEventObserver();
-        this.checkSliderElements();
+        this.bindElementsEvents();
         this.pathChangeObserver.subscribe(this.getValueFromPath.bind(this));
         
-        this.mainView.baseSlider.givePresenterInfo = this.reactOnPacthChange.bind(this);
+        this.mainView.baseSlider.givePresenterInfo = this.reactOnPathChange.bind(this);
     }
 
-    private checkSliderElements(): void {
+    public setModelParams(model: Model): void {
+        this.mainView.min = model.min;
+        this.mainView.max = model.max;
+        this.mainView.value = model.value;
+        this.mainView.step = model.step;
+    }
+
+    public slider(): void {
+        this.model.work();
+        this.setModelParams(this.model);
+        this.mainView.createBaseSlider();
+        this.createSliderElements();
+        this.initialize();
+    }
+
+    private createSliderElements() {
+        if (this.model.progressBar === true) {
+            this.mainView.createProgressBar();
+        }
+
+        if (this.model.minMaxFields === true) {
+            this.mainView.createMinMax();
+        }
+
+        if (this.model.valueBanner === true) {
+            this.mainView.createBanner();
+        }
+
+        if (this.model.position === 'vertical') {
+            this.mainView.rotateSlider();
+        }
+    }
+
+    private bindElementsEvents(): void {
         if (this.mainView.valueBanner !== undefined) {
             this.pathChangeObserver.subscribe(this.mainView.valueBanner.bannerMove.bind(this.mainView.valueBanner));
-            // send value to sabview
+            // send value to sab view
             this.pathChangeObserver.subscribe(this.mainView.sendValueToElements.bind(this.mainView));
         }
 
@@ -36,11 +69,11 @@ export default class Presenter {
         }
     }
 
-    reactOnPacthChange(path: number):void {
+    private reactOnPathChange(path: number):void {
         this.pathChangeObserver.broadcast(path);
     }
 
-    getValueFromPath(path: number): void {
+    private getValueFromPath(path: number): void {
         const max = this.model.max;
         const min = this.model.min;
         // need to stop toddler on half
@@ -50,22 +83,5 @@ export default class Presenter {
         this.value = value;
         this.model.value = value;
         this.mainView.value = value;
-    }
-    
-    setModelParams(model: Model): void {
-        this.mainView.min = model.min;
-        this.mainView.max = model.max;
-        this.mainView.value = model.value;
-        this.mainView.step = model.step;
-    }
-
-    slider(): void {
-        this.model.work();
-        this.setModelParams(this.model);
-        this.mainView.createBaseSlider();
-        this.mainView.createProgressBar();
-        this.mainView.createBanner();
-        this.mainView.createMinMax();
-        this.initialize();
     }
 }

@@ -30,10 +30,11 @@ class MainView {
     baseSlider: DefaultToddlerField;
     progressBar: ProgressBar;
     valueBanner: valueBanner
-    minmaxField: MinMaxFields;
+    minMaxField: MinMaxFields;
 
     constructor(container: HTMLElement) {
         this.container = container;
+        this.container.classList.add('js-slider-container-def')
     }
 
     public sendValueToElements(): void {
@@ -80,15 +81,20 @@ class MainView {
     }
 
     public createMinMax(): void {
-        this.minmaxField = new MinMaxFields(this.sliderField, this.min, this.max);
-        this.minmaxField.work();
+        this.minMaxField = new MinMaxFields(this.sliderField, this.min, this.max);
+        this.minMaxField.work();
 
-        this.container.appendChild(this.minmaxField.minField);
-        this.container.appendChild(this.minmaxField.maxField);
-        this.minmaxField.setFieldsWidth(this.minmaxField.minSpan, this.minmaxField.maxSpan);
+        this.container.appendChild(this.minMaxField.minField);
+        this.container.appendChild(this.minMaxField.maxField);
+        // change width of field if text width is too big
+        this.minMaxField.setFieldsWidth(this.minMaxField.minSpan, this.minMaxField.maxSpan);
 
-        this.minField = this.minmaxField.minField;
-        this.maxField = this.minmaxField.maxField;
+        this.minField = this.minMaxField.minField;
+        this.maxField = this.minMaxField.maxField;
+    }
+
+    public rotateSlider(): void {
+        this.sliderField.classList.add('slider-field-vertical');
     }
 
     private getPathFromValue() {

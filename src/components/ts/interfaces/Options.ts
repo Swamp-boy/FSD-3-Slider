@@ -10,14 +10,16 @@ interface Options {
         family?: string,
         weight? :number | string,
         color? : string,
-    }
+    },
 
     valueScale?: boolean,
     valueBanner?: boolean,
-    stepBoubles?: boolean,
+    stepCircles?: boolean,
     multiple?: boolean,
-
-
+    minMaxFields?: boolean,
+    progressBar?: boolean,
+    
+    position?: string, 
 }
 
 export default Options;
