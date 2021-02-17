@@ -15,6 +15,7 @@ class MainView {
     public step: number;
     public value: number;
     public multiValue: number[];
+    public position: string;
 
     public sliderWidth: number;
 
@@ -42,7 +43,7 @@ class MainView {
     }
 
     public createBaseSlider(): void {
-        this.baseSlider = new DefaultToddlerField(this.min, this.max, this.step, this.value);
+        this.baseSlider = new DefaultToddlerField(this.min, this.max, this.step, this.value, this.position);
         this.baseSlider.work();
 
         this.sliderField = this.baseSlider.sliderField;
@@ -54,14 +55,14 @@ class MainView {
         // for this slider type range is
         this.sliderWidth = this.baseSlider.sliderField.getBoundingClientRect().width;
         // calc toddler star position
-        this.setToddlerStartPosition();
+        this.baseSlider.setToddlerStartPosition();
     }
 
     public createProgressBar(): void {
         const scopeArray: number[] = [this.sliderField.getBoundingClientRect().left,
             this.toddler.getBoundingClientRect().right - this.toddler.getBoundingClientRect().width / 2];
         
-        this.progressBar = new ProgressBar(this.sliderField, scopeArray);
+        this.progressBar = new ProgressBar(this.sliderField.offsetWidth, this.toddler.offsetWidth, scopeArray);
         
         this.progressBar.createSingleProgressBar();
         this.sliderField.appendChild(this.progressBar.progressBar);
@@ -97,6 +98,17 @@ class MainView {
         this.sliderField.classList.add('slider-field-vertical');
     }
 
+    private getHorizontalPath() {
+        // calc margin left from value
+        const fieldWidth = this.sliderField.offsetWidth;
+        const intervalsNum = (this.max - this.min) / this.step;
+        const visualStep = fieldWidth / intervalsNum;
+        const visualStepsNum = fieldWidth / visualStep;
+        const procent = this.value / (this.max - this.min);
+        const path = procent * fieldWidth;
+
+        return Math.floor(path / visualStepsNum) * visualStepsNum;
+    }
     private getPathFromValue() {
         // calc margin left from value
         const fieldWidth = this.sliderField.offsetWidth;
@@ -110,15 +122,29 @@ class MainView {
     }
 
     private setToddlerStartPosition() {
-        // get height of elements
-        const fieldHeight = this.sliderField.offsetHeight;
-        const toddlerHeigth = this.toddler.offsetHeight;
-        // calc margin top
-        const marginTop = fieldHeight / 2 - toddlerHeigth / 2;
-        this.toddler.style.top = String(marginTop) + 'px';
+        if (this.position === 'horizontal') {
+            // get height of elements
+            const fieldHeight = this.sliderField.offsetHeight;
+            const toddlerHeigth = this.toddler.offsetHeight;
+            // calc margin top
+            const marginTop = fieldHeight / 2 - toddlerHeigth / 2;
+            this.toddler.style.top = String(marginTop) + 'px';
 
-        const marginLeft = this.getPathFromValue();
-        this.toddler.style.left = String(marginLeft) + 'px';
+            const marginLeft = this.getPathFromValue();
+            this.toddler.style.left = String(marginLeft) + 'px';
+        }
+
+        if (this.position === 'vertical') {
+            // get height of elements
+            const fieldHeight = this.sliderField.offsetHeight;
+            const toddlerHeight = this.toddler.offsetHeight;
+            // calc margin left
+            const marginTop = fieldHeight / 2 - toddlerHeight / 2;
+            this.toddler.style.top = String(marginTop) + 'px';
+
+            const marginLeft = this.getPathFromValue();
+            this.toddler.style.left = String(marginLeft) + 'px';
+        }
     }
 }
 

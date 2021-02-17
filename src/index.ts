@@ -35,6 +35,7 @@ $('#slider1').slider(
 
 $('#slider2').slider({
     position: 'vertical',
+    progressBar: false,
 });
 
 

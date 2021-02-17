@@ -7,30 +7,33 @@ class DefaultToddlerField {
     public max: number;
     public step: number;
     public value: number;
+    public position: string;
 
-    constructor(min:number, max:number, step:number, value:number) {
+    constructor(min:number, max:number, step:number, value:number, position: string) {
         this.min = min;
         this.max = max;
         this.step = step;
         this.value = value;
+        this.position = position;
     }
 
     public work(): void {
-        this.crteateField();
+        this.createField();
         this.createToddler();
         this.initializeEvents();
     }
     
-    givePresenterInfo(path: number):void {}
+    public givePresenterInfo(path: number):void {}
     // creating HTML Elements
     private createToddler(): void {
         this.toddler = document.createElement('div');
         this.toddler.classList.add('slider-toddler');
     }
 
-    private crteateField(): void {
+    private createField(): void {
         this.sliderField = document.createElement('div');
-        this.sliderField.classList.add('slider-field-horizontal');
+        this.sliderField.classList.add('slider-field');
+        if(this.position === 'vertical') this.sliderField.classList.add('slider-field_vertical');
     }
 
     private initializeEvents(): void {
@@ -50,11 +53,10 @@ class DefaultToddlerField {
     }
 
     private mouseOnField(e: MouseEvent): void {
-        // get slider fiel left edge
         this.toddlerPushed = true;
         this.elementDrag(e);
     }
-    // Events Funtions
+    // Events Functions
     private getToddlerPath(e: MouseEvent): number {
         // get width od elements 
         const toddlerWidth = this.getToddlerWidth();
@@ -85,7 +87,46 @@ class DefaultToddlerField {
             this.toddler.style.left = `${path}px`;
             this.givePresenterInfo(path);
         }
+    }
 
+    public setToddlerStartPosition(): void {
+        if (this.position === 'horizontal') {
+            // get height of elements
+            const fieldHeight = this.sliderField.offsetHeight;
+            const toddlerHeigth = this.toddler.offsetHeight;
+            // calc margin top
+            const marginTop = fieldHeight / 2 - toddlerHeigth / 2;
+            this.toddler.style.top = String(marginTop) + 'px';
+
+            const marginLeft = this.getPathFromValue();
+            console.log(marginLeft)
+            this.toddler.style.left = String(marginLeft) + 'px';
+        }
+
+        if (this.position === 'vertical') {
+            // get height of elements
+            const fieldHeight = this.sliderField.offsetHeight;
+            const toddlerHeight = this.toddler.offsetHeight;
+            // calc margin left
+            const marginTop = fieldHeight / 2 - toddlerHeight / 2;
+            this.toddler.style.top = String(marginTop) + 'px';
+
+            const marginLeft = this.getPathFromValue();
+            
+            this.toddler.style.left = String(marginLeft) + 'px';
+        }
+    }
+
+    private getPathFromValue() {
+        // calc margin left from value
+        const fieldWidth = this.sliderField.offsetWidth;
+        const intervalsNum = (this.max - this.min) / this.step;
+        const visualStep = fieldWidth / intervalsNum;
+        const visualStepsNum = fieldWidth / visualStep;
+        const procent = this.value / (this.max - this.min);
+        const path = procent * fieldWidth;
+
+        return Math.floor(path / visualStepsNum) * visualStepsNum;
     }
 
     private getFieldWidth(): number {

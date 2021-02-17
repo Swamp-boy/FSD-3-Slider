@@ -1,11 +1,12 @@
 export default class ProgressBar {
     progressBar: HTMLElement;
-    sliderField: HTMLElement;
-    backgroundColor: string;
+    sliderFieldWidth: number;
+    toddlerWidth: number;
     scopeArray: Array<number>;
 
-    constructor(sliderField: HTMLElement,  scopeArray: Array<number>) {
-        this.sliderField = sliderField;
+    constructor(sliderFieldWidth: number, toddlerWidth: number,  scopeArray: Array<number>) {
+        this.sliderFieldWidth = sliderFieldWidth;
+        this.toddlerWidth = toddlerWidth;
         this.scopeArray = scopeArray;
     }
 
@@ -18,13 +19,13 @@ export default class ProgressBar {
     }
 
     public progressBarSingleChange(path: number): void {
-        const right: number = this.sliderField.getBoundingClientRect().width - path;
+        const right: number = this.sliderFieldWidth - path - this.toddlerWidth / 2;
         this.progressBar.style.right = String(right) + 'px';
     }
 
     private setBarScope(scopeArray: Array<number>): void {
         const left = 0;
-        const right: number = this.sliderField.getBoundingClientRect().width - (scopeArray[1] - scopeArray[0]);
+        const right: number = this.sliderFieldWidth - (scopeArray[1] - scopeArray[0]);
         this.progressBar.style.left = String(left) + 'px';
         this.progressBar.style.right = String(right) + 'px';
     }

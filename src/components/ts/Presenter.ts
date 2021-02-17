@@ -29,32 +29,22 @@ export default class Presenter {
         this.mainView.max = model.max;
         this.mainView.value = model.value;
         this.mainView.step = model.step;
+        this.mainView.position = model.position;
     }
 
     public slider(): void {
         this.model.work();
         this.setModelParams(this.model);
-        this.mainView.createBaseSlider();
-        this.createSliderElements();
+        this.checkModel();
         this.initialize();
     }
 
-    private createSliderElements() {
-        if (this.model.progressBar === true) {
-            this.mainView.createProgressBar();
-        }
+    private checkModel() {
+        this.mainView.createBaseSlider();
+        if (this.model.valueBanner === true) this.mainView.createBanner();
+        if (this.model.minMaxFields === true) this.mainView.createMinMax();
+        if (this.model.progressBar === true) this.mainView.createProgressBar();
 
-        if (this.model.minMaxFields === true) {
-            this.mainView.createMinMax();
-        }
-
-        if (this.model.valueBanner === true) {
-            this.mainView.createBanner();
-        }
-
-        if (this.model.position === 'vertical') {
-            this.mainView.rotateSlider();
-        }
     }
 
     private bindElementsEvents(): void {
