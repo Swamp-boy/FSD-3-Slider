@@ -99,27 +99,33 @@ class DefaultToddlerField {
             this.toddler.style.top = String(marginTop) + 'px';
 
             const marginLeft = this.getPathFromValue();
-            console.log(marginLeft)
-            this.toddler.style.left = String(marginLeft) + 'px';
-        }
 
-        if (this.position === 'vertical') {
-            // get height of elements
-            const fieldHeight = this.sliderField.offsetHeight;
+            this.toddler.style.left = String(marginLeft) + 'px';
+        } else {
+            // if position = vertical
+            const fieldHeight = this.sliderField.offsetWidth;
             const toddlerHeight = this.toddler.offsetHeight;
             // calc margin left
-            const marginTop = fieldHeight / 2 - toddlerHeight / 2;
-            this.toddler.style.top = String(marginTop) + 'px';
-
-            const marginLeft = this.getPathFromValue();
-            
+            const marginLeft = fieldHeight / 2 - toddlerHeight / 2;
             this.toddler.style.left = String(marginLeft) + 'px';
+            
+
+            const marginBot = this.getPathFromValue();
+            
+            this.toddler.style.bottom = String(marginBot) + 'px';
         }
     }
 
     private getPathFromValue() {
         // calc margin left from value
-        const fieldWidth = this.sliderField.offsetWidth;
+        let fieldWidth;
+        if (this.position === 'horizontal') {
+            fieldWidth = this.sliderField.offsetWidth;
+        } else {
+            // if position = vertical
+            fieldWidth = this.sliderField.offsetHeight;
+        }
+        
         const intervalsNum = (this.max - this.min) / this.step;
         const visualStep = fieldWidth / intervalsNum;
         const visualStepsNum = fieldWidth / visualStep;

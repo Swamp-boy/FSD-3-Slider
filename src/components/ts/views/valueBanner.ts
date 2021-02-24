@@ -4,23 +4,24 @@ class valueBanner {
     public max: number;
     public step: number;
     public value: number;
+    
     public valueBannerContainer: HTMLElement;
-
-    private toddlerWidth: number;
-    private sliderFieldWidth: number;
+    private toddler: HTMLElement;
+    private sliderField: HTMLElement;
 
     private valueBanner: HTMLElement;
     private valueBannerArrow: HTMLElement;
     private valueSpan: HTMLElement;
     
 
-    constructor(min: number, max: number, step: number, value: number, sliderFieldWidth: number, toddlerWidth: number) {
+    constructor(min: number, max: number, step: number, value: number, sliderField: HTMLElement, toddler: HTMLElement) {
         this.min = min;
         this.max = max;
         this.step = step;
         this.value = value;
-        this.sliderFieldWidth = sliderFieldWidth;
-        this.toddlerWidth = toddlerWidth;
+
+        this.sliderField = sliderField;
+        this.toddler = toddler;
     }
 
     public work(): void {
@@ -29,13 +30,17 @@ class valueBanner {
 
     public setStartPosition(path: number): void {
         // set banner center over toddler
-       const bannerLeft = path - this.valueBanner.offsetWidth / 2 + this.toddlerWidth / 2;
-       this.valueBannerContainer.style.left = String(bannerLeft) + 'px';
+        const bannerLeft = path - this.valueBanner.offsetWidth / 2 + this.toddler.offsetWidth / 2;
+        this.valueBannerContainer.style.left = String(bannerLeft) + 'px';
+        
+        const bannerBottom = Math.max(this.sliderField.offsetHeight, this.toddler.offsetHeight) + this.valueBanner.offsetHeight + 10;
+        
+        this.valueBannerContainer.style.bottom = String(bannerBottom) + 'px';
     }
 
     public bannerMove(path: number): void {
         // set banner center over toddler
-        const bannerLeft = path - this.valueBanner.offsetWidth / 2 + this.toddlerWidth / 2;
+        const bannerLeft = path - this.valueBanner.offsetWidth / 2 + this.toddler.offsetWidth / 2;
         this.valueBannerContainer.style.left = String(bannerLeft) + 'px';
         this.valueSpan.innerHTML = String(this.value);
 
@@ -44,7 +49,7 @@ class valueBanner {
 
     private changeBannerWidth(path: number) {
         // set banner center over toddler
-        const bannerLeft = path - this.valueBanner.offsetWidth / 2 + this.toddlerWidth / 2;
+        const bannerLeft = path - this.valueBanner.offsetWidth / 2 + this.toddler.offsetWidth / 2;
         this.valueBannerContainer.style.left = String(bannerLeft) + 'px';
         // get text width
         const valueWidth = this.valueSpan.offsetWidth;

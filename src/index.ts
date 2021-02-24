@@ -26,14 +26,18 @@ import Presenter from './components/ts/Presenter';
 $('#slider1').slider(
     {
     min: 0,
-    max: 100000,
+    max: 100,
     step: 1,
-    value: 0,
+    value: 50,
     progressBar: true,
     valueBanner: true,
 });
 
 $('#slider2').slider({
+    min: 0,
+    max: 100,
+    step: 1,
+    value: 50,
     position: 'vertical',
     progressBar: false,
 });

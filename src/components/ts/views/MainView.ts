@@ -71,7 +71,7 @@ class MainView {
 
     public createBanner(): void {
         this.valueBanner = new valueBanner(this.min, this.max, this.step, this.value,
-            this.sliderField.offsetWidth, this.toddler.offsetWidth);
+            this.sliderField, this.toddler);
         
         this.valueBanner.work();
         this.container.appendChild(this.valueBanner.valueBannerContainer);
