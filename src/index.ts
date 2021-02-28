@@ -26,7 +26,7 @@ import Presenter from './components/ts/Presenter';
 $('#slider1').slider(
     {
     min: 0,
-    max: 100,
+    max: 1000000,
     step: 1,
     value: 50,
     progressBar: true,
@@ -40,9 +40,7 @@ $('#slider2').slider({
     value: 50,
     position: 'vertical',
     progressBar: false,
+    valueBanner: true,
 });
-
-
-
 
 

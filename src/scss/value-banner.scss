@@ -11,6 +11,9 @@
     user-select: none;
     @include def-font;
 }
+.js-num-circle_vertical {
+    transform: rotate(270deg);
+}
 .js-numcircle-arrow {
     cursor: pointer;
     width: 0;
@@ -19,4 +22,12 @@
     border-top: 4px solid $default-color; /* Добавляем треугольник */
     position: absolute;
     left: 13px;
+}
+.js-numcircle-arrow_vertical {
+    transform: rotate(270deg);
+    top: 8px;
+    left: 29px;
+}
+.js-value-banner-container_vertical {
+    transform: rotate(270deg);
 }

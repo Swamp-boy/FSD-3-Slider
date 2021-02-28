@@ -19,9 +19,7 @@ export default class Presenter {
     public initialize(): void {
         this.pathChangeObserver = new PathEventObserver();
         this.bindElementsEvents();
-        this.pathChangeObserver.subscribe(this.getValueFromPath.bind(this));
         
-        this.mainView.baseSlider.givePresenterInfo = this.reactOnPathChange.bind(this);
     }
 
     public setModelParams(model: Model): void {
@@ -32,7 +30,7 @@ export default class Presenter {
         this.mainView.position = model.position;
     }
 
-    public slider(): void {
+    public slider(): void { 
         this.model.work();
         this.setModelParams(this.model);
         this.checkModel();
@@ -48,26 +46,32 @@ export default class Presenter {
     }
 
     private bindElementsEvents(): void {
+        this.pathChangeObserver.subscribe(this.setValueFromPath.bind(this));
+        
         if (this.mainView.valueBanner !== undefined) {
             this.pathChangeObserver.subscribe(this.mainView.valueBanner.bannerMove.bind(this.mainView.valueBanner));
             // send value to sab view
             this.pathChangeObserver.subscribe(this.mainView.sendValueToElements.bind(this.mainView));
         }
-
         if (this.mainView.progressBar !== undefined) {
             this.pathChangeObserver.subscribe(this.mainView.progressBar.progressBarSingleChange.bind(this.mainView.progressBar));
         }
+        
+        this.mainView.baseSlider.givePresenterInfo = this.reactOnPathChange.bind(this);
     }
 
     private reactOnPathChange(path: number):void {
         this.pathChangeObserver.broadcast(path);
     }
 
-    private getValueFromPath(path: number): void {
+    private setValueFromPath(path: number): void {
         const max = this.model.max;
         const min = this.model.min;
         // need to stop toddler on half
-        const width = this.mainView.sliderWidth - this.mainView.toddler.offsetWidth / 2;
+        const width = (this.model.position === 'horizontal') ?
+            this.mainView.sliderField.offsetWidth - this.mainView.toddler.offsetWidth / 2 :
+            this.mainView.sliderField.offsetHeight - this.mainView.toddler.offsetHeight / 2;
+
 
         const value = Math.floor((max - min) * (path / width));
         this.value = value;

@@ -23,17 +23,18 @@ class DefaultToddlerField {
         this.initializeEvents();
     }
     
-    public givePresenterInfo(path: number):void {}
+    public givePresenterInfo(path: number): void { }
+    
     // creating HTML Elements
     private createToddler(): void {
         this.toddler = document.createElement('div');
-        this.toddler.classList.add('slider-toddler');
+        this.toddler.classList.add('js-slider-toddler');
     }
 
     private createField(): void {
         this.sliderField = document.createElement('div');
-        this.sliderField.classList.add('slider-field');
-        if(this.position === 'vertical') this.sliderField.classList.add('slider-field_vertical');
+        this.sliderField.classList.add('js-slider-field');
+        if(this.position === 'vertical') this.sliderField.classList.add('js-slider-field_vertical');
     }
 
     private initializeEvents(): void {
@@ -59,17 +60,34 @@ class DefaultToddlerField {
     // Events Functions
     private getToddlerPath(e: MouseEvent): number {
         // get width od elements 
-        const toddlerWidth = this.getToddlerWidth();
-        const fieldWidth = this.getFieldWidth() - toddlerWidth / 2;
-        // get left side of sliders field
-        const startFieldLeft = this.sliderField.getBoundingClientRect().left;
-        // calc distanse from left side of field to mouse
-        const toddlerPath = e.clientX - startFieldLeft - toddlerWidth / 2 + 1;
+        let toddlerWidth: number;
+        let fieldWidth: number;
+        // get mouse position
+        let mousePos: number;
+        // get left side of slider field
+        let startFieldLeft: number;
+        // toddler distance
+        let toddlerPath: number;
+
+        if (this.position === 'vertical') {
+            toddlerWidth = this.toddler.getBoundingClientRect().height;
+            fieldWidth = this.sliderField.getBoundingClientRect().height - toddlerWidth / 2;
+            startFieldLeft = this.sliderField.getBoundingClientRect().bottom;
+            mousePos = e.clientY;
+            toddlerPath = startFieldLeft - mousePos - toddlerWidth / 2 + 1;
+        } else {
+            // if position is horizontal
+            toddlerWidth = this.toddler.getBoundingClientRect().width;
+            fieldWidth = this.sliderField.getBoundingClientRect().width - toddlerWidth / 2;
+            startFieldLeft = this.sliderField.getBoundingClientRect().left;
+            mousePos = e.clientX;
+            toddlerPath = mousePos - startFieldLeft - toddlerWidth / 2 + 1;
+        }
         // calc number of intervals
         const intervalsNum = (this.max - this.min) / this.step;
         // calc length of interval in pixels
         const visualStep = fieldWidth / intervalsNum;
-        // calc distanse in pixels
+        // calc distance in pixels
         let pathWithStep = Math.floor(toddlerPath / visualStep) * visualStep;
         // if mouse out of field
         if (pathWithStep >= fieldWidth - toddlerWidth / 2)
@@ -84,7 +102,11 @@ class DefaultToddlerField {
     private elementDrag(e: MouseEvent): void {
         if (this.toddlerPushed) {
             const path = this.getToddlerPath(e);
-            this.toddler.style.left = `${path}px`;
+            if (this.position === 'horizontal')
+                this.toddler.style.left = `${path}px`;
+            else
+                this.toddler.style.bottom = `${path}px`;
+            
             this.givePresenterInfo(path);
         }
     }
@@ -133,14 +155,6 @@ class DefaultToddlerField {
         const path = procent * fieldWidth;
 
         return Math.floor(path / visualStepsNum) * visualStepsNum;
-    }
-
-    private getFieldWidth(): number {
-        return this.sliderField.getBoundingClientRect().width;
-    }
-
-    private getToddlerWidth(): number {
-        return this.toddler.getBoundingClientRect().width;
     }
 }
 

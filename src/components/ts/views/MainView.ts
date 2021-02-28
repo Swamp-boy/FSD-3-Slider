@@ -17,8 +17,6 @@ class MainView {
     public multiValue: number[];
     public position: string;
 
-    public sliderWidth: number;
-
     //slider elements
     sliderField: HTMLElement;
     toddler: HTMLElement;
@@ -35,7 +33,8 @@ class MainView {
 
     constructor(container: HTMLElement) {
         this.container = container;
-        this.container.classList.add('js-slider-container-def')
+        this.container.classList.add('js-slider-container_def')
+        this.position === 'vertical' && this.container.classList.add('js-slider-container_vertical')
     }
 
     public sendValueToElements(): void {
@@ -52,8 +51,6 @@ class MainView {
         // append elements
         this.container.appendChild(this.sliderField);
         this.container.appendChild(this.toddler);
-        // for this slider type range is
-        this.sliderWidth = this.baseSlider.sliderField.getBoundingClientRect().width;
         // calc toddler star position
         this.baseSlider.setToddlerStartPosition();
     }
@@ -70,13 +67,14 @@ class MainView {
     }
 
     public createBanner(): void {
-        this.valueBanner = new valueBanner(this.min, this.max, this.step, this.value,
+        this.valueBanner = new valueBanner(this.min, this.max, this.step, this.value, this.position,
             this.sliderField, this.toddler);
         
         this.valueBanner.work();
         this.container.appendChild(this.valueBanner.valueBannerContainer);
-
-        this.valueBanner.setStartPosition(this.getPathFromValue());
+        this.position === 'horizontal' ?
+            this.valueBanner.setStartPositionHorizontal(this.getPathFromValue()) :
+            this.valueBanner.setStartPositionVertical(this.getPathFromValue());
 
         this.banner = this.valueBanner.valueBannerContainer;
     }
@@ -93,11 +91,6 @@ class MainView {
         this.minField = this.minMaxField.minField;
         this.maxField = this.minMaxField.maxField;
     }
-
-    public rotateSlider(): void {
-        this.sliderField.classList.add('slider-field-vertical');
-    }
-
     private getHorizontalPath() {
         // calc margin left from value
         const fieldWidth = this.sliderField.offsetWidth;
@@ -111,7 +104,7 @@ class MainView {
     }
     private getPathFromValue() {
         // calc margin left from value
-        const fieldWidth = this.sliderField.offsetWidth;
+        const fieldWidth = this.position === 'horizontal'? this.sliderField.offsetWidth : this.sliderField.offsetHeight;
         const intervalsNum = (this.max - this.min) / this.step;
         const visualStep = fieldWidth / intervalsNum;
         const visualStepsNum = fieldWidth / visualStep;
@@ -119,32 +112,6 @@ class MainView {
         const path = procent * fieldWidth;
 
         return Math.floor(path / visualStepsNum) * visualStepsNum;
-    }
-
-    private setToddlerStartPosition() {
-        if (this.position === 'horizontal') {
-            // get height of elements
-            const fieldHeight = this.sliderField.offsetHeight;
-            const toddlerHeigth = this.toddler.offsetHeight;
-            // calc margin top
-            const marginTop = fieldHeight / 2 - toddlerHeigth / 2;
-            this.toddler.style.top = String(marginTop) + 'px';
-
-            const marginLeft = this.getPathFromValue();
-            this.toddler.style.left = String(marginLeft) + 'px';
-        }
-
-        if (this.position === 'vertical') {
-            // get height of elements
-            const fieldHeight = this.sliderField.offsetHeight;
-            const toddlerHeight = this.toddler.offsetHeight;
-            // calc margin left
-            const marginTop = fieldHeight / 2 - toddlerHeight / 2;
-            this.toddler.style.top = String(marginTop) + 'px';
-
-            const marginLeft = this.getPathFromValue();
-            this.toddler.style.left = String(marginLeft) + 'px';
-        }
     }
 }
 
