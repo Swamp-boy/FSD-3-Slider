@@ -28,6 +28,7 @@ class DefaultToddlerField {
     // creating HTML Elements
     private createToddler(): void {
         this.toddler = document.createElement('div');
+        this.toddler.ondragstart = () => { return false };
         this.toddler.classList.add('js-slider-toddler');
     }
 
