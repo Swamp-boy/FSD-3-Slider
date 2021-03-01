@@ -28,8 +28,8 @@ $('#slider1').slider(
     min: 0,
     max: 1000000,
     step: 1,
-    value: 50,
-    progressBar: true,
+    value: 0,
+    progressBar: false,
     valueBanner: true,
 });
 

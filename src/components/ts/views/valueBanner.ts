@@ -39,10 +39,10 @@ class valueBanner {
 
     public setStartPositionHorizontal(path: number): void {
         // set banner center over toddler
-        const bannerLeft = path - this.valueBanner.offsetWidth / 2 + this.toddlerWidth / 2;
+        const bannerLeft = path- this.valueBanner.offsetWidth / 2 + this.toddlerWidth / 2;
         this.valueBannerContainer.style.left = String(bannerLeft) + 'px';
         
-        const bannerBottom = Math.max(this.sliderField.offsetHeight, this.toddler.offsetHeight) + this.valueBanner.offsetHeight + 10;  
+        const bannerBottom = Math.max(this.sliderField.offsetHeight, this.toddler.offsetHeight) + this.valueBanner.offsetHeight + 10//margin for customization;  
         this.valueBannerContainer.style.bottom = String(bannerBottom) + 'px';
         
     }
@@ -50,24 +50,24 @@ class valueBanner {
     public setStartPositionVertical(path: number): void {
         this.valueBannerContainer.classList.add('js-value-banner-container_vertical');
         
-        const bannerBottom = path + this.valueBanner.offsetWidth / 2 - this.toddlerWidth / 2;
+        const bannerBottom = path + this.toddler.offsetWidth / 2;
+        
+        console.log(path)
         this.valueBannerContainer.style.bottom = String(bannerBottom) + 'px';
 
-        const bannerRight = Math.max(this.sliderField.offsetWidth, this.toddler.offsetWidth) + this.valueBanner.offsetHeight  - 14;
-        console.log(this.sliderField.offsetWidth)
+        const bannerRight = Math.max(this.sliderField.offsetWidth, this.toddler.offsetHeight) + this.valueBanner.offsetHeight - 17//margin for customization;
         this.valueBannerContainer.style.right = String(bannerRight) + 'px';
+        
     }
 
     public bannerMove(path: number): void {
         // set banner center over toddler
-        
-        
         if (this.position === 'horizontal') {
             const bannerLeft = path - this.valueBanner.offsetWidth / 2 + this.toddlerWidth / 2;
             this.valueBannerContainer.style.left = String(bannerLeft) + 'px';
         }    
         else {
-            const bannerBottom = path /*+ this.valueBanner.offsetWidth / 2 + this.toddlerWidth / 2*/;
+            const bannerBottom = path + this.toddlerWidth / 2;
             this.valueBannerContainer.style.bottom = String(bannerBottom) + 'px';
         }
             
@@ -81,7 +81,6 @@ class valueBanner {
         const valueWidth = this.valueSpan.offsetWidth;
         // change banner width if text is too big
         if (valueWidth + 15 >= this.valueBanner.offsetWidth) {
-            
             this.valueBanner.style.width = String(valueWidth + 10) + 'px';
 
             const arrowLeft = (this.valueBanner.offsetWidth / 2) - (this.valueBannerArrow.offsetWidth / 2);

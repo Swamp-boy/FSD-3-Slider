@@ -25,6 +25,32 @@ class DefaultToddlerField {
     
     public givePresenterInfo(path: number): void { }
     
+    public setToddlerStartPosition(): void {
+        if (this.position === 'horizontal') {
+            // get height of elements
+            const fieldHeight = this.sliderField.offsetHeight;
+            const toddlerHeigth = this.toddler.offsetHeight;
+            // calc margin top
+            const marginTop = fieldHeight / 2 - toddlerHeigth / 2;
+            this.toddler.style.top = String(marginTop) + 'px';
+
+            const marginLeft = this.getPathFromValue();
+
+            this.toddler.style.left = String(marginLeft) + 'px';
+        } else {
+            // if position = vertical
+            const fieldHeight = this.sliderField.offsetWidth;
+            const toddlerHeight = this.toddler.offsetWidth;
+            // calc margin left
+            const marginLeft = fieldHeight / 2 - toddlerHeight / 2;
+            this.toddler.style.left = String(marginLeft) + 'px';
+            
+            const marginBot = this.getPathFromValue();
+            
+            this.toddler.style.bottom = String(marginBot) + 'px';
+        }
+    }
+    
     // creating HTML Elements
     private createToddler(): void {
         this.toddler = document.createElement('div');
@@ -35,7 +61,7 @@ class DefaultToddlerField {
     private createField(): void {
         this.sliderField = document.createElement('div');
         this.sliderField.classList.add('js-slider-field');
-        if(this.position === 'vertical') this.sliderField.classList.add('js-slider-field_vertical');
+        if (this.position === 'vertical') this.sliderField.classList.add('js-slider-field_vertical');
     }
 
     private initializeEvents(): void {
@@ -69,20 +95,20 @@ class DefaultToddlerField {
         let startFieldLeft: number;
         // toddler distance
         let toddlerPath: number;
-
+    
         if (this.position === 'vertical') {
             toddlerWidth = this.toddler.getBoundingClientRect().height;
             fieldWidth = this.sliderField.getBoundingClientRect().height - toddlerWidth / 2;
             startFieldLeft = this.sliderField.getBoundingClientRect().bottom;
             mousePos = e.clientY;
-            toddlerPath = startFieldLeft - mousePos - toddlerWidth / 2 + 1;
+            toddlerPath = startFieldLeft - mousePos - toddlerWidth / 2;
         } else {
             // if position is horizontal
             toddlerWidth = this.toddler.getBoundingClientRect().width;
             fieldWidth = this.sliderField.getBoundingClientRect().width - toddlerWidth / 2;
             startFieldLeft = this.sliderField.getBoundingClientRect().left;
             mousePos = e.clientX;
-            toddlerPath = mousePos - startFieldLeft - toddlerWidth / 2 + 1;
+            toddlerPath = mousePos - startFieldLeft - toddlerWidth / 2;
         }
         // calc number of intervals
         const intervalsNum = (this.max - this.min) / this.step;
@@ -109,33 +135,6 @@ class DefaultToddlerField {
                 this.toddler.style.bottom = `${path}px`;
             
             this.givePresenterInfo(path);
-        }
-    }
-
-    public setToddlerStartPosition(): void {
-        if (this.position === 'horizontal') {
-            // get height of elements
-            const fieldHeight = this.sliderField.offsetHeight;
-            const toddlerHeigth = this.toddler.offsetHeight;
-            // calc margin top
-            const marginTop = fieldHeight / 2 - toddlerHeigth / 2;
-            this.toddler.style.top = String(marginTop) + 'px';
-
-            const marginLeft = this.getPathFromValue();
-
-            this.toddler.style.left = String(marginLeft) + 'px';
-        } else {
-            // if position = vertical
-            const fieldHeight = this.sliderField.offsetWidth;
-            const toddlerHeight = this.toddler.offsetHeight;
-            // calc margin left
-            const marginLeft = fieldHeight / 2 - toddlerHeight / 2;
-            this.toddler.style.left = String(marginLeft) + 'px';
-            
-
-            const marginBot = this.getPathFromValue();
-            
-            this.toddler.style.bottom = String(marginBot) + 'px';
         }
     }
 
