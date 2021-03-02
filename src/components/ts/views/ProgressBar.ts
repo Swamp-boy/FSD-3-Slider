@@ -2,31 +2,47 @@ export default class ProgressBar {
     progressBar: HTMLElement;
     sliderFieldWidth: number;
     toddlerWidth: number;
-    scopeArray: Array<number>;
+    position: string;
 
-    constructor(sliderFieldWidth: number, toddlerWidth: number,  scopeArray: Array<number>) {
-        this.sliderFieldWidth = sliderFieldWidth;
-        this.toddlerWidth = toddlerWidth;
-        this.scopeArray = scopeArray;
+    constructor(sliderField: HTMLElement, toddler: HTMLElement, position: string) {
+        if (position === 'horizontal') {
+            this.sliderFieldWidth = sliderField.offsetWidth;
+            this.toddlerWidth = toddler.offsetWidth;
+        }
+        if(position === 'vertical') {
+            this.sliderFieldWidth = sliderField.offsetHeight;
+            this.toddlerWidth = toddler.offsetHeight;
+        }
+        this.position = position;
     }
 
     public createSingleProgressBar():void {
         this.progressBar = document.createElement('div');
 
-        this.progressBar.classList.add('slider-progres-bar');
-
-        this.setBarScope(this.scopeArray);
+        this.progressBar.classList.add('slider-progress-bar');
+        if (this.position === 'vertical') {
+            this.progressBar.classList.add('slider-progress-bar_vertical');
+        }
     }
 
     public progressBarSingleChange(path: number): void {
-        const right: number = this.sliderFieldWidth - path - this.toddlerWidth / 2;
-        this.progressBar.style.right = String(right) + 'px';
+        if (this.position === 'horizontal') {
+            const right: number = this.sliderFieldWidth - path - this.toddlerWidth / 2;
+            this.progressBar.style.right = String(right) + 'px';
+        } else {
+            const top: number = this.sliderFieldWidth - path - this.toddlerWidth / 2;
+            this.progressBar.style.top = String(top) + 'px';
+        }
+        
     }
 
-    private setBarScope(scopeArray: Array<number>): void {
-        const left = 0;
-        const right: number = this.sliderFieldWidth - (scopeArray[1] - scopeArray[0]);
-        this.progressBar.style.left = String(left) + 'px';
-        this.progressBar.style.right = String(right) + 'px';
+    public setBarScope(path: number): void {
+        if (this.position === 'horizontal') {
+            const right: number = this.sliderFieldWidth - path - this.toddlerWidth / 2;
+            this.progressBar.style.right = String(right) + 'px';
+        }else {
+            const top: number = this.sliderFieldWidth - path- this.toddlerWidth / 2;
+            this.progressBar.style.top = String(top) + 'px';
+        }
     }
 }

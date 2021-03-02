@@ -26,6 +26,10 @@ class MinMaxFields {
             this.minField.style.width = String(this.minField.offsetWidth + 10) + 'px';
         }
     }
+    public rotate() {
+        this.minField.classList.add('js-slider-min-field_vertical');
+        this.maxField.classList.add('js-slider-max-field_vertical');
+    }
 
     private createMinMax() {
         this.minField = document.createElement('div');

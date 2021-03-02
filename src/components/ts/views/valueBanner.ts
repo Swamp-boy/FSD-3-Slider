@@ -52,7 +52,6 @@ class valueBanner {
         
         const bannerBottom = path + this.toddler.offsetWidth / 2;
         
-        console.log(path)
         this.valueBannerContainer.style.bottom = String(bannerBottom) + 'px';
 
         const bannerRight = Math.max(this.sliderField.offsetWidth, this.toddler.offsetHeight) + this.valueBanner.offsetHeight - 17//margin for customization;

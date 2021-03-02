@@ -56,12 +56,14 @@ class MainView {
     }
 
     public createProgressBar(): void {
-        const scopeArray: number[] = [this.sliderField.getBoundingClientRect().left,
-            this.toddler.getBoundingClientRect().right - this.toddler.getBoundingClientRect().width / 2];
+        const path = this.getPathFromValue();
+        /*const scopeArray: number[] = [this.sliderField.getBoundingClientRect().left,
+            this.toddler.getBoundingClientRect().right - this.toddler.getBoundingClientRect().width / 2];*/
         
-        this.progressBar = new ProgressBar(this.sliderField.offsetWidth, this.toddler.offsetWidth, scopeArray);
+        this.progressBar = new ProgressBar(this.sliderField, this.toddler, this.position);
         
         this.progressBar.createSingleProgressBar();
+        this.progressBar.setBarScope(path)
         this.sliderField.appendChild(this.progressBar.progressBar);
 
     }
@@ -82,6 +84,9 @@ class MainView {
     public createMinMax(): void {
         this.minMaxField = new MinMaxFields(this.sliderField, this.min, this.max);
         this.minMaxField.work();
+        if (this.position === 'vertical') {
+            this.minMaxField.rotate();
+        }
 
         this.container.appendChild(this.minMaxField.minField);
         this.container.appendChild(this.minMaxField.maxField);

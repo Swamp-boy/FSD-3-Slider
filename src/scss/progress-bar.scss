@@ -1,6 +1,6 @@
 @import './vars/vars.scss';
 
-.slider-progres-bar {
+.slider-progress-bar {
     position: absolute;
     top: 0;
     bottom: 0;
@@ -8,4 +8,7 @@
     right: 0;
     border-radius: inherit;
     background-color: $default-color;
+}
+.slider-progress-bar_vertical {
+    transform: rotate(180deg);
 }
