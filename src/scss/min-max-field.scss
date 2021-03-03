@@ -1,8 +1,5 @@
-@import './vars/vars.scss';
-
 .js-slider-min-field {
     position: absolute;
-    left: 0;
     z-index: -2;
     background-color: $default-color;
     @include def-font;
@@ -15,7 +12,6 @@
 }
 .js-slider-max-field {
     position: absolute;
-    right: 0;
     z-index: -2;
     background-color: $default-color;
     @include def-font;
@@ -28,11 +24,7 @@
 }
 .js-slider-max-field_vertical {
     transform: rotate(270deg);
-    right: 5px;
-    top: 9px;
 }
 .js-slider-min-field_vertical {
     transform: rotate(270deg);
-    right: 9px;
-    bottom: 9px;
 }

@@ -83,7 +83,9 @@ class MainView {
 
     public createMinMax(): void {
         this.minMaxField = new MinMaxFields(this.sliderField, this.min, this.max);
-        this.minMaxField.work();
+        this.minMaxField.createMinMax();
+        
+
         if (this.position === 'vertical') {
             this.minMaxField.rotate();
         }
@@ -92,6 +94,8 @@ class MainView {
         this.container.appendChild(this.minMaxField.maxField);
         // change width of field if text width is too big
         this.minMaxField.setFieldsWidth(this.minMaxField.minSpan, this.minMaxField.maxSpan);
+        this.minMaxField.setMinField(this.position);
+        this.minMaxField.setMaxField(this.position);
 
         this.minField = this.minMaxField.minField;
         this.maxField = this.minMaxField.maxField;
