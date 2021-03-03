@@ -27,7 +27,7 @@ export default class Presenter {
         this.mainView.max = model.max;
         this.mainView.value = model.value;
         this.mainView.step = model.step;
-        this.mainView.position = model.position;
+        this.mainView.orientation = model.orientation;
     }
 
     public slider(): void { 
@@ -68,7 +68,7 @@ export default class Presenter {
         const max = this.model.max;
         const min = this.model.min;
         // need to stop toddler on half
-        const width = (this.model.position === 'horizontal') ?
+        const width = (this.model.orientation === 'horizontal') ?
             this.mainView.sliderField.offsetWidth - this.mainView.toddler.offsetWidth / 2 :
             this.mainView.sliderField.offsetHeight - this.mainView.toddler.offsetHeight / 2;
 

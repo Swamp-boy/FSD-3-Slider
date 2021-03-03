@@ -19,7 +19,7 @@ interface Options {
     minMaxFields?: boolean,
     progressBar?: boolean,
     
-    position?: string, 
+    orientation?: string, 
 }
 
 export default Options;

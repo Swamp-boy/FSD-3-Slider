@@ -7,14 +7,14 @@ class DefaultToddlerField {
     public max: number;
     public step: number;
     public value: number;
-    public position: string;
+    public orientation: string;
 
-    constructor(min:number, max:number, step:number, value:number, position: string) {
+    constructor(min:number, max:number, step:number, value:number, orientation: string) {
         this.min = min;
         this.max = max;
         this.step = step;
         this.value = value;
-        this.position = position;
+        this.orientation = orientation;
     }
 
     public work(): void {
@@ -26,7 +26,7 @@ class DefaultToddlerField {
     public givePresenterInfo(path: number): void { }
     
     public setToddlerStartPosition(): void {
-        if (this.position === 'horizontal') {
+        if (this.orientation === 'horizontal') {
             // get height of elements
             const fieldHeight = this.sliderField.offsetHeight;
             const toddlerHeigth = this.toddler.offsetHeight;
@@ -61,7 +61,7 @@ class DefaultToddlerField {
     private createField(): void {
         this.sliderField = document.createElement('div');
         this.sliderField.classList.add('js-slider-field');
-        if (this.position === 'vertical') this.sliderField.classList.add('js-slider-field_vertical');
+        if (this.orientation === 'vertical') this.sliderField.classList.add('js-slider-field_vertical');
     }
 
     private initializeEvents(): void {
@@ -96,7 +96,7 @@ class DefaultToddlerField {
         // toddler distance
         let toddlerPath: number;
     
-        if (this.position === 'vertical') {
+        if (this.orientation === 'vertical') {
             toddlerWidth = this.toddler.getBoundingClientRect().height;
             fieldWidth = this.sliderField.getBoundingClientRect().height - toddlerWidth / 2;
             startFieldLeft = this.sliderField.getBoundingClientRect().bottom;
@@ -129,7 +129,7 @@ class DefaultToddlerField {
     private elementDrag(e: MouseEvent): void {
         if (this.toddlerPushed) {
             const path = this.getToddlerPath(e);
-            if (this.position === 'horizontal')
+            if (this.orientation === 'horizontal')
                 this.toddler.style.left = `${path}px`;
             else
                 this.toddler.style.bottom = `${path}px`;
@@ -141,7 +141,7 @@ class DefaultToddlerField {
     private getPathFromValue() {
         // calc margin left from value
         let fieldWidth;
-        if (this.position === 'horizontal') {
+        if (this.orientation === 'horizontal') {
             fieldWidth = this.sliderField.offsetWidth;
         } else {
             // if position = vertical

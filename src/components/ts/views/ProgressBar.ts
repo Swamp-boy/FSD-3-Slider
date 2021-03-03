@@ -2,31 +2,31 @@ export default class ProgressBar {
     progressBar: HTMLElement;
     sliderFieldWidth: number;
     toddlerWidth: number;
-    position: string;
+    orientation: string;
 
-    constructor(sliderField: HTMLElement, toddler: HTMLElement, position: string) {
-        if (position === 'horizontal') {
+    constructor(sliderField: HTMLElement, toddler: HTMLElement, orientation: string) {
+        if (orientation === 'horizontal') {
             this.sliderFieldWidth = sliderField.offsetWidth;
             this.toddlerWidth = toddler.offsetWidth;
         }
-        if(position === 'vertical') {
+        if(orientation === 'vertical') {
             this.sliderFieldWidth = sliderField.offsetHeight;
             this.toddlerWidth = toddler.offsetHeight;
         }
-        this.position = position;
+        this.orientation = orientation;
     }
 
     public createSingleProgressBar():void {
         this.progressBar = document.createElement('div');
 
         this.progressBar.classList.add('slider-progress-bar');
-        if (this.position === 'vertical') {
+        if (this.orientation === 'vertical') {
             this.progressBar.classList.add('slider-progress-bar_vertical');
         }
     }
 
     public progressBarSingleChange(path: number): void {
-        if (this.position === 'horizontal') {
+        if (this.orientation === 'horizontal') {
             const right: number = this.sliderFieldWidth - path - this.toddlerWidth / 2;
             this.progressBar.style.right = String(right) + 'px';
         } else {
@@ -37,7 +37,7 @@ export default class ProgressBar {
     }
 
     public setBarScope(path: number): void {
-        if (this.position === 'horizontal') {
+        if (this.orientation === 'horizontal') {
             const right: number = this.sliderFieldWidth - path - this.toddlerWidth / 2;
             this.progressBar.style.right = String(right) + 'px';
         }else {

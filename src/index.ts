@@ -39,7 +39,7 @@ $('#slider2').slider({
     max: 100,
     step: 1,
     value: 50,
-    position: 'vertical',
+    orientation: 'vertical',
     progressBar: true,
     valueBanner: true,
     minMaxFields: true,

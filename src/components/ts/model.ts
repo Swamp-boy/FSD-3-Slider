@@ -9,7 +9,7 @@ export default class Model {
     public multiValue: number[];
     public step: number;
 
-    position: string;
+    public orientation: string;
 
     // elements
     valueScale?: boolean;
@@ -69,6 +69,6 @@ export default class Model {
     }
 
     private positionCheck(): void {
-        this.position = this.options.position === undefined ? 'horizontal' : this.options.position;
+        this.orientation = this.options.orientation === undefined ? 'horizontal' : this.options.orientation;
     }
 }
