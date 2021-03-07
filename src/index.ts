@@ -27,11 +27,11 @@ $('#slider1').slider(
     {
     min: 0,
     max: 100,
-    step: 1,
+    step: 0.01,
     value: 50,
     progressBar: true,
     valueBanner: true,
-    minMaxFields:true,
+    minMaxFields:false,
 });
 
 $('#slider2').slider({
@@ -46,3 +46,4 @@ $('#slider2').slider({
 });
 
 
+//console.log($('#slider1').slider('min'))

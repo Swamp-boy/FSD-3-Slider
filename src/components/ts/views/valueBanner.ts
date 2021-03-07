@@ -54,12 +54,13 @@ class valueBanner {
         
         this.valueBannerContainer.style.bottom = String(bannerBottom) + 'px';
 
-        const bannerRight = Math.max(this.sliderField.offsetWidth, this.toddler.offsetHeight) + this.valueBanner.offsetHeight - 17//margin for customization;
+        const bannerRight = Math.max(this.sliderField.offsetWidth, this.toddler.offsetHeight) + this.valueBanner.offsetHeight - 10//margin for customization;
         this.valueBannerContainer.style.right = String(bannerRight) + 'px';
         
     }
 
     public bannerMove(path: number): void {
+        console.log('banner')
         // set banner center over toddler
         if (this.position === 'horizontal') {
             const bannerLeft = path - this.valueBanner.offsetWidth / 2 + this.toddlerWidth / 2;

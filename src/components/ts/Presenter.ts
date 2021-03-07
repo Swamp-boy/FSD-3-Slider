@@ -46,25 +46,26 @@ export default class Presenter {
     }
 
     private bindElementsEvents(): void {
+        this.mainView.baseSlider.givePresenterInfo = this.reactOnPathChange.bind(this);
         this.pathChangeObserver.subscribe(this.setValueFromPath.bind(this));
         
         if (this.mainView.valueBanner !== undefined) {
-            this.pathChangeObserver.subscribe(this.mainView.valueBanner.bannerMove.bind(this.mainView.valueBanner));
             // send value to sab view
             this.pathChangeObserver.subscribe(this.mainView.sendValueToElements.bind(this.mainView));
+
+            this.pathChangeObserver.subscribe(this.mainView.valueBanner.bannerMove.bind(this.mainView.valueBanner));
         }
         if (this.mainView.progressBar !== undefined) {
             this.pathChangeObserver.subscribe(this.mainView.progressBar.progressBarSingleChange.bind(this.mainView.progressBar));
         }
-        
-        this.mainView.baseSlider.givePresenterInfo = this.reactOnPathChange.bind(this);
     }
 
-    private reactOnPathChange(path: number):void {
+    private reactOnPathChange(path: number): void {
         this.pathChangeObserver.broadcast(path);
     }
 
     private setValueFromPath(path: number): void {
+        
         const max = this.model.max;
         const min = this.model.min;
         // need to stop toddler on half
@@ -77,5 +78,6 @@ export default class Presenter {
         this.value = value;
         this.model.value = value;
         this.mainView.value = value;
+        console.log(this.value)
     }
 }

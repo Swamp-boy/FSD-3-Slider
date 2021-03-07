@@ -57,8 +57,6 @@ class MainView {
 
     public createProgressBar(): void {
         const path = this.getPathFromValue();
-        /*const scopeArray: number[] = [this.sliderField.getBoundingClientRect().left,
-            this.toddler.getBoundingClientRect().right - this.toddler.getBoundingClientRect().width / 2];*/
         
         this.progressBar = new ProgressBar(this.sliderField, this.toddler, this.orientation);
         

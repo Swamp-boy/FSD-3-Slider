@@ -23,7 +23,7 @@ class DefaultToddlerField {
         this.initializeEvents();
     }
     
-    public givePresenterInfo(path: number): void { }
+    public givePresenterInfo(path: number): void {}
     
     public setToddlerStartPosition(): void {
         if (this.orientation === 'horizontal') {
@@ -117,7 +117,7 @@ class DefaultToddlerField {
         // calc distance in pixels
         let pathWithStep = Math.floor(toddlerPath / visualStep) * visualStep;
         // if mouse out of field
-        if (pathWithStep >= fieldWidth - toddlerWidth / 2)
+        if (pathWithStep >= fieldWidth)
             pathWithStep = fieldWidth;
 
         if (pathWithStep <= 0)
