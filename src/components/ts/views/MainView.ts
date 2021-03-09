@@ -42,7 +42,7 @@ class MainView {
     }
 
     public createBaseSlider(): void {
-        this.baseSlider = new DefaultToddlerField(this.min, this.max, this.step, this.value, this.orientation);
+        this.baseSlider = new DefaultToddlerField(this.getIntervalsNum(), this.value, this.orientation);
         this.baseSlider.work();
 
         this.sliderField = this.baseSlider.sliderField;
@@ -52,7 +52,7 @@ class MainView {
         this.container.appendChild(this.sliderField);
         this.container.appendChild(this.toddler);
         // calc toddler star position
-        this.baseSlider.setToddlerStartPosition();
+        this.baseSlider.setToddlerStartPosition(this.getPathFromValue());
     }
 
     public createProgressBar(): void {
@@ -63,7 +63,6 @@ class MainView {
         this.progressBar.createSingleProgressBar();
         this.progressBar.setBarScope(path)
         this.sliderField.appendChild(this.progressBar.progressBar);
-
     }
 
     public createBanner(): void {
@@ -110,15 +109,20 @@ class MainView {
         return Math.floor(path / visualStepsNum) * visualStepsNum;
     }
     private getPathFromValue() {
-        // calc margin left from value
-        const fieldWidth = this.orientation === 'horizontal'? this.sliderField.offsetWidth : this.sliderField.offsetHeight;
-        const intervalsNum = (this.max - this.min) / this.step;
-        const visualStep = fieldWidth / intervalsNum;
-        const visualStepsNum = fieldWidth / visualStep;
-        const procent = this.value / (this.max - this.min);
-        const path = procent * fieldWidth;
-
-        return Math.floor(path / visualStepsNum) * visualStepsNum;
+        // calc distance from left to value
+        const fieldWidth = this.orientation === 'horizontal' ? this.sliderField.offsetWidth : this.sliderField.offsetHeight;
+        
+        const intervalsNum = (this.max - this.min) / this.step;        
+        const percent = this.value / (this.max - this.min);
+        // distance from left to toddler
+        const path = percent * fieldWidth; 
+        // step in px
+        const visualStep = fieldWidth / intervalsNum; 
+        
+        return Math.floor(path / visualStep) * visualStep;
+    }
+    private getIntervalsNum() {
+        return (this.max - this.min) / this.step;
     }
 }
 

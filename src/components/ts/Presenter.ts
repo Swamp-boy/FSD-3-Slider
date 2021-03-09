@@ -64,8 +64,7 @@ export default class Presenter {
         this.pathChangeObserver.broadcast(path);
     }
 
-    private setValueFromPath(path: number): void {
-        
+    private setValueFromPath(path: number): void {       
         const max = this.model.max;
         const min = this.model.min;
         // need to stop toddler on half
@@ -78,6 +77,5 @@ export default class Presenter {
         this.value = value;
         this.model.value = value;
         this.mainView.value = value;
-        console.log(this.value)
     }
 }

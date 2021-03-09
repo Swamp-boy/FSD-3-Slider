@@ -3,16 +3,13 @@ class DefaultToddlerField {
     sliderField: HTMLElement;
     toddlerPushed: boolean;
 
-    public min: number;
-    public max: number;
-    public step: number;
+    
+    public intervalsNum: number;
     public value: number;
     public orientation: string;
 
-    constructor(min:number, max:number, step:number, value:number, orientation: string) {
-        this.min = min;
-        this.max = max;
-        this.step = step;
+    constructor(intervalsNum: number, value:number, orientation: string) {
+        this.intervalsNum = intervalsNum
         this.value = value;
         this.orientation = orientation;
     }
@@ -25,16 +22,16 @@ class DefaultToddlerField {
     
     public givePresenterInfo(path: number): void {}
     
-    public setToddlerStartPosition(): void {
+    public setToddlerStartPosition(path: number): void {
         if (this.orientation === 'horizontal') {
             // get height of elements
             const fieldHeight = this.sliderField.offsetHeight;
-            const toddlerHeigth = this.toddler.offsetHeight;
+            const toddlerHeight = this.toddler.offsetHeight;
             // calc margin top
-            const marginTop = fieldHeight / 2 - toddlerHeigth / 2;
+            const marginTop = fieldHeight / 2 - toddlerHeight / 2;
             this.toddler.style.top = String(marginTop) + 'px';
 
-            const marginLeft = this.getPathFromValue();
+            const marginLeft = path;
 
             this.toddler.style.left = String(marginLeft) + 'px';
         } else {
@@ -45,7 +42,7 @@ class DefaultToddlerField {
             const marginLeft = fieldHeight / 2 - toddlerHeight / 2;
             this.toddler.style.left = String(marginLeft) + 'px';
             
-            const marginBot = this.getPathFromValue();
+            const marginBot = path;
             
             this.toddler.style.bottom = String(marginBot) + 'px';
         }
@@ -110,10 +107,8 @@ class DefaultToddlerField {
             mousePos = e.clientX;
             toddlerPath = mousePos - startFieldLeft - toddlerWidth / 2;
         }
-        // calc number of intervals
-        const intervalsNum = (this.max - this.min) / this.step;
         // calc length of interval in pixels
-        const visualStep = fieldWidth / intervalsNum;
+        const visualStep = fieldWidth / this.intervalsNum;
         // calc distance in pixels
         let pathWithStep = Math.floor(toddlerPath / visualStep) * visualStep;
         // if mouse out of field
@@ -136,25 +131,6 @@ class DefaultToddlerField {
             
             this.givePresenterInfo(path);
         }
-    }
-
-    private getPathFromValue() {
-        // calc margin left from value
-        let fieldWidth;
-        if (this.orientation === 'horizontal') {
-            fieldWidth = this.sliderField.offsetWidth;
-        } else {
-            // if position = vertical
-            fieldWidth = this.sliderField.offsetHeight;
-        }
-        
-        const intervalsNum = (this.max - this.min) / this.step;
-        const visualStep = fieldWidth / intervalsNum;
-        const visualStepsNum = fieldWidth / visualStep;
-        const procent = this.value / (this.max - this.min);
-        const path = procent * fieldWidth;
-
-        return Math.floor(path / visualStepsNum) * visualStepsNum;
     }
 }
 

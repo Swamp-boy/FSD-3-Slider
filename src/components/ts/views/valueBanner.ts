@@ -60,7 +60,6 @@ class valueBanner {
     }
 
     public bannerMove(path: number): void {
-        console.log('banner')
         // set banner center over toddler
         if (this.position === 'horizontal') {
             const bannerLeft = path - this.valueBanner.offsetWidth / 2 + this.toddlerWidth / 2;

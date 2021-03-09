@@ -15,20 +15,18 @@ import Presenter from './components/ts/Presenter';
         });
         */
         // const htmlel: HTMLElement = this[0];
-        const view = new MainView(this[0]);
+        const view = new MainView(this.get(0));
         const model = new Model(options);
         const presenter = new Presenter(view, model);
         presenter.slider();
-        
     };
 })(jQuery);
 
-$('#slider1').slider(
-    {
+$('#slider1').slider({
     min: 0,
     max: 100,
-    step: 0.01,
-    value: 50,
+    step: 1,
+    value: 41,
     progressBar: true,
     valueBanner: true,
     minMaxFields:false,
