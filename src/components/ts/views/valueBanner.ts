@@ -14,23 +14,12 @@ class valueBanner {
     private valueBannerArrow: HTMLElement;
     private valueSpan: HTMLElement;
 
-    private bannerWidth: number;
-    private toddlerWidth: number;
-    private fieldWidth: number;
-    
-
-    constructor(min: number, max: number, step: number, value: number, position:string, sliderField: HTMLElement, toddler: HTMLElement) {
-        this.min = min;
-        this.max = max;
-        this.step = step;
+    constructor(value: number, position:string, sliderField: HTMLElement, toddler: HTMLElement) {
         this.value = value;
         this.position = position;
 
         this.sliderField = sliderField;
         this.toddler = toddler;
-
-        this.fieldWidth = this.sliderField.getBoundingClientRect().width;
-        this.toddlerWidth = this.toddler.getBoundingClientRect().width;
     }
 
     public work(): void {
@@ -39,7 +28,7 @@ class valueBanner {
 
     public setStartPositionHorizontal(path: number): void {
         // set banner center over toddler
-        const bannerLeft = path- this.valueBanner.offsetWidth / 2 + this.toddlerWidth / 2;
+        const bannerLeft = path- this.valueBanner.offsetWidth / 2 + this.toddler.offsetWidth / 2;
         this.valueBannerContainer.style.left = String(bannerLeft) + 'px';
         
         const bannerBottom = Math.max(this.sliderField.offsetHeight, this.toddler.offsetHeight) + this.valueBanner.offsetHeight + 10//margin for customization;  
@@ -62,11 +51,11 @@ class valueBanner {
     public bannerMove(path: number): void {
         // set banner center over toddler
         if (this.position === 'horizontal') {
-            const bannerLeft = path - this.valueBanner.offsetWidth / 2 + this.toddlerWidth / 2;
+            const bannerLeft = path - this.valueBanner.offsetWidth / 2 + this.toddler.offsetWidth / 2;
             this.valueBannerContainer.style.left = String(bannerLeft) + 'px';
         }    
         else {
-            const bannerBottom = path + this.toddlerWidth / 2;
+            const bannerBottom = path + this.toddler.offsetWidth / 2;
             this.valueBannerContainer.style.bottom = String(bannerBottom) + 'px';
         }
             

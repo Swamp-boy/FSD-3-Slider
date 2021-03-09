@@ -56,18 +56,14 @@ class MainView {
     }
 
     public createProgressBar(): void {
-        const path = this.getPathFromValue();
-        
         this.progressBar = new ProgressBar(this.sliderField, this.toddler, this.orientation);
-        
         this.progressBar.createSingleProgressBar();
-        this.progressBar.setBarScope(path)
+        this.progressBar.setBarScope(this.getPathFromValue())
         this.sliderField.appendChild(this.progressBar.progressBar);
     }
 
     public createBanner(): void {
-        this.valueBanner = new valueBanner(this.min, this.max, this.step, this.value, this.orientation,
-            this.sliderField, this.toddler);
+        this.valueBanner = new valueBanner(this.value, this.orientation, this.sliderField, this.toddler);
         
         this.valueBanner.work();
         this.container.appendChild(this.valueBanner.valueBannerContainer);
