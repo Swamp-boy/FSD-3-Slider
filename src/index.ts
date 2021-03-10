@@ -14,22 +14,27 @@ import Presenter from './components/ts/Presenter';
             }
         });
         */
-        // const htmlel: HTMLElement = this[0];
-        const view = new MainView(this.get(0));
-        const model = new Model(options);
-        const presenter = new Presenter(view, model);
-        presenter.slider();
+        
+        return this.each(function () {
+            const view = new MainView(this);
+            const model = new Model(options);
+            const presenter = new Presenter(view, model);
+            presenter.slider();
+        })
+        
     };
 })(jQuery);
 
-$('#slider1').slider({
+
+
+const sl1 = $('#slider1').slider({
     min: 0,
     max: 100,
-    step: 1,
+    step: 15,
     value: 41,
     progressBar: true,
     valueBanner: true,
-    minMaxFields:false,
+    minMaxFields: false,
 });
 
 $('#slider2').slider({

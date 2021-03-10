@@ -9,7 +9,7 @@ class DefaultToddlerField {
     public orientation: string;
 
     constructor(intervalsNum: number, value:number, orientation: string) {
-        this.intervalsNum = intervalsNum
+        this.intervalsNum = intervalsNum;
         this.value = value;
         this.orientation = orientation;
     }
@@ -111,6 +111,7 @@ class DefaultToddlerField {
         const visualStep = fieldWidth / this.intervalsNum;
         // calc distance in pixels
         let pathWithStep = Math.floor(toddlerPath / visualStep) * visualStep;
+        console.log(this.intervalsNum)
         // if mouse out of field
         if (pathWithStep >= fieldWidth)
             pathWithStep = fieldWidth;

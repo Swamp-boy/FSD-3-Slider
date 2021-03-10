@@ -36,11 +36,9 @@ class MainView {
         this.container.classList.add('js-slider-container_def')
         this.orientation === 'vertical' && this.container.classList.add('js-slider-container_vertical')
     }
-
     public sendValueToElements(): void {
         this.valueBanner.value = this.value;
     }
-
     public createBaseSlider(): void {
         this.baseSlider = new DefaultToddlerField(this.getIntervalsNum(), this.value, this.orientation);
         this.baseSlider.work();
@@ -54,14 +52,12 @@ class MainView {
         // calc toddler star position
         this.baseSlider.setToddlerStartPosition(this.getPathFromValue());
     }
-
     public createProgressBar(): void {
         this.progressBar = new ProgressBar(this.sliderField, this.toddler, this.orientation);
         this.progressBar.createSingleProgressBar();
         this.progressBar.setBarScope(this.getPathFromValue())
         this.sliderField.appendChild(this.progressBar.progressBar);
     }
-
     public createBanner(): void {
         this.valueBanner = new valueBanner(this.value, this.orientation, this.sliderField, this.toddler);
         
@@ -92,17 +88,6 @@ class MainView {
 
         this.minField = this.minMaxField.minField;
         this.maxField = this.minMaxField.maxField;
-    }
-    private getHorizontalPath() {
-        // calc margin left from value
-        const fieldWidth = this.sliderField.offsetWidth;
-        const intervalsNum = (this.max - this.min) / this.step;
-        const visualStep = fieldWidth / intervalsNum;
-        const visualStepsNum = fieldWidth / visualStep;
-        const procent = this.value / (this.max - this.min);
-        const path = procent * fieldWidth;
-
-        return Math.floor(path / visualStepsNum) * visualStepsNum;
     }
     private getPathFromValue() {
         // calc distance from left to value
