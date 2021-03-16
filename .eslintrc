@@ -6,7 +6,8 @@
 		// Включаем возможности ES6
 		"es6": true,
 		// Добавляем возможности ES2017
-		"es2017": true
+		"es2017": true,
+		"jest/globals": true
     },
     // Наборы правил
     "extends": [
@@ -29,6 +30,6 @@
 		"tsconfigRootDir": "."
 	},
 	// Плагин с наборами правил для TypeScript
-	"plugins": ["@typescript-eslint", "fsd"],
+	"plugins": ["@typescript-eslint", "fsd", "jest"],
 	"rules": {}
 }
