@@ -111,7 +111,7 @@ class DefaultToddlerField {
         const visualStep = fieldWidth / this.intervalsNum;
         // calc distance in pixels
         let pathWithStep = Math.floor(toddlerPath / visualStep) * visualStep;
-        console.log(this.intervalsNum)
+        console.log(visualStep)
         // if mouse out of field
         if (pathWithStep >= fieldWidth)
             pathWithStep = fieldWidth;
