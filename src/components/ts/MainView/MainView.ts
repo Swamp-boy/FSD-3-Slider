@@ -1,11 +1,8 @@
 // Views imports
-import DefaultToddlerField from './DefaultToddlerField';
-import ProgressBar from './ProgressBar';
-import valueBanner from './valueBanner';
-import MinMaxFields from './MinMaxFields';
-
-
-import './../interfaces/containerParams';
+import DefaultToddlerField from './../DefaultToddlerField/DefaultToddlerField';
+import ProgressBar from './../ProgressBar/ProgressBar';
+import ValueBanner from './../ValueBanner/ValueBanner';
+import MinMaxFields from './../MinMaxFields/MinMaxFields';
 
 class MainView {
     container: HTMLElement;
@@ -28,7 +25,7 @@ class MainView {
     // Sub views
     baseSlider: DefaultToddlerField;
     progressBar: ProgressBar;
-    valueBanner: valueBanner
+    valueBanner: ValueBanner
     minMaxField: MinMaxFields;
 
     constructor(container: HTMLElement) {
@@ -59,7 +56,7 @@ class MainView {
         this.sliderField.appendChild(this.progressBar.progressBar);
     }
     public createBanner(): void {
-        this.valueBanner = new valueBanner(this.value, this.orientation, this.sliderField, this.toddler);
+        this.valueBanner = new ValueBanner(this.value, this.orientation, this.sliderField, this.toddler);
         
         this.valueBanner.work();
         this.container.appendChild(this.valueBanner.valueBannerContainer);

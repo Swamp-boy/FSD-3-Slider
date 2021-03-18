@@ -1,9 +1,9 @@
 import './scss/main.scss';
 
 import Options from './components/ts/interfaces/Options';
-import MainView from './components/ts/views/MainView';
-import Model from './components/ts/Model';
-import Presenter from './components/ts/Presenter';      
+import MainView from './components/ts/MainView/MainView';
+import Model from './components/ts/Model/Model';
+import Presenter from './components/ts/Presenter/Presenter';      
 
 (function ($) {
     jQuery.fn.slider = function (options: Options) {

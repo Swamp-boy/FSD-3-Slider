@@ -1,4 +1,4 @@
-class valueBanner {
+class ValueBanner {
     
     public min: number;
     public max: number;
@@ -104,4 +104,4 @@ class valueBanner {
     }
 }
 
-export default valueBanner;
+export default ValueBanner;

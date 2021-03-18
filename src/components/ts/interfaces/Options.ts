@@ -3,15 +3,7 @@ interface Options {
     max?: number;
     step?: number;
     value?: number;
-    multiValue?: number[];
-
-    font?: {
-        size?: number,
-        family?: string,
-        weight? :number | string,
-        color? : string,
-    },
-
+    multiValue?: number[],
     valueScale?: boolean,
     valueBanner?: boolean,
     stepCircles?: boolean,

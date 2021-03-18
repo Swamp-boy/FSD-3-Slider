@@ -47,7 +47,6 @@ class DefaultToddlerField {
             this.toddler.style.bottom = String(marginBot) + 'px';
         }
     }
-    
     // creating HTML Elements
     private createToddler(): void {
         this.toddler = document.createElement('div');
@@ -66,7 +65,6 @@ class DefaultToddlerField {
         this.sliderField.addEventListener('mousedown', this.mouseOnField.bind(this));
         document.addEventListener('mouseup', this.mouseOut.bind(this));
         document.addEventListener('mousemove', this.elementDrag.bind(this));
-        
     }
     // Events
     private mouseOnElement(): void {

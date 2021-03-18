@@ -2,10 +2,10 @@
 @import './reset';
 
 @import './container.scss';
-@import './defaultSlider.scss';
-@import './progress-bar.scss';
-@import './value-banner.scss';
-@import './min-max-field.scss';
+@import './../components/ts/DefaultToddlerField/default-toddler-field.scss';
+@import './../components/ts/ProgressBar/progress-bar.scss';
+@import './../components/ts/ValueBanner/value-banner.scss';
+@import './../components/ts/MinMaxFields/min-max-field.scss';
 
 .hide {
     display: none;

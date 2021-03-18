@@ -1,5 +1,5 @@
-import Model from './Model';
-import MainView from './views/MainView';
+import Model from './../Model/Model';
+import MainView from './../MainView/MainView';
 // Patterns
 import PathEventObserver from './ObserverPattern';
 
@@ -33,7 +33,7 @@ export default class Presenter {
         this.checkModel();
         this.initialize();
     }
-    private checkModel() {
+    private checkModel(): void {
         this.mainView.createBaseSlider();
         if (this.model.valueBanner === true) this.mainView.createBanner();
         if (this.model.minMaxFields === true) this.mainView.createMinMax();
