@@ -14,10 +14,7 @@ export default class Model {
     // horizontal or vertical slider
     public orientation: string;
     // elements
-    public valueScale?: boolean;
     public valueBanner?: boolean;
-    public stepCircles?: boolean;
-    public multiple?: boolean;
     public minMaxFields: boolean;
     public progressBar: boolean;
 

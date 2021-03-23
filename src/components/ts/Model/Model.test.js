@@ -1,13 +1,13 @@
 import Model from './Model'
-import Options from './../interfaces/Options';
 
-let options: Options = {};
+let options = {};
 let model = new Model(options);
 
 describe('If the model received 0 params, all fields have to be equal to default', () => {
     beforeAll(() => {
         options = {};
-        model = new Model(options)
+        model = new Model(options);
+        model.work();
     })
 
     it('min field', () => {
@@ -27,27 +27,23 @@ describe('If the model received 0 params, all fields have to be equal to default
     })
 
     it('multiple value should be undef', () => {
-        expect(model.multiValue).toEqual(model.defaultSet.multiValue);
+        expect(model.multiValue).toBeUndefined()
     })
 
     it('orientation', () => {
         expect(model.orientation).toBe(model.defaultSet.orientation);
     })
 
-    it('', () => {
-        expect().toBe(0);
+    it('value banner', () => {
+        expect(model.valueBanner).toBe(model.defaultSet.valueBanner);
     })
 
-    it('orientation', () => {
-        expect(model.orientation).toBe(model.defaultSet.orientation);
+    it('min and max fields', () => {
+        expect(model.minMaxFields).toBe(model.defaultSet.minMaxFields);
     })
 
-    it('orientation', () => {
-        expect(model.orientation).toBe(model.defaultSet.orientation);
-    })
-
-    it('orientation', () => {
-        expect(model.orientation).toBe(model.defaultSet.orientation);
+    it('progress bar', () => {
+        expect(model.progressBar).toBe(model.progressBar);
     })
 })
 
