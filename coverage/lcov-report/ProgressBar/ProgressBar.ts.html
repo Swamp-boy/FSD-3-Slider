@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">46.15% </span>
+                <span class="strong">80.77% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>12/26</span>
+                <span class='fraction'>21/26</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">40% </span>
+                <span class="strong">80% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>4/10</span>
+                <span class='fraction'>8/10</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">40% </span>
+                <span class="strong">80% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>2/5</span>
+                <span class='fraction'>4/5</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">46.15% </span>
+                <span class="strong">80.77% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>12/26</span>
+                <span class='fraction'>21/26</span>
             </div>
         
             
@@ -55,7 +55,7 @@
             Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
         </p>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -111,33 +111,33 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -169,22 +169,22 @@
         this.orientation = orientation;
     }
 &nbsp;
-<span class="fstat-no" title="function not covered" >    public c</span>reateSingleProgressBar():void {
-<span class="cstat-no" title="statement not covered" >        this.progressBar = document.createElement('div');</span>
+    public createSingleProgressBar():void {
+        this.progressBar = document.createElement('div');
 &nbsp;
-<span class="cstat-no" title="statement not covered" >        this.progressBar.classList.add('slider-progress-bar');</span>
-<span class="cstat-no" title="statement not covered" >        if (this.orientation === 'vertical') {</span>
-<span class="cstat-no" title="statement not covered" >            this.progressBar.classList.add('slider-progress-bar_vertical');</span>
+        this.progressBar.classList.add('slider-progress-bar');
+        if (this.orientation === 'vertical') {
+            this.progressBar.classList.add('slider-progress-bar_vertical');
         }
     }
 &nbsp;
-<span class="fstat-no" title="function not covered" >    public p</span>rogressBarSingleChange(path: number): void {
-<span class="cstat-no" title="statement not covered" >        if (this.orientation === 'horizontal') {</span>
-            const right: number = <span class="cstat-no" title="statement not covered" >this.sliderFieldWidth - path - this.toddlerWidth / 2;</span>
-<span class="cstat-no" title="statement not covered" >            this.progressBar.style.right = String(right) + 'px';</span>
+    public progressBarSingleChange(path: number): void {
+        if (this.orientation === 'horizontal') {
+            const right: number = this.sliderFieldWidth - path - this.toddlerWidth / 2;
+            this.progressBar.style.right = String(right) + 'px';
         } else {
-            const top: number = <span class="cstat-no" title="statement not covered" >this.sliderFieldWidth - path - this.toddlerWidth / 2;</span>
-<span class="cstat-no" title="statement not covered" >            this.progressBar.style.top = String(top) + 'px';</span>
+            const top: number = this.sliderFieldWidth - path - this.toddlerWidth / 2;
+            this.progressBar.style.top = String(top) + 'px';
         }
         
     }
@@ -194,7 +194,7 @@
             const right: number = <span class="cstat-no" title="statement not covered" >this.sliderFieldWidth - path - this.toddlerWidth / 2;</span>
 <span class="cstat-no" title="statement not covered" >            this.progressBar.style.right = String(right) + 'px';</span>
         }else {
-            const top: number = <span class="cstat-no" title="statement not covered" >this.sliderFieldWidth - path- this.toddlerWidth / 2;</span>
+            const top: number = <span class="cstat-no" title="statement not covered" >this.sliderFieldWidth - path - this.toddlerWidth / 2;</span>
 <span class="cstat-no" title="statement not covered" >            this.progressBar.style.top = String(top) + 'px';</span>
         }
     }
@@ -205,7 +205,7 @@
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Tue Mar 23 2021 18:00:13 GMT+0300 (Москва, стандартное время)
+                at Wed Mar 24 2021 12:03:19 GMT+0300 (Москва, стандартное время)
             </div>
         </div>
         <script src="../prettify.js"></script>

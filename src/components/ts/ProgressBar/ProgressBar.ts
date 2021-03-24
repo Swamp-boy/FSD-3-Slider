@@ -35,14 +35,4 @@ export default class ProgressBar {
         }
         
     }
-
-    public setBarScope(path: number): void {
-        if (this.orientation === 'horizontal') {
-            const right: number = this.sliderFieldWidth - path - this.toddlerWidth / 2;
-            this.progressBar.style.right = String(right) + 'px';
-        }else {
-            const top: number = this.sliderFieldWidth - path- this.toddlerWidth / 2;
-            this.progressBar.style.top = String(top) + 'px';
-        }
-    }
 }

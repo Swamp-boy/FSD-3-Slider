@@ -52,7 +52,7 @@ class MainView {
     public createProgressBar(): void {
         this.progressBar = new ProgressBar(this.sliderField, this.toddler, this.orientation);
         this.progressBar.createSingleProgressBar();
-        this.progressBar.setBarScope(this.getPathFromValue())
+        this.progressBar.progressBarSingleChange(this.getPathFromValue());
         this.sliderField.appendChild(this.progressBar.progressBar);
     }
     public createBanner(): void {
