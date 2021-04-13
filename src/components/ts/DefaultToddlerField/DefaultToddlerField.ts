@@ -1,23 +1,18 @@
 class DefaultToddlerField {
-    toddler: HTMLElement;
-    sliderField: HTMLElement;
-    toddlerPushed: boolean;
+    public toddler: HTMLElement;
+    public sliderField: HTMLElement;
+    public toddlerPushed: boolean;
 
-    
     public intervalsNum: number;
     public value: number;
     public orientation: string;
+
+    public testConst: number; // need only for tests
 
     constructor(intervalsNum: number, value:number, orientation: string) {
         this.intervalsNum = intervalsNum;
         this.value = value;
         this.orientation = orientation;
-    }
-
-    public work(): void {
-        this.createField();
-        this.createToddler();
-        this.initializeEvents();
     }
     
     public givePresenterInfo(path: number): void {}
@@ -48,24 +43,25 @@ class DefaultToddlerField {
         }
     }
     // creating HTML Elements
-    private createToddler(): void {
+    public createToddler(): void {
         this.toddler = document.createElement('div');
         this.toddler.ondragstart = () => { return false };
         this.toddler.classList.add('js-slider-toddler');
     }
 
-    private createField(): void {
+    public createField(): void {
         this.sliderField = document.createElement('div');
         this.sliderField.classList.add('js-slider-field');
         if (this.orientation === 'vertical') this.sliderField.classList.add('js-slider-field_vertical');
     }
 
-    private initializeEvents(): void {
+    public initializeEvents(): void {
         this.toddler.addEventListener('mousedown', this.mouseOnElement.bind(this));
         this.sliderField.addEventListener('mousedown', this.mouseOnField.bind(this));
         document.addEventListener('mouseup', this.mouseOut.bind(this));
         document.addEventListener('mousemove', this.elementDrag.bind(this));
     }
+    
     // Events
     private mouseOnElement(): void {
         this.toddlerPushed = true;
@@ -98,7 +94,7 @@ class DefaultToddlerField {
             mousePos = e.clientY;
             toddlerPath = startFieldLeft - mousePos - toddlerWidth / 2;
         } else {
-            // if position is horizontal
+            // if orientation is horizontal
             toddlerWidth = this.toddler.getBoundingClientRect().width;
             fieldWidth = this.sliderField.getBoundingClientRect().width - toddlerWidth / 2;
             startFieldLeft = this.sliderField.getBoundingClientRect().left;
@@ -109,7 +105,6 @@ class DefaultToddlerField {
         const visualStep = fieldWidth / this.intervalsNum;
         // calc distance in pixels
         let pathWithStep = Math.floor(toddlerPath / visualStep) * visualStep;
-        console.log(visualStep)
         // if mouse out of field
         if (pathWithStep >= fieldWidth)
             pathWithStep = fieldWidth;

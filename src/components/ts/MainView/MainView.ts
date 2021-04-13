@@ -38,7 +38,9 @@ class MainView {
     }
     public createBaseSlider(): void {
         this.baseSlider = new DefaultToddlerField(this.getIntervalsNum(), this.value, this.orientation);
-        this.baseSlider.work();
+        this.baseSlider.createField();
+        this.baseSlider.createToddler();
+        this.baseSlider.initializeEvents();
 
         this.sliderField = this.baseSlider.sliderField;
         this.toddler = this.baseSlider.toddler;

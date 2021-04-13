@@ -48,5 +48,3 @@ $('#slider2').slider({
     minMaxFields: true,
 });
 
-
-//console.log($('#slider1').slider('min'))

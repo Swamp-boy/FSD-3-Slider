@@ -66,5 +66,4 @@ describe('Progress bar test width change for one toddler', () => {
         let result = parseFloat(barVertical.progressBar.style.top)
         expect(result).toBeCloseTo(14.9);
     })
-    
 })
