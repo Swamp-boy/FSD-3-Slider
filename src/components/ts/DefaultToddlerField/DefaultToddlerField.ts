@@ -19,10 +19,9 @@ class DefaultToddlerField {
     
     public setToddlerStartPosition(path: number): void {
         if (this.orientation === 'horizontal') {
-            // get height of elements
             const fieldHeight = this.sliderField.offsetHeight;
             const toddlerHeight = this.toddler.offsetHeight;
-            // calc margin top
+            
             const marginTop = fieldHeight / 2 - toddlerHeight / 2;
             this.toddler.style.top = String(marginTop) + 'px';
 

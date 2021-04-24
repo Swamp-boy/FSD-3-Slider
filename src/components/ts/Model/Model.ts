@@ -37,7 +37,7 @@ export default class Model {
         }
     }
 
-    public work(): void {
+    public execute(): void {
         this.setMinMaxStep();
         this.setValue();
         this.minMaxFieldsCheck();
@@ -47,7 +47,12 @@ export default class Model {
     }
 
     private setValue(): void{
-        this.value = this.options.value === undefined ? this.defaultSet.value : this.options.value;
+        if (this.options.multiValue === undefined)
+            this.value = this.options.value === undefined ? this.defaultSet.value : this.options.value;
+        else {
+            
+            this.multiValue = this.options.multiValue;
+        }
     }
 
     private setMinMaxStep(): void {

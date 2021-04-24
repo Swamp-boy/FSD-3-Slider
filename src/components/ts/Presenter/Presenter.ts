@@ -15,31 +15,53 @@ export default class Presenter {
         this.mainView = view;
         this.model = model;
     }
+
     public initialize(): void {
         this.pathChangeObserver = new PathEventObserver();
         this.bindElementsEvents();
         
     }
-    public setModelParams(model: Model): void {
+
+    public slider(): void { 
+        this.model.execute();
+        this.setMinMaxStep(this.model);
+        this.setOrientation(this.model);
+        this.setValue(this.model)
+        this.creteSliderElements();
+        this.initialize();
+    }
+
+    private floorStep(value: number): number {
+        return Math.floor(value / this.model.step) * this.model.step;
+    }
+
+    private setMinMaxStep(model: Model) {
         this.mainView.min = model.min;
         this.mainView.max = model.max;
         this.mainView.step = model.step;
+    }
+
+    private setOrientation(model: Model) {
         this.mainView.orientation = model.orientation;
-        this.mainView.value = Math.floor(this.model.value / this.model.step) * this.model.step;
     }
-    public slider(): void { 
-        this.model.work();
-        this.setModelParams(this.model);
-        this.checkModel();
-        this.initialize();
+
+    private setValue(model: Model) {
+        if (model.multiValue === undefined){
+            this.mainView.value = this.floorStep(model.value);    
+        }else {
+            this.mainView.multiValue = [this.floorStep(model.multiValue[0]),
+                                     this.floorStep(model.multiValue[1])];
+        }
     }
-    private checkModel(): void {
-        this.mainView.createBaseSlider();
+
+    private creteSliderElements(): void {
+        if (this.model.value !== undefined) this.mainView.createBaseSlider();
+        if (this.model.multiValue !== undefined) this.mainView.createMultiToddlerSlider();
         if (this.model.valueBanner === true) this.mainView.createBanner();
         if (this.model.minMaxFields === true) this.mainView.createMinMax();
         if (this.model.progressBar === true) this.mainView.createProgressBar();
-
     }
+    
     private bindElementsEvents(): void {
         this.mainView.baseSlider.givePresenterInfo = this.reactOnPathChange.bind(this);
         this.pathChangeObserver.subscribe(this.setValueFromPath.bind(this));
@@ -54,9 +76,11 @@ export default class Presenter {
             this.pathChangeObserver.subscribe(this.mainView.progressBar.progressBarSingleChange.bind(this.mainView.progressBar));
         }
     }
+
     private reactOnPathChange(path: number): void {
         this.pathChangeObserver.broadcast(path);
     }
+    
     private setValueFromPath(path: number): void {       
         const max = this.model.max;
         const min = this.model.min;

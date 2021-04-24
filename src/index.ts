@@ -29,14 +29,15 @@ import Presenter from './components/ts/Presenter/Presenter';
 
 const sl1 = $('#slider1').slider({
     min: 0,
-    max: 100,
-    step: 15,
-    value: 41,
-    progressBar: true,
-    valueBanner: true,
+    max: 90,
+    step: 30,
+    multiValue: [30, 60],
+    //value: 60,
+    progressBar: false,
+    valueBanner: false,
     minMaxFields: false,
 });
-
+/*
 $('#slider2').slider({
     min: 0,
     max: 100,
@@ -48,3 +49,4 @@ $('#slider2').slider({
     minMaxFields: true,
 });
 
+*/

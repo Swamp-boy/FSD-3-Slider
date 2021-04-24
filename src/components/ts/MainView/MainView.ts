@@ -1,12 +1,12 @@
 // Views imports
 import DefaultToddlerField from './../DefaultToddlerField/DefaultToddlerField';
+import MultiToddler from './../Multitoddler/MultiToddler';
 import ProgressBar from './../ProgressBar/ProgressBar';
 import ValueBanner from './../ValueBanner/ValueBanner';
 import MinMaxFields from './../MinMaxFields/MinMaxFields';
 
 class MainView {
-    container: HTMLElement;
-
+    public container: HTMLElement;
     public min: number;
     public max: number;
     public step: number;
@@ -17,13 +17,16 @@ class MainView {
     //slider elements
     sliderField: HTMLElement;
     toddler: HTMLElement;
+    //if multi toddlers
+    toddler1: HTMLElement;
+    toddler2: HTMLElement;
     bar: HTMLElement;
     banner: HTMLElement;
     minField: HTMLElement;
     maxField: HTMLElement;
 
     // Sub views
-    baseSlider: DefaultToddlerField;
+    baseSlider: DefaultToddlerField | MultiToddler;
     progressBar: ProgressBar;
     valueBanner: ValueBanner
     minMaxField: MinMaxFields;
@@ -45,26 +48,45 @@ class MainView {
         this.sliderField = this.baseSlider.sliderField;
         this.toddler = this.baseSlider.toddler;
         
-        // append elements
         this.container.appendChild(this.sliderField);
         this.container.appendChild(this.toddler);
         // calc toddler star position
-        this.baseSlider.setToddlerStartPosition(this.getPathFromValue());
+        this.baseSlider.setToddlerStartPosition(this.getPathFromValue(this.value));
     }
+
+    public createMultiToddlerSlider(): void {
+        //console.log(this.multiValue)
+        this.baseSlider = new MultiToddler(this.multiValue, this.orientation, this.getIntervalsNum());
+        this.baseSlider.createField();
+        this.baseSlider.createToddlers();
+        this.baseSlider.initializeEvents();
+
+        this.sliderField = this.baseSlider.sliderField;
+        this.toddler1 = this.baseSlider.toddler1;
+        this.toddler = this.baseSlider.toddler2;
+
+        this.container.appendChild(this.sliderField);
+        this.container.appendChild(this.toddler1);
+        this.container.appendChild(this.toddler);
+
+        this.baseSlider.setToddlersStartPositions([this.getPathFromValue(this.multiValue[0]), this.getPathFromValue(this.multiValue[1])]);
+    }
+
     public createProgressBar(): void {
         this.progressBar = new ProgressBar(this.sliderField, this.toddler, this.orientation);
         this.progressBar.createSingleProgressBar();
-        this.progressBar.progressBarSingleChange(this.getPathFromValue());
+        this.progressBar.progressBarSingleChange(this.getPathFromValue(this.value));
         this.sliderField.appendChild(this.progressBar.progressBar);
     }
+
     public createBanner(): void {
         this.valueBanner = new ValueBanner(this.value, this.orientation, this.sliderField, this.toddler);
         
         this.valueBanner.work();
         this.container.appendChild(this.valueBanner.valueBannerContainer);
         this.orientation === 'horizontal' ?
-            this.valueBanner.setStartPositionHorizontal(this.getPathFromValue()) :
-            this.valueBanner.setStartPositionVertical(this.getPathFromValue());
+            this.valueBanner.setStartPositionHorizontal(this.getPathFromValue(this.value)) :
+            this.valueBanner.setStartPositionVertical(this.getPathFromValue(this.value));
 
         this.banner = this.valueBanner.valueBannerContainer;
     }
@@ -90,20 +112,24 @@ class MainView {
         this.minField = this.minMaxField.minField;
         this.maxField = this.minMaxField.maxField;
     }
-    private getPathFromValue() {
-        // calc distance from left to value
-        const fieldWidth = this.orientation === 'horizontal' ? this.sliderField.offsetWidth : this.sliderField.offsetHeight;
+
+    private getPathFromValue(value: number): number {
+        // calc distance from left to value in px
+        const fieldWidth = this.orientation === 'horizontal' ?
+            this.sliderField.offsetWidth - this.toddler.offsetWidth / 2 :
+            this.sliderField.offsetHeight - this.toddler.offsetHeight / 2;
         
-        const intervalsNum = (this.max - this.min) / this.step;        
-        const percent = this.value / (this.max - this.min);
+        const intervalsNum = this.getIntervalsNum();        
+        const percent = value / (this.max - this.min);
         // distance from left to toddler
         const path = percent * fieldWidth; 
         // step in px
-        const visualStep = fieldWidth / intervalsNum; 
+        const visualStep = fieldWidth / intervalsNum;
         
         return Math.floor(path / visualStep) * visualStep;
     }
-    private getIntervalsNum() {
+
+    private getIntervalsNum(): number {
         return (this.max - this.min) / this.step;
     }
 }
