@@ -15,7 +15,7 @@ class DefaultToddlerField {
         this.orientation = orientation;
     }
     
-    public givePresenterInfo(path: number): void {}
+    public givePresenterValue(path: number): void {}
     
     public setToddlerStartPosition(path: number): void {
         if (this.orientation === 'horizontal') {
@@ -122,7 +122,7 @@ class DefaultToddlerField {
             else
                 this.toddler.style.bottom = `${path}px`;
             
-            this.givePresenterInfo(path + this.toddler.offsetWidth / 2);
+            this.givePresenterValue(path + this.toddler.offsetWidth / 2);
         }
     }
 }

@@ -79,7 +79,13 @@ class MainView {
     public createProgressBar(): void {
         this.progressBar = new ProgressBar(this.sliderField, this.toddler, this.orientation);
         this.progressBar.createSingleProgressBar();
-        this.progressBar.progressBarSingleChange(this.getPathFromValue(this.value));
+        if (this.sliderType === 'single') {
+            this.progressBar.progressBarSingleChange(this.getPathFromValue(this.value));
+        }
+        if (this.sliderType === 'multi') {
+            this.progressBar.progressBarChangeRange([this.getPathFromValue(this.multiValue[0]), this.getPathFromValue(this.multiValue[1])]);
+        }
+        
         this.sliderField.appendChild(this.progressBar.progressBar);
     }
 

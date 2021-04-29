@@ -82,7 +82,7 @@ class Presenter {
     }
     
     private bindElementsEventsSingleV(): void {
-        this.mainView.baseSlider.givePresenterInfo = this.reactOnPathChangeSingleVersion.bind(this);
+        this.mainView.baseSlider.givePresenterValue = this.reactOnPathChangeSingleVersion.bind(this);
         // send value to model and view
         this.changePathObs.subscribe(this.setValueToModelViewSingleVersion.bind(this));
         // check and send value to value banner
@@ -97,18 +97,22 @@ class Presenter {
     }
 
     private bindElementsEventsMultiV(): void {
-        this.mainView.baseSlider.givePresenterInfo = this.reactOnPathChangeMultiVersion.bind(this);
+        this.mainView.baseSlider.givePresenterValue = this.reactOnPathChangeMultiVersion.bind(this);
         // send value to model and view
         this.changeRangeObs.subscribe(this.setValueToModelViewMultiVersion.bind(this));
         
         // TO DO: check and send value to value banner
 
+
         // TO DO: check and send value to progress barf
+        if (this.mainView.progressBar !== undefined) {
+            this.changeRangeObs.subscribe(this.mainView.progressBar.progressBarChangeRange.bind(this.mainView.progressBar));
+        }
     }
 
     private reactOnPathChangeSingleVersion(path: number): void {
         this.changePathObs.broadcast(path);
-        console.log(this.value)
+        
     }
 
     private reactOnPathChangeMultiVersion(path: number[]): void {

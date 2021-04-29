@@ -18,7 +18,7 @@ class MultiToddler {
         this.intervalsNum = intervalsNum;
     }
 
-    public givePresenterInfo(path: number[]): void {}
+    public givePresenterValue(path: number[]): void {}
     
     public createToddlers(): void {
         this.toddler1 = document.createElement('div');
@@ -90,6 +90,7 @@ class MultiToddler {
             this.orientation === 'horizontal' ?
             this.toddler1.style.left = `${path}px` :
             this.toddler1.style.bottom = `${path}px`;
+            
         }
         if (this.lastToddlerPushed === true) {
             const path = this.getLastToddlerPath(e);
@@ -98,6 +99,7 @@ class MultiToddler {
             this.toddler2.style.left = `${path}px` :
             this.toddler2.style.bottom = `${path}px`;
         }
+        this.givePresenterValue([this.toddler1Pos, this.toddler2Pos]);
     }
 
     private getFirstToddlerPath(e: MouseEvent): number {

@@ -26,13 +26,26 @@ export default class ProgressBar {
     }
 
     public progressBarSingleChange(path: number): void {
-        if (this.orientation === 'horizontal') {
-            const right: number = this.sliderFieldWidth - path - this.toddlerWidth / 2;
-            this.progressBar.style.right = String(right) + 'px';
-        } else {
-            const top: number = this.sliderFieldWidth - path - this.toddlerWidth / 2;
+        if (this.orientation === 'vertical') {
+            const top = this.sliderFieldWidth - path - this.toddlerWidth / 2;
             this.progressBar.style.top = String(top) + 'px';
+        } else {
+            const right = this.sliderFieldWidth - path - this.toddlerWidth / 2;
+            this.progressBar.style.right = String(right) + 'px';
         }
-        
+    }
+
+    public progressBarChangeRange(path: number[]): void {
+        if (this.orientation === 'vertical') {
+            const top = path[0];
+            const bot = path[1]
+            this.progressBar.style.top = String(top) + 'px';
+            this.progressBar.style.bottom = String(bot) + 'px';
+        } else {
+            const left = path[0] + this.toddlerWidth / 2;
+            const right = this.sliderFieldWidth - path[1] - this.toddlerWidth / 2;
+            this.progressBar.style.left = String(left) + 'px';
+            this.progressBar.style.right = String(right) + 'px';
+        }
     }
 }
