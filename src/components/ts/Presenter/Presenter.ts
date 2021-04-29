@@ -1,34 +1,50 @@
 import Model from './../Model/Model';
 import MainView from './../MainView/MainView';
 // Patterns
-import PathEventObserver from './ObserverPattern';
+import ChangePathObs from './changePathObs';
+import ChangeRangeObs from './changeRangeObs';
 
-export default class Presenter {
+class Presenter {
     public mainView: MainView;
     public model: Model;
 
-    pathChangeObserver: PathEventObserver;
+    private changePathObs: ChangePathObs;
+    private changeRangeObs: ChangeRangeObs;
 
-    value: number;
+    public sliderType: string;
+    public value: number;
+    public  multiValue: number[];
 
     constructor(view: MainView, model: Model) {
         this.mainView = view;
-        this.model = model;
+        this.model = model;   
     }
 
     public initialize(): void {
-        this.pathChangeObserver = new PathEventObserver();
-        this.bindElementsEvents();
+        if (this.sliderType === 'single'){
+            this.changePathObs = new ChangePathObs();
+            this.bindElementsEventsSingleV();
+        }
+        if (this.sliderType === 'multi') {
+            this.changeRangeObs = new ChangeRangeObs();
+            this.bindElementsEventsMultiV();
+        }
         
     }
 
     public slider(): void { 
         this.model.execute();
+        this.setSliderType();
         this.setMinMaxStep(this.model);
         this.setOrientation(this.model);
-        this.setValue(this.model)
+        this.valueToView(this.model)
         this.creteSliderElements();
         this.initialize();
+    }
+
+    private setSliderType(): void {
+        this.sliderType = this.model.sliderType;
+        this.mainView.sliderType = this.model.sliderType;
     }
 
     private floorStep(value: number): number {
@@ -45,56 +61,98 @@ export default class Presenter {
         this.mainView.orientation = model.orientation;
     }
 
-    private setValue(model: Model) {
-        if (model.multiValue === undefined){
+    private valueToView(model: Model) {
+        if (this.sliderType === 'single'){
             this.mainView.value = this.floorStep(model.value);    
-        }else {
+        }
+        if (this.sliderType === 'multi') {
             this.mainView.multiValue = [this.floorStep(model.multiValue[0]),
                                      this.floorStep(model.multiValue[1])];
         }
     }
 
     private creteSliderElements(): void {
-        if (this.model.value !== undefined) this.mainView.createBaseSlider();
-        if (this.model.multiValue !== undefined) this.mainView.createMultiToddlerSlider();
+        if (this.sliderType === 'single') this.mainView.createBaseSlider();
+        if (this.sliderType === 'multi') this.mainView.createMultiToddlerSlider();
         if (this.model.valueBanner === true) this.mainView.createBanner();
         if (this.model.minMaxFields === true) this.mainView.createMinMax();
         if (this.model.progressBar === true) this.mainView.createProgressBar();
+        if (this.model.valueScale === true) this.mainView.createValueScale(this.model.marksNum);
+        
     }
     
-    private bindElementsEvents(): void {
-        this.mainView.baseSlider.givePresenterInfo = this.reactOnPathChange.bind(this);
-        this.pathChangeObserver.subscribe(this.setValueFromPath.bind(this));
-        
+    private bindElementsEventsSingleV(): void {
+        this.mainView.baseSlider.givePresenterInfo = this.reactOnPathChangeSingleVersion.bind(this);
+        // send value to model and view
+        this.changePathObs.subscribe(this.setValueToModelViewSingleVersion.bind(this));
+        // check and send value to value banner
         if (this.mainView.valueBanner !== undefined) {
-            // send value to sab view
-            this.pathChangeObserver.subscribe(this.mainView.sendValueToElements.bind(this.mainView));
-
-            this.pathChangeObserver.subscribe(this.mainView.valueBanner.bannerMove.bind(this.mainView.valueBanner));
+            this.changePathObs.subscribe(this.mainView.sendValueToValueBanner.bind(this.mainView));
+            this.changePathObs.subscribe(this.mainView.valueBanner.bannerMove.bind(this.mainView.valueBanner));
         }
+        // check and send value to progress bar
         if (this.mainView.progressBar !== undefined) {
-            this.pathChangeObserver.subscribe(this.mainView.progressBar.progressBarSingleChange.bind(this.mainView.progressBar));
+            this.changePathObs.subscribe(this.mainView.progressBar.progressBarSingleChange.bind(this.mainView.progressBar));
         }
     }
 
-    private reactOnPathChange(path: number): void {
-        this.pathChangeObserver.broadcast(path);
+    private bindElementsEventsMultiV(): void {
+        this.mainView.baseSlider.givePresenterInfo = this.reactOnPathChangeMultiVersion.bind(this);
+        // send value to model and view
+        this.changeRangeObs.subscribe(this.setValueToModelViewMultiVersion.bind(this));
+        
+        // TO DO: check and send value to value banner
+
+        // TO DO: check and send value to progress barf
+    }
+
+    private reactOnPathChangeSingleVersion(path: number): void {
+        this.changePathObs.broadcast(path);
+        console.log(this.value)
+    }
+
+    private reactOnPathChangeMultiVersion(path: number[]): void {
+        this.changeRangeObs.broadcast(path);
+    }
+
+    private getSingleValueFromPath(path: number): number {
+        const fieldWidth = (this.model.orientation === 'horizontal') ?
+        this.mainView.sliderField.offsetWidth :
+        this.mainView.sliderField.offsetHeight;   
+        const percent = path / fieldWidth
+        const value = (this.model.max - this.model.min) * percent
+        
+        return Math.floor(value);
+    }
+
+    private getMultiValueFromPath(path: number[]): number[] {
+        
+        const fieldWidth = (this.model.orientation === 'horizontal') ?
+        this.mainView.sliderField.offsetWidth :
+        this.mainView.sliderField.offsetHeight;
+        
+        const percent1 = path[0] / fieldWidth;
+        const percent2 = path[1] / fieldWidth;
+        const value1 = (this.model.max - this.model.min) * percent1;
+        const value2 = (this.model.max - this.model.min) * percent2;
+        
+        const valueArray = [value1, value2];
+        return valueArray;
+    }
+
+    private setValueToModelViewMultiVersion(path: number[]): void {
+        const value = this.getMultiValueFromPath(path);
+        this.multiValue = value;
+        this.model.multiValue = value;
+        this.mainView.multiValue = value;
     }
     
-    private setValueFromPath(path: number): void {       
-        const max = this.model.max;
-        const min = this.model.min;
-        // need to stop toddler on half
-        
-        const width = (this.model.orientation === 'horizontal') ?
-            this.mainView.sliderField.offsetWidth - this.mainView.toddler.offsetWidth / 2 :
-            this.mainView.sliderField.offsetHeight - this.mainView.toddler.offsetHeight / 2;
-            
-        // const width = this.model.orientation === 'horizontal' ? this.mainView.sliderField.offsetWidth : this.mainView.sliderField.offsetHeight;
-
-        const value = Math.floor((max - min) * (path / width));
+    private setValueToModelViewSingleVersion(path: number): void {       
+        const value = this.getSingleValueFromPath(path);
         this.value = value;
         this.model.value = value;
         this.mainView.value = value;
     }
 }
+
+export default Presenter;

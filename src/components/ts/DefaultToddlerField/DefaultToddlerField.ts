@@ -88,14 +88,14 @@ class DefaultToddlerField {
     
         if (this.orientation === 'vertical') {
             toddlerWidth = this.toddler.getBoundingClientRect().height;
-            fieldWidth = this.sliderField.getBoundingClientRect().height - toddlerWidth / 2;
+            fieldWidth = this.sliderField.getBoundingClientRect().height;
             startFieldLeft = this.sliderField.getBoundingClientRect().bottom;
             mousePos = e.clientY;
             toddlerPath = startFieldLeft - mousePos - toddlerWidth / 2;
         } else {
             // if orientation is horizontal
             toddlerWidth = this.toddler.getBoundingClientRect().width;
-            fieldWidth = this.sliderField.getBoundingClientRect().width - toddlerWidth / 2;
+            fieldWidth = this.sliderField.getBoundingClientRect().width;
             startFieldLeft = this.sliderField.getBoundingClientRect().left;
             mousePos = e.clientX;
             toddlerPath = mousePos - startFieldLeft - toddlerWidth / 2;
@@ -105,11 +105,11 @@ class DefaultToddlerField {
         // calc distance in pixels
         let pathWithStep = Math.floor(toddlerPath / visualStep) * visualStep;
         // if mouse out of field
-        if (pathWithStep >= fieldWidth)
-            pathWithStep = fieldWidth;
+        if (pathWithStep + toddlerWidth / 2 >= fieldWidth)
+            pathWithStep = fieldWidth - toddlerWidth / 2;
 
-        if (pathWithStep <= 0)
-            pathWithStep = 0;
+        if (pathWithStep + toddlerWidth / 2 <= 0)
+            pathWithStep = - toddlerWidth / 2;
 
         return pathWithStep;
     }
@@ -122,7 +122,7 @@ class DefaultToddlerField {
             else
                 this.toddler.style.bottom = `${path}px`;
             
-            this.givePresenterInfo(path);
+            this.givePresenterInfo(path + this.toddler.offsetWidth / 2);
         }
     }
 }

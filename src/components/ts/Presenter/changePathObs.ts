@@ -1,4 +1,4 @@
-export default class PathEventObserver {
+class ChangePathObs {
     observers: Array<(path: number) => void>;
 
     constructor () {
@@ -16,8 +16,9 @@ export default class PathEventObserver {
     public broadcast (data: number): void {
       this.observers.forEach(subscriber => subscriber(data))
     }
+    
 }
-
+export default ChangePathObs
 
 
 

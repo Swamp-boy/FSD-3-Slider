@@ -6,18 +6,19 @@
 @import './../components/ts/ProgressBar/progress-bar.scss';
 @import './../components/ts/ValueBanner/value-banner.scss';
 @import './../components/ts/MinMaxFields/min-max-field.scss';
+@import './../components/ts/ValueScale/value-scale.scss';
 
 .hide {
     display: none;
 }
 .test-block1 {
-    margin-top: 150px;
-    margin-left: 300px;
+    margin-top: 50px;
+    margin-left: 50px;
     width: 700px;
 }
 .test-block2 {
-    margin-top: 150px;
-    margin-left: 300px;
+    margin-top: 50px;
+    margin-left: 50px;
     width: 700px;
 }
 #slider2 {

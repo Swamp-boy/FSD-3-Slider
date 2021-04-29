@@ -29,16 +29,19 @@ import Presenter from './components/ts/Presenter/Presenter';
 
 const sl1 = $('#slider1').slider({
     min: 0,
-    max: 90,
-    step: 30,
-    multiValue: [30, 60],
-    //value: 60,
+    max: 100,
+    step: 1,
+    //multiValue: [30, 60],
+    value: 60,
+    orientation: 'horizontal',
     progressBar: false,
     valueBanner: false,
     minMaxFields: false,
+    //valueScale: true,
+    //marksNum: 3,
 });
-/*
-$('#slider2').slider({
+
+const sl2 = $('#slider2').slider({
     min: 0,
     max: 100,
     step: 1,
@@ -49,4 +52,13 @@ $('#slider2').slider({
     minMaxFields: true,
 });
 
-*/
+const sl3 = $('#slider3').slider({
+    min: 0,
+    max: 100,
+    step: 1,
+    multiValue: [30, 60],
+    orientation: 'horizontal',
+    progressBar: true,
+    valueBanner: true,
+    minMaxFields: true,
+});

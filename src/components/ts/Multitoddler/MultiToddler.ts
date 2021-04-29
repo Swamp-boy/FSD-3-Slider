@@ -18,7 +18,7 @@ class MultiToddler {
         this.intervalsNum = intervalsNum;
     }
 
-    public givePresenterInfo(path: number): void {}
+    public givePresenterInfo(path: number[]): void {}
     
     public createToddlers(): void {
         this.toddler1 = document.createElement('div');
@@ -61,8 +61,6 @@ class MultiToddler {
 
             this.toddler1Pos = path[0];
             this.toddler2Pos = path[1];
-            console.log(this.toddler1Pos)
-            console.log(this.toddler2Pos)
 
             this.toddler1.style.left = String(marginLeftForFirst) + 'px';
             this.toddler2.style.left = String(marginRightForSecond) + 'px';
@@ -88,7 +86,6 @@ class MultiToddler {
     private elementDrag(e: MouseEvent): void {
         if (this.firstToddlerPushed === true) {
             const path = this.getFirstToddlerPath(e);
-            console.log(path)
             
             this.orientation === 'horizontal' ?
             this.toddler1.style.left = `${path}px` :
@@ -96,7 +93,6 @@ class MultiToddler {
         }
         if (this.lastToddlerPushed === true) {
             const path = this.getLastToddlerPath(e);
-            console.log(path)
             
             this.orientation === 'horizontal' ?
             this.toddler2.style.left = `${path}px` :
@@ -119,15 +115,11 @@ class MultiToddler {
         
         if (pathWithStep >= this.toddler2Pos - toddlerWidth - visualStep) {
             pathWithStep = this.toddler2Pos - toddlerWidth - visualStep;
-            this.toddler1Pos = pathWithStep;
-            
-            return pathWithStep;
         }
-        if (pathWithStep <= 0) {
-            pathWithStep = 0;
+        if (pathWithStep + toddlerWidth / 2 <= 0) {
+            pathWithStep = - toddlerWidth / 2;     
         }
         this.toddler1Pos = pathWithStep;
-        
         return pathWithStep;
     }
 //////////////
@@ -146,12 +138,9 @@ class MultiToddler {
         
         if (pathWithStep <= this.toddler1Pos + toddlerWidth + visualStep) {
             pathWithStep = this.toddler1Pos + toddlerWidth + visualStep;
-            this.toddler2Pos = pathWithStep;
-
-            return pathWithStep;
         }
-        if (pathWithStep >= fieldWidth) {
-            pathWithStep = fieldWidth + toddlerWidth / 2;
+        if (pathWithStep + toddlerWidth / 2 >= fieldWidth) {
+            pathWithStep = fieldWidth - toddlerWidth / 2;
         }
         this.toddler2Pos = pathWithStep;
     

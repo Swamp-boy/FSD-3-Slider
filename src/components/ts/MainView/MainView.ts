@@ -1,11 +1,13 @@
 // Views imports
 import DefaultToddlerField from './../DefaultToddlerField/DefaultToddlerField';
-import MultiToddler from './../Multitoddler/MultiToddler';
+import MultiToddler from '../MultiToddler/MultiToddler';
 import ProgressBar from './../ProgressBar/ProgressBar';
 import ValueBanner from './../ValueBanner/ValueBanner';
 import MinMaxFields from './../MinMaxFields/MinMaxFields';
+import ValueScale from './../ValueScale/ValueScale';
 
 class MainView {
+    public sliderType: string;
     public container: HTMLElement;
     public min: number;
     public max: number;
@@ -24,19 +26,21 @@ class MainView {
     banner: HTMLElement;
     minField: HTMLElement;
     maxField: HTMLElement;
+    scale: HTMLElement;
 
     // Sub views
     baseSlider: DefaultToddlerField | MultiToddler;
     progressBar: ProgressBar;
     valueBanner: ValueBanner
     minMaxField: MinMaxFields;
+    valueScale: ValueScale;
 
     constructor(container: HTMLElement) {
         this.container = container;
         this.container.classList.add('js-slider-container_def')
         this.orientation === 'vertical' && this.container.classList.add('js-slider-container_vertical')
     }
-    public sendValueToElements(): void {
+    public sendValueToValueBanner(): void {
         this.valueBanner.value = this.value;
     }
     public createBaseSlider(): void {
@@ -113,11 +117,21 @@ class MainView {
         this.maxField = this.minMaxField.maxField;
     }
 
+    public createValueScale(valueMarks:number): void {
+        this.valueScale = new ValueScale(this.sliderField, valueMarks);
+        
+        this.valueScale.createScale();
+        this.valueScale.createLineMarks();
+
+        this.scale = this.valueScale.valueScale;
+        this.container.appendChild(this.scale);
+    }
+
     private getPathFromValue(value: number): number {
         // calc distance from left to value in px
         const fieldWidth = this.orientation === 'horizontal' ?
-            this.sliderField.offsetWidth - this.toddler.offsetWidth / 2 :
-            this.sliderField.offsetHeight - this.toddler.offsetHeight / 2;
+            this.sliderField.offsetWidth:
+            this.sliderField.offsetHeight;
         
         const intervalsNum = this.getIntervalsNum();        
         const percent = value / (this.max - this.min);

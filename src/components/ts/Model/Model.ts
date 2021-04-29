@@ -6,28 +6,35 @@ export default class Model {
     
     public defaultSet: DefaultSettings;
 
+    public sliderType: string;
+
     public min: number;
     public max: number;
     public value: number;
     public multiValue: number[];
     public step: number;
+    public marksNum: number;
     // horizontal or vertical slider
     public orientation: string;
     // elements
     public valueBanner?: boolean;
     public minMaxFields: boolean;
     public progressBar: boolean;
+    public valueScale: boolean;
 
     constructor(options: Options) {
         this.options = options;
 
         this.defaultSet = {
+            sliderType: 'single',
             min: 0,
             max: 100,
             step: 1,
             value: 0,
             multiValue: [],
             valueScale: false,
+            
+            marksNum:  this.getMarksNum(),
             valueBanner: false,
             stepCircles: false,
             multiple: false,
@@ -38,19 +45,22 @@ export default class Model {
     }
 
     public execute(): void {
-        this.setMinMaxStep();
         this.setValue();
+        this.setMinMaxStep();
         this.minMaxFieldsCheck();
         this.valueBannerCheck();
         this.progressBarCheck();
-        this.positionCheck();
+        this.orientationCheck();
+        this.valueScaleCheck();
     }
 
     private setValue(): void{
-        if (this.options.multiValue === undefined)
+        if (this.options.multiValue === undefined){
+            this.sliderType = this.defaultSet.sliderType;
             this.value = this.options.value === undefined ? this.defaultSet.value : this.options.value;
+        }    
         else {
-            
+            this.sliderType = 'multi';
             this.multiValue = this.options.multiValue;
         }
     }
@@ -73,7 +83,17 @@ export default class Model {
         this.progressBar = this.options.progressBar === undefined ? this.defaultSet.progressBar : this.options.progressBar;
     }
 
-    private positionCheck(): void {
+    private valueScaleCheck(): void{
+        this.valueScale = this.options.valueScale === undefined ? this.defaultSet.valueScale : this.options.valueScale;
+        this.marksNum = this.options.marksNum === undefined ? (Math.round((this.max - this.min) / 10)) : this.options.marksNum;
+    }
+
+    private orientationCheck(): void {
         this.orientation = this.options.orientation === undefined ? this.defaultSet.orientation : this.options.orientation;
     }
+
+    private getMarksNum(): number {
+        return Math.round((this.max - this.min) / 10)
+    }
+    
 }
