@@ -122,7 +122,7 @@ class DefaultToddlerField {
             else
                 this.toddler.style.bottom = `${path}px`;
             
-            this.givePresenterValue(path + this.toddler.offsetWidth / 2);
+            this.givePresenterValue(path);
         }
     }
 }

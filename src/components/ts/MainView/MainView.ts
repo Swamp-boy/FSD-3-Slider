@@ -41,7 +41,9 @@ class MainView {
         this.orientation === 'vertical' && this.container.classList.add('js-slider-container_vertical')
     }
     public sendValueToValueBanner(): void {
-        this.valueBanner.value = this.value;
+        this.sliderType === 'single' ? 
+            this.valueBanner.value = this.value :
+            this.valueBanner.multiValue = this.multiValue;
     }
     public createBaseSlider(): void {
         this.baseSlider = new DefaultToddlerField(this.getIntervalsNum(), this.value, this.orientation);
@@ -90,15 +92,20 @@ class MainView {
     }
 
     public createBanner(): void {
-        this.valueBanner = new ValueBanner(this.value, this.orientation, this.sliderField, this.toddler);
-        
-        this.valueBanner.work();
-        this.container.appendChild(this.valueBanner.valueBannerContainer);
-        this.orientation === 'horizontal' ?
-            this.valueBanner.setStartPositionHorizontal(this.getPathFromValue(this.value)) :
-            this.valueBanner.setStartPositionVertical(this.getPathFromValue(this.value));
+        this.valueBanner = new ValueBanner(this.value, this.multiValue, this.orientation, this.sliderField,
+            this.toddler, this.min, this.max, this.step);
 
-        this.banner = this.valueBanner.valueBannerContainer;
+        this.valueBanner.execute();
+        
+        if (this.sliderType === 'single') {
+            this.container.appendChild(this.valueBanner.valueBannerContainer)
+        }
+        if (this.sliderType === 'multi') {
+            this.container.appendChild(this.valueBanner.valueBannerContainer1)
+            this.container.appendChild(this.valueBanner.valueBannerContainer2)
+        }
+        this.valueBanner.setOnPosition(); //method need element in dom to work
+        
     }
 
     public createMinMax(): void {

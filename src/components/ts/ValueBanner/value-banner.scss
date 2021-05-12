@@ -1,4 +1,5 @@
 .js-circle-container {
+    display: inline-block;
     position: relative;
 }
 .js-num-circle {
@@ -25,8 +26,6 @@
 }
 .js-numcircle-arrow_vertical {
     transform: rotate(270deg);
-    top: 8px;
-    left: 29px;
 }
 .js-value-banner-container_vertical {
     transform: rotate(270deg);

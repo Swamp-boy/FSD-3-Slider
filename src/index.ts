@@ -34,8 +34,8 @@ const sl1 = $('#slider1').slider({
     //multiValue: [30, 60],
     value: 60,
     orientation: 'horizontal',
-    progressBar: false,
-    valueBanner: false,
+    progressBar: true,
+    valueBanner: true,
     minMaxFields: false,
     //valueScale: true,
     //marksNum: 3,
@@ -62,3 +62,15 @@ const sl3 = $('#slider3').slider({
     valueBanner: true,
     minMaxFields: true,
 });
+/*
+const sl4 = $('#slider4').slider({
+    min: 0,
+    max: 100,
+    step: 1,
+    multiValue: [20, 40],
+    orientation: 'vertical',
+    progressBar: true,
+    valueBanner: true,
+    minMaxFields: true,
+});
+*/

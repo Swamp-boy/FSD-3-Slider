@@ -100,11 +100,14 @@ class Presenter {
         this.mainView.baseSlider.givePresenterValue = this.reactOnPathChangeMultiVersion.bind(this);
         // send value to model and view
         this.changeRangeObs.subscribe(this.setValueToModelViewMultiVersion.bind(this));
-        
+        /*
         // TO DO: check and send value to value banner
-
-
-        // TO DO: check and send value to progress barf
+        if (this.mainView.valueBanner !== undefined) {
+            this.changePathObs.subscribe(this.mainView.sendValueToValueBanner.bind(this.mainView));
+            this.changePathObs.subscribe(this.mainView.valueBanner.bannerMove.bind(this.mainView.valueBanner));
+        }
+*/
+        // TO DO: check and send value to progress bar
         if (this.mainView.progressBar !== undefined) {
             this.changeRangeObs.subscribe(this.mainView.progressBar.progressBarChangeRange.bind(this.mainView.progressBar));
         }
@@ -122,21 +125,22 @@ class Presenter {
     private getSingleValueFromPath(path: number): number {
         const fieldWidth = (this.model.orientation === 'horizontal') ?
         this.mainView.sliderField.offsetWidth :
-        this.mainView.sliderField.offsetHeight;   
-        const percent = path / fieldWidth
+            this.mainView.sliderField.offsetHeight;
+        // have add toddlerWidth / 2 to right value 
+        const percent = (path + this.mainView.toddler.offsetWidth / 2) / fieldWidth
         const value = (this.model.max - this.model.min) * percent
         
         return Math.floor(value);
     }
 
     private getMultiValueFromPath(path: number[]): number[] {
-        
         const fieldWidth = (this.model.orientation === 'horizontal') ?
         this.mainView.sliderField.offsetWidth :
         this.mainView.sliderField.offsetHeight;
-        
-        const percent1 = path[0] / fieldWidth;
-        const percent2 = path[1] / fieldWidth;
+        // have add toddlerWidth / 2 to right value
+        const percent1 = (path[0] + this.mainView.toddler.offsetWidth / 2) / fieldWidth;
+        const percent2 = (path[1] + this.mainView.toddler.offsetWidth / 2) / fieldWidth;
+
         const value1 = (this.model.max - this.model.min) * percent1;
         const value2 = (this.model.max - this.model.min) * percent2;
         

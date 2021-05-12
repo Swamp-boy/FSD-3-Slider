@@ -53,7 +53,7 @@ export default class Model {
         this.orientationCheck();
         this.valueScaleCheck();
     }
-
+    // TO DO: change all if bla === undef on obj.hasOwnProperty('prop') 
     private setValue(): void{
         if (this.options.multiValue === undefined){
             this.sliderType = this.defaultSet.sliderType;
