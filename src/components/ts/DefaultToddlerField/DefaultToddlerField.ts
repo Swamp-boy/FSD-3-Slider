@@ -1,17 +1,19 @@
+import { getPathFromMousePos } from './../CalculateFunctions';
+
 class DefaultToddlerField {
     public toddler: HTMLElement;
     public sliderField: HTMLElement;
     public toddlerPushed: boolean;
 
-    public intervalsNum: number;
-    public value: number;
-    public orientation: string;
+    private orientation: string;
+    private min: number;
+    private max: number;
+    private step: number;
 
-    public testConst: number; // need only for tests
-
-    constructor(intervalsNum: number, value:number, orientation: string) {
-        this.intervalsNum = intervalsNum;
-        this.value = value;
+    constructor(min:number, max:number, step:number, orientation: string) {
+        this.min = min;
+        this.max = max;
+        this.step = step;
         this.orientation = orientation;
     }
     
@@ -74,6 +76,7 @@ class DefaultToddlerField {
         this.toddlerPushed = true;
         this.elementDrag(e);
     }
+    /*
     // Events Functions
     private getToddlerPath(e: MouseEvent): number {
         // get width od elements 
@@ -87,15 +90,15 @@ class DefaultToddlerField {
         let toddlerPath: number;
     
         if (this.orientation === 'vertical') {
-            toddlerWidth = this.toddler.getBoundingClientRect().height;
-            fieldWidth = this.sliderField.getBoundingClientRect().height;
+            toddlerWidth = this.toddler.offsetHeight;
+            fieldWidth = this.sliderField.offsetHeight;
             startFieldLeft = this.sliderField.getBoundingClientRect().bottom;
             mousePos = e.clientY;
             toddlerPath = startFieldLeft - mousePos - toddlerWidth / 2;
         } else {
             // if orientation is horizontal
-            toddlerWidth = this.toddler.getBoundingClientRect().width;
-            fieldWidth = this.sliderField.getBoundingClientRect().width;
+            toddlerWidth = this.toddler.offsetWidth;
+            fieldWidth = this.sliderField.offsetWidth;
             startFieldLeft = this.sliderField.getBoundingClientRect().left;
             mousePos = e.clientX;
             toddlerPath = mousePos - startFieldLeft - toddlerWidth / 2;
@@ -113,10 +116,12 @@ class DefaultToddlerField {
 
         return pathWithStep;
     }
+    */
 
     private elementDrag(e: MouseEvent): void {
         if (this.toddlerPushed) {
-            const path = this.getToddlerPath(e);
+            const path = getPathFromMousePos(e, this.sliderField, this.toddler, this.orientation,
+            this.min, this.max, this.step)
             if (this.orientation === 'horizontal')
                 this.toddler.style.left = `${path}px`;
             else

@@ -48,8 +48,7 @@ class MainView {
             this.valueBanner.multiValue = this.multiValue;
     }
     public createBaseSlider(): void {
-        this.baseSlider = new DefaultToddlerField(
-            getIntervalsNum(this.min, this.max, this.step), this.value, this.orientation);
+        this.baseSlider = new DefaultToddlerField( this.min, this.max, this.step, this.orientation);
         this.baseSlider.createField();
         this.baseSlider.createToddler();
         this.baseSlider.initializeEvents();
@@ -61,7 +60,7 @@ class MainView {
         this.container.appendChild(this.toddler);
         // calc toddler star position
         this.baseSlider.setToddlerStartPosition(getPathFromValue(this.value, 
-            this.sliderField, this.orientation, this.min, this.max, this.step));
+            this.sliderField, this.toddler, this.orientation, this.min, this.max, this.step));
     }
 
     public createMultiToddlerSlider(): void {
@@ -82,9 +81,9 @@ class MainView {
         
         const pathArray = [];
         pathArray.push(getPathFromValue(this.multiValue[0],
-            this.sliderField, this.orientation, this.min, this.max, this.step));
+            this.sliderField, this.toddler, this.orientation, this.min, this.max, this.step));
         pathArray.push(getPathFromValue(this.multiValue[1],
-            this.sliderField, this.orientation, this.min, this.max, this.step));
+            this.sliderField, this.toddler, this.orientation, this.min, this.max, this.step));
         
         this.baseSlider.setToddlersStartPositions(pathArray);
     }
@@ -94,14 +93,14 @@ class MainView {
         this.progressBar.createSingleProgressBar();
         if (this.sliderType === 'single') {
             this.progressBar.progressBarSingleChange(getPathFromValue(this.value,
-                this.sliderField,  this.orientation, this.min, this.max, this.step));
+                this.sliderField, this.toddler, this.orientation, this.min, this.max, this.step));
         }
         if (this.sliderType === 'multi') {
             const pathArray = [];
             pathArray.push(getPathFromValue(this.multiValue[0],
-                this.sliderField, this.orientation, this.min, this.max, this.step));
+                this.sliderField, this.toddler, this.orientation, this.min, this.max, this.step));
             pathArray.push(getPathFromValue(this.multiValue[1],
-                this.sliderField, this.orientation, this.min, this.max, this.step));
+                this.sliderField, this.toddler, this.orientation, this.min, this.max, this.step));
             
             this.progressBar.progressBarChangeRange(pathArray);
         }
