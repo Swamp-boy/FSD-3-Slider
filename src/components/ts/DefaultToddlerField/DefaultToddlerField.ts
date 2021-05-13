@@ -29,7 +29,7 @@ class DefaultToddlerField {
 
             this.toddler.style.left = String(marginLeft) + 'px';
         } else {
-            // if position = vertical
+            // if position === vertical
             const fieldHeight = this.sliderField.offsetWidth;
             const toddlerHeight = this.toddler.offsetWidth;
             // calc margin left

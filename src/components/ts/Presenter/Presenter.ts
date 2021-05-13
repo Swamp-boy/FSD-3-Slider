@@ -4,6 +4,8 @@ import MainView from './../MainView/MainView';
 import ChangePathObs from './changePathObs';
 import ChangeRangeObs from './changeRangeObs';
 
+import { getValueFromPath, getValueFromPathMultiVersion } from './../CalculateFunctions';
+
 class Presenter {
     public mainView: MainView;
     public model: Model;
@@ -122,41 +124,19 @@ class Presenter {
         this.changeRangeObs.broadcast(path);
     }
 
-    private getSingleValueFromPath(path: number): number {
-        const fieldWidth = (this.model.orientation === 'horizontal') ?
-        this.mainView.sliderField.offsetWidth :
-            this.mainView.sliderField.offsetHeight;
-        // have add toddlerWidth / 2 to right value 
-        const percent = (path + this.mainView.toddler.offsetWidth / 2) / fieldWidth
-        const value = (this.model.max - this.model.min) * percent
-        
-        return Math.floor(value);
-    }
-
-    private getMultiValueFromPath(path: number[]): number[] {
-        const fieldWidth = (this.model.orientation === 'horizontal') ?
-        this.mainView.sliderField.offsetWidth :
-        this.mainView.sliderField.offsetHeight;
-        // have add toddlerWidth / 2 to right value
-        const percent1 = (path[0] + this.mainView.toddler.offsetWidth / 2) / fieldWidth;
-        const percent2 = (path[1] + this.mainView.toddler.offsetWidth / 2) / fieldWidth;
-
-        const value1 = (this.model.max - this.model.min) * percent1;
-        const value2 = (this.model.max - this.model.min) * percent2;
-        
-        const valueArray = [value1, value2];
-        return valueArray;
-    }
-
     private setValueToModelViewMultiVersion(path: number[]): void {
-        const value = this.getMultiValueFromPath(path);
+        const value = getValueFromPathMultiVersion(path, this.mainView.sliderField, this.mainView.toddler,
+            this.model.orientation, this.model.min, this.model.max);
+        
         this.multiValue = value;
         this.model.multiValue = value;
         this.mainView.multiValue = value;
     }
     
     private setValueToModelViewSingleVersion(path: number): void {       
-        const value = this.getSingleValueFromPath(path);
+        const value = getValueFromPath(path, this.mainView.sliderField, this.mainView.toddler,
+            this.model.orientation, this.model.min, this.model.max);
+        
         this.value = value;
         this.model.value = value;
         this.mainView.value = value;
