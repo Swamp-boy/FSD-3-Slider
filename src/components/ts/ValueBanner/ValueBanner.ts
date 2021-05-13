@@ -87,7 +87,7 @@ class ValueBanner {
     private setStartPositionVertical(path: number): void {
         this.valueBannerContainer.classList.add('js-value-banner-container_vertical');
         
-        const bannerBottom = path - this.toddler.offsetWidth / 2 + this.valueBanner.offsetWidth / 2;
+        const bannerBottom = path + this.valueBanner.offsetWidth / 2 + this.toddler.offsetWidth / 2 - 5; // 5 needs to be centered
         
         this.valueBannerContainer.style.bottom = String(bannerBottom) + 'px';
 
