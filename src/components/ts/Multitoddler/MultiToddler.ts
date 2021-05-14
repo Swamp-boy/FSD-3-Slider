@@ -1,9 +1,13 @@
+import { getPathFromMousePosMulti } from './../CalculateFunctions';
+
+
 class MultiToddler {
-    public values: number[];
-    public orientation: string;
-    public intervalsNum: number;
-    public firstToddlerPushed: boolean;
-    public lastToddlerPushed: boolean;
+    private orientation: string;
+    private min: number;
+    private max: number;
+    private step: number;
+    private firstToddlerPushed: boolean;
+    private lastToddlerPushed: boolean;
 
     public toddler1: HTMLElement;
     public toddler2: HTMLElement;
@@ -12,10 +16,12 @@ class MultiToddler {
     private toddler1Pos: number;
     private toddler2Pos: number;
 
-    constructor(values: number[], orientation: string, intervalsNum: number) {
-        this.values = values;
+
+    constructor(orientation: string, min: number, max: number, step: number) {
         this.orientation = orientation;
-        this.intervalsNum = intervalsNum;
+        this.min = min;
+        this.max = max;
+        this.step = step;
     }
 
     public givePresenterValue(path: number[]): void {}
@@ -56,14 +62,11 @@ class MultiToddler {
             this.toddler1.style.top = String(marginTopForFirst) + 'px';
             this.toddler2.style.top = String(marginTopForSecond) + 'px';
 
-            const marginLeftForFirst = path[0];
-            const marginRightForSecond = path[1];
-
             this.toddler1Pos = path[0];
             this.toddler2Pos = path[1];
 
-            this.toddler1.style.left = String(marginLeftForFirst) + 'px';
-            this.toddler2.style.left = String(marginRightForSecond) + 'px';
+            this.toddler1.style.left = String(this.toddler1Pos) + 'px';
+            this.toddler2.style.left = String(this.toddler2Pos) + 'px';
         }
         if (this.orientation === 'vertical') {
             
@@ -85,15 +88,27 @@ class MultiToddler {
     // moving calculating methods
     private elementDrag(e: MouseEvent): void {
         if (this.firstToddlerPushed === true) {
-            const path = this.getFirstToddlerPath(e);
+            let path = getPathFromMousePosMulti(e, this.sliderField, this.toddler1, this.orientation,
+                this.min, this.max, this.step);
             
+            if (path >= this.toddler2Pos - this.step) {
+                path = this.toddler2Pos - this.step
+            }
+            this.toddler1Pos = path;
+
             this.orientation === 'horizontal' ?
             this.toddler1.style.left = `${path}px` :
             this.toddler1.style.bottom = `${path}px`;
             
         }
         if (this.lastToddlerPushed === true) {
-            const path = this.getLastToddlerPath(e);
+            let path = getPathFromMousePosMulti(e, this.sliderField, this.toddler2, this.orientation,
+                this.min, this.max, this.step);
+            
+            if (path <= this.toddler1Pos + this.step) {
+                path = this.toddler1Pos + this.step
+            }
+            this.toddler2Pos = path;
             
             this.orientation === 'horizontal' ?
             this.toddler2.style.left = `${path}px` :
@@ -101,7 +116,7 @@ class MultiToddler {
         }
         this.givePresenterValue([this.toddler1Pos, this.toddler2Pos]);
     }
-
+    /*
     private getFirstToddlerPath(e: MouseEvent): number {
         const toddlerWidth = this.toddler1.getBoundingClientRect().width;
         const fieldWidth = this.sliderField.getBoundingClientRect().width;
@@ -124,7 +139,7 @@ class MultiToddler {
         this.toddler1Pos = pathWithStep;
         return pathWithStep;
     }
-//////////////
+
     private getLastToddlerPath(e: MouseEvent): number {
         const toddlerWidth = this.toddler2.getBoundingClientRect().width;
         const fieldWidth = this.sliderField.getBoundingClientRect().width;
@@ -148,6 +163,7 @@ class MultiToddler {
     
         return pathWithStep;
     }
+    */
 }
 
 export default MultiToddler

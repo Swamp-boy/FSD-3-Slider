@@ -25,8 +25,6 @@ import Presenter from './components/ts/Presenter/Presenter';
     };
 })(jQuery);
 
-
-
 const sl1 = $('#slider1').slider({
     min: 0,
     max: 100,
@@ -55,7 +53,7 @@ const sl2 = $('#slider2').slider({
 const sl3 = $('#slider3').slider({
     min: 0,
     max: 100,
-    step: 1,
+    step: 15,
     multiValue: [30, 60],
     orientation: 'horizontal',
     progressBar: true,

@@ -64,9 +64,7 @@ class MainView {
     }
 
     public createMultiToddlerSlider(): void {
-        //console.log(this.multiValue)
-        this.baseSlider = new MultiToddler(this.multiValue, this.orientation,
-            getIntervalsNum(this.min, this.max, this.step));
+        this.baseSlider = new MultiToddler(this.orientation, this.min, this.max, this.step);
         this.baseSlider.createField();
         this.baseSlider.createToddlers();
         this.baseSlider.initializeEvents();

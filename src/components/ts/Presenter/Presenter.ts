@@ -108,7 +108,7 @@ class Presenter {
             this.changePathObs.subscribe(this.mainView.sendValueToValueBanner.bind(this.mainView));
             this.changePathObs.subscribe(this.mainView.valueBanner.bannerMove.bind(this.mainView.valueBanner));
         }
-*/
+        */
         // TO DO: check and send value to progress bar
         if (this.mainView.progressBar !== undefined) {
             this.changeRangeObs.subscribe(this.mainView.progressBar.progressBarChangeRange.bind(this.mainView.progressBar));

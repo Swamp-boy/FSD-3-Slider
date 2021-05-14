@@ -1,17 +1,20 @@
+import { getPathFromValue } from './../CalculateFunctions';
+
+
 class ValueBanner {
-    public min: number;
-    public max: number;
-    public step: number;
-    public value: number;
-    public multiValue: number[];
-    public orientation: string;
-    
     public valueBannerContainer: HTMLElement;
     public valueBannerContainer1: HTMLElement;
     public valueBannerContainer2: HTMLElement;
+
+    public value: number;
+    public multiValue: number[];
+    private min: number;
+    private max: number;
+    private step: number;
+    private orientation: string;
+
     private toddler: HTMLElement;
     private sliderField: HTMLElement;
-
     private valueBanner: HTMLElement;
     private valueBannerArrow: HTMLElement;
     private valueSpan: HTMLElement;
@@ -40,7 +43,10 @@ class ValueBanner {
 
     public setOnPosition(): void {
         if (this.multiValue !== undefined) {
-            const pathArray = [this.getPathFromValue(this.multiValue[0]), this.getPathFromValue(this.multiValue[1])];
+            const pathArray = [getPathFromValue(this.multiValue[0], this.sliderField,
+                this.toddler, this.orientation, this.min, this.max, this.step),
+                getPathFromValue(this.multiValue[1], this.sliderField,
+                    this.toddler, this.orientation, this.min, this.max, this.step)];
             if (this.orientation === 'horizontal') {
                 this.setStartPositionHorizontalMulti(pathArray);
             }
@@ -49,15 +55,15 @@ class ValueBanner {
             }
         } else {
             if (this.orientation === 'horizontal') {
-                this.setStartPositionHorizontal(this.getPathFromValue(this.value));
+                this.setStartPositionHorizontal(getPathFromValue(this.value, this.sliderField,
+                this.toddler, this.orientation, this.min, this.max, this.step));
             }
             if (this.orientation === 'vertical') {
-                this.setStartPositionVertical(this.getPathFromValue(this.value));
+                this.setStartPositionVertical(getPathFromValue(this.value, this.sliderField,
+                    this.toddler, this.orientation, this.min, this.max, this.step));
             }
         }
     }
-
-    
 
     public bannerMove(path: number): void {
         // set banner center over toddler
@@ -66,7 +72,8 @@ class ValueBanner {
             this.valueBannerContainer.style.left = String(bannerLeft) + 'px';
         }    
         else {
-            const bannerBottom = path + this.toddler.offsetWidth / 2 + this.valueBanner.offsetWidth / 2 - 2;
+            const centering = 6;
+            const bannerBottom = path + this.toddler.offsetWidth / 2 + this.valueBanner.offsetWidth / 2 - centering;
             this.valueBannerContainer.style.bottom = String(bannerBottom) + 'px';
         }
             
@@ -87,7 +94,8 @@ class ValueBanner {
     private setStartPositionVertical(path: number): void {
         this.valueBannerContainer.classList.add('js-value-banner-container_vertical');
         
-        const bannerBottom = path + this.valueBanner.offsetWidth / 2 + this.toddler.offsetWidth / 2 - 5; // 5 needs to be centered
+        const centring = 5;
+        const bannerBottom = path + this.valueBanner.offsetWidth / 2 + this.toddler.offsetWidth / 2 - centring;
         
         this.valueBannerContainer.style.bottom = String(bannerBottom) + 'px';
 
@@ -197,26 +205,6 @@ class ValueBanner {
 
         this.valueBannerContainer2.appendChild(this.valueBanner);
         this.valueBannerContainer2.appendChild(this.valueBannerArrow);
-    }
-
-    private getPathFromValue(value: number): number {
-        // calc distance from left to value in px
-        const fieldWidth = this.orientation === 'horizontal' ?
-            this.sliderField.offsetWidth:
-            this.sliderField.offsetHeight;
-        
-        const intervalsNum = this.getIntervalsNum();        
-        const percent = value / (this.max - this.min);
-        // distance from left to toddler
-        const path = percent * fieldWidth; 
-        // step in px
-        const visualStep = fieldWidth / intervalsNum;
-        
-        return Math.floor(path / visualStep) * visualStep;
-    }
-
-    private getIntervalsNum(): number {
-        return (this.max - this.min) / this.step;
     }
 }
 

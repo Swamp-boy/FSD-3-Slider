@@ -76,47 +76,6 @@ class DefaultToddlerField {
         this.toddlerPushed = true;
         this.elementDrag(e);
     }
-    /*
-    // Events Functions
-    private getToddlerPath(e: MouseEvent): number {
-        // get width od elements 
-        let toddlerWidth: number;
-        let fieldWidth: number;
-        // get mouse position
-        let mousePos: number;
-        // get left side of slider field
-        let startFieldLeft: number;
-        // toddler distance
-        let toddlerPath: number;
-    
-        if (this.orientation === 'vertical') {
-            toddlerWidth = this.toddler.offsetHeight;
-            fieldWidth = this.sliderField.offsetHeight;
-            startFieldLeft = this.sliderField.getBoundingClientRect().bottom;
-            mousePos = e.clientY;
-            toddlerPath = startFieldLeft - mousePos - toddlerWidth / 2;
-        } else {
-            // if orientation is horizontal
-            toddlerWidth = this.toddler.offsetWidth;
-            fieldWidth = this.sliderField.offsetWidth;
-            startFieldLeft = this.sliderField.getBoundingClientRect().left;
-            mousePos = e.clientX;
-            toddlerPath = mousePos - startFieldLeft - toddlerWidth / 2;
-        }
-        // calc length of interval in pixels
-        const visualStep = fieldWidth / this.intervalsNum;
-        // calc distance in pixels
-        let pathWithStep = Math.floor(toddlerPath / visualStep) * visualStep;
-        // if mouse out of field
-        if (pathWithStep + toddlerWidth / 2 >= fieldWidth)
-            pathWithStep = fieldWidth - toddlerWidth / 2;
-
-        if (pathWithStep + toddlerWidth / 2 <= 0)
-            pathWithStep = - toddlerWidth / 2;
-
-        return pathWithStep;
-    }
-    */
 
     private elementDrag(e: MouseEvent): void {
         if (this.toddlerPushed) {
