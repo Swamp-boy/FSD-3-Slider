@@ -72,7 +72,7 @@ class ValueBanner {
             this.valueBannerContainer.style.left = String(bannerLeft) + 'px';
         }    
         else {
-            const centering = 6;
+            const centering = 4;
             const bannerBottom = path + this.toddler.offsetWidth / 2 + this.valueBanner.offsetWidth / 2 - centering;
             this.valueBannerContainer.style.bottom = String(bannerBottom) + 'px';
         }
@@ -81,10 +81,30 @@ class ValueBanner {
 
         this.changeBannerWidth(); 
     }
+    // ====================================================
+    public bannerMoveMulti(path: number[]): void {
+        if (this.orientation === 'horizontal') {
+            
+            const centring = 5;
+            const firstBannerLeft = path[0] + centring;
+            const secondBannerLeft = path[1] - this.valueBanner.offsetWidth + centring;
+
+            this.valueBannerContainer1.style.left = String(firstBannerLeft) + 'px';
+            this.valueBannerContainer2.style.left = String(secondBannerLeft) + 'px';
+            console.log(secondBannerLeft)
+        }    
+        else {
+            const centering = 6;
+            const bannerBottom = path[1] + this.toddler.offsetWidth / 2 + this.valueBanner.offsetWidth / 2 - centering;
+            this.valueBannerContainer.style.bottom = String(bannerBottom) + 'px';
+        }
+    }
+
+    
 
     private setStartPositionHorizontal(path: number): void {
         // set banner center over toddler
-        const bannerLeft = path - this.valueBanner.offsetWidth / 2 + this.toddler.offsetWidth / 2;
+        const bannerLeft = path - this.valueBanner.offsetWidth / 2;
         this.valueBannerContainer.style.left = String(bannerLeft) + 'px';
         
         const bannerBottom = Math.max(this.sliderField.offsetHeight, this.toddler.offsetHeight) + this.valueBanner.offsetHeight + 10; //margin for customization;
@@ -95,7 +115,7 @@ class ValueBanner {
         this.valueBannerContainer.classList.add('js-value-banner-container_vertical');
         
         const centring = 5;
-        const bannerBottom = path + this.valueBanner.offsetWidth / 2 + this.toddler.offsetWidth / 2 - centring;
+        const bannerBottom = path + this.valueBanner.offsetWidth / 2 - centring;
         
         this.valueBannerContainer.style.bottom = String(bannerBottom) + 'px';
 
@@ -105,10 +125,11 @@ class ValueBanner {
 
     private setStartPositionHorizontalMulti(path: number[]): void {
         // set banner center over toddler
-        const firstBannerLeft = path[0] - this.valueBanner.offsetWidth / 2 + this.toddler.offsetWidth / 2;
+        const firstBannerLeft = path[0] - this.valueBanner.offsetWidth / 2 ;
         this.valueBannerContainer1.style.left = String(firstBannerLeft) + 'px';
-
-        const secondBannerLeft = path[1] - this.valueBanner.offsetWidth / 2 + this.toddler.offsetWidth / 2;
+         
+        const secondBannerLeft = path[1] - this.valueBanner.offsetWidth - this.valueBanner.offsetWidth / 2;
+        
         this.valueBannerContainer2.style.left = String(secondBannerLeft) + 'px';
         
         const bannerBottom = Math.max(this.sliderField.offsetHeight, this.toddler.offsetHeight) + this.valueBanner.offsetHeight + 10//margin for customization;  

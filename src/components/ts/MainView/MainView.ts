@@ -89,16 +89,18 @@ class MainView {
     public createProgressBar(): void {
         this.progressBar = new ProgressBar(this.sliderField, this.toddler, this.orientation);
         this.progressBar.createSingleProgressBar();
+
         if (this.sliderType === 'single') {
-            this.progressBar.progressBarSingleChange(getPathFromValue(this.value,
-                this.sliderField, this.toddler, this.orientation, this.min, this.max, this.step));
+            const path = getPathFromValue(this.value,
+                this.sliderField, this.toddler, this.orientation, this.min, this.max, this.step) - this.toddler.offsetWidth / 2;
+            this.progressBar.progressBarSingleChange(path);
         }
         if (this.sliderType === 'multi') {
             const pathArray = [];
             pathArray.push(getPathFromValue(this.multiValue[0],
-                this.sliderField, this.toddler, this.orientation, this.min, this.max, this.step));
+                this.sliderField, this.toddler, this.orientation, this.min, this.max, this.step) - this.toddler.offsetWidth / 2 );
             pathArray.push(getPathFromValue(this.multiValue[1],
-                this.sliderField, this.toddler, this.orientation, this.min, this.max, this.step));
+                this.sliderField, this.toddler, this.orientation, this.min, this.max, this.step) - this.toddler.offsetWidth / 2);
             
             this.progressBar.progressBarChangeRange(pathArray);
         }

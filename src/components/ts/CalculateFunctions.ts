@@ -8,7 +8,7 @@ export function getPathFromValue(value: number, sliderField: HTMLElement, toddle
     const intervalsNum = (max - min) / step;
     const percent = value / (max - min);
     // distance from left to toddler
-    const path = percent * fieldWidth - toddler.offsetWidth / 2;
+    const path = percent * fieldWidth;
     // step in px
     const visualStep = fieldWidth / intervalsNum;
     return path <= 0 ?  path : Math.floor(path / visualStep) * visualStep;
@@ -54,26 +54,26 @@ export function getPathFromMousePos(e: MouseEvent, sliderField: HTMLElement,
         sliderField.offsetWidth : sliderField.offsetHeight;
         
     const startPoint = orientation === 'horizontal' ?
-        sliderField.getBoundingClientRect().left - toddler.offsetWidth / 2 : sliderField.getBoundingClientRect().bottom;
+        sliderField.getBoundingClientRect().left : sliderField.getBoundingClientRect().bottom;
     
     
     let mousePos: number;
     if (orientation === 'horizontal') {
-        mousePos  = e.clientX - startPoint - toddler.offsetWidth / 2;
+        mousePos  = e.clientX - startPoint;
     } else {
         mousePos = startPoint - e.clientY;
     }
     
     const stepInPx = fieldWidth / ((max - min) / step);
 
-    let path = Math.floor(mousePos / stepInPx) * stepInPx - toddler.offsetWidth / 2;
+    let path = Math.floor(mousePos / stepInPx) * stepInPx;
     
     
-    if (path <= -toddler.offsetWidth / 2)
-        path =- toddler.offsetWidth / 2;
+    if (path <= 0)
+        path = 0;
     
-    if (path + toddler.offsetWidth / 2 >= fieldWidth)
-        path = fieldWidth - toddler.offsetWidth / 2
+    if (path >= fieldWidth)
+        path = fieldWidth;
     
     return path
 }
@@ -84,24 +84,24 @@ export function getPathFromMousePosMulti(e: MouseEvent, sliderField: HTMLElement
         sliderField.offsetWidth : sliderField.offsetHeight;
         
     const startPoint = orientation === 'horizontal' ?
-        sliderField.getBoundingClientRect().left - toddler.offsetWidth / 2 : sliderField.getBoundingClientRect().bottom;
+        sliderField.getBoundingClientRect().left : sliderField.getBoundingClientRect().bottom;
     
     let mousePos: number;
     if (orientation === 'horizontal') {
-        mousePos  = e.clientX - startPoint - toddler.offsetWidth / 2;
+        mousePos  = e.clientX - startPoint;
     } else {
         mousePos = startPoint - e.clientY;
     }
     
     const stepInPx = fieldWidth / ((max - min) / step);
     
-    let path = Math.floor(mousePos / stepInPx) * stepInPx - toddler.offsetWidth / 2;
+    let path = Math.floor(mousePos / stepInPx) * stepInPx;
 
-    if (path <= -toddler.offsetWidth / 2)
-        path =- toddler.offsetWidth / 2;
+    if (path <= 0)
+        path = 0;
     
-    if (path + toddler.offsetWidth / 2 >= fieldWidth)
-        path = fieldWidth - toddler.offsetWidth / 2
+    if (path >= fieldWidth)
+        path = fieldWidth;
     
     return path
 }

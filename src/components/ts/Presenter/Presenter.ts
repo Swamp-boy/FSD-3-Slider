@@ -102,13 +102,13 @@ class Presenter {
         this.mainView.baseSlider.givePresenterValue = this.reactOnPathChangeMultiVersion.bind(this);
         // send value to model and view
         this.changeRangeObs.subscribe(this.setValueToModelViewMultiVersion.bind(this));
-        /*
+        
         // TO DO: check and send value to value banner
         if (this.mainView.valueBanner !== undefined) {
-            this.changePathObs.subscribe(this.mainView.sendValueToValueBanner.bind(this.mainView));
-            this.changePathObs.subscribe(this.mainView.valueBanner.bannerMove.bind(this.mainView.valueBanner));
+            this.changeRangeObs.subscribe(this.mainView.sendValueToValueBanner.bind(this.mainView));
+            this.changeRangeObs.subscribe(this.mainView.valueBanner.bannerMoveMulti.bind(this.mainView.valueBanner));
         }
-        */
+        
         // TO DO: check and send value to progress bar
         if (this.mainView.progressBar !== undefined) {
             this.changeRangeObs.subscribe(this.mainView.progressBar.progressBarChangeRange.bind(this.mainView.progressBar));

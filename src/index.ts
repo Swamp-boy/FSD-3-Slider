@@ -28,11 +28,11 @@ import Presenter from './components/ts/Presenter/Presenter';
 const sl1 = $('#slider1').slider({
     min: 0,
     max: 100,
-    step: 1,
+    step: 15,
     //multiValue: [30, 60],
     value: 0,
     orientation: 'horizontal',
-    progressBar: false,
+    progressBar: true,
     valueBanner: true,
     minMaxFields: false,
     //valueScale: true,
@@ -60,15 +60,14 @@ const sl3 = $('#slider3').slider({
     valueBanner: true,
     minMaxFields: true,
 });
-/*
+
 const sl4 = $('#slider4').slider({
     min: 0,
     max: 100,
     step: 1,
-    multiValue: [20, 40],
-    orientation: 'vertical',
-    progressBar: true,
+    multiValue: [20, 100],
+    orientation: 'horizontal',
+    progressBar: false,
     valueBanner: true,
     minMaxFields: true,
 });
-*/

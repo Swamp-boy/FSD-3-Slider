@@ -27,7 +27,7 @@ class DefaultToddlerField {
             const marginTop = fieldHeight / 2 - toddlerHeight / 2;
             this.toddler.style.top = String(marginTop) + 'px';
 
-            const marginLeft = path;
+            const marginLeft = path - this.toddler.offsetWidth / 2;
 
             this.toddler.style.left = String(marginLeft) + 'px';
         } else {
@@ -38,7 +38,7 @@ class DefaultToddlerField {
             const marginLeft = fieldHeight / 2 - toddlerHeight / 2;
             this.toddler.style.left = String(marginLeft) + 'px';
             
-            const marginBot = path;
+            const marginBot = path - this.toddler.offsetWidth / 2;
             
             this.toddler.style.bottom = String(marginBot) + 'px';
         }
@@ -79,8 +79,10 @@ class DefaultToddlerField {
 
     private elementDrag(e: MouseEvent): void {
         if (this.toddlerPushed) {
-            const path = getPathFromMousePos(e, this.sliderField, this.toddler, this.orientation,
-            this.min, this.max, this.step)
+            let path = getPathFromMousePos(e, this.sliderField, this.toddler, this.orientation,
+                this.min, this.max, this.step)
+            path -= this.toddler.offsetWidth / 2;
+
             if (this.orientation === 'horizontal')
                 this.toddler.style.left = `${path}px`;
             else

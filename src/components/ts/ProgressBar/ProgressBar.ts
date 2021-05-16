@@ -37,8 +37,8 @@ export default class ProgressBar {
 
     public progressBarChangeRange(path: number[]): void {
         if (this.orientation === 'vertical') {
-            const top = path[0];
-            const bot = path[1]
+            const top = path[0] - this.toddlerWidth / 2;
+            const bot = path[1] - this.toddlerWidth / 2;
             this.progressBar.style.top = String(top) + 'px';
             this.progressBar.style.bottom = String(bot) + 'px';
         } else {
