@@ -35,11 +35,11 @@ export function getValueFromPathMultiVersion(path: number[], sliderField: HTMLEl
         sliderField.offsetWidth :
         sliderField.offsetHeight;
     // have add toddlerWidth / 2 to right value
-    const percent1 = (path[0] + toddler.offsetWidth / 2) / fieldWidth;
-    const percent2 = (path[1] + toddler.offsetWidth / 2) / fieldWidth;
+    const percent1 = (path[0] + toddler.offsetWidth) / fieldWidth;
+    const percent2 = (path[1] + toddler.offsetWidth) / fieldWidth;
 
-    const value1 = (max - min) * percent1;
-    const value2 = (max - min) * percent2;
+    const value1 = Math.floor((max - min) * percent1);
+    const value2 = Math.floor((max - min) * percent2);
 
     return [value1, value2];
 }

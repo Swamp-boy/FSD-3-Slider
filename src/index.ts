@@ -65,9 +65,9 @@ const sl4 = $('#slider4').slider({
     min: 0,
     max: 100,
     step: 1,
-    multiValue: [20, 100],
+    multiValue: [20, 40],
     orientation: 'horizontal',
-    progressBar: false,
+    progressBar: true,
     valueBanner: true,
     minMaxFields: true,
 });

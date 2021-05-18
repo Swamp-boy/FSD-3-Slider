@@ -93,8 +93,10 @@ class MultiToddler {
                 this.min, this.max, this.step);
             path -= this.toddler1.offsetWidth / 2;
             
-            if (path >= this.toddler2Pos - this.step) {
-                path = this.toddler2Pos - this.step
+            const stepLength = this.sliderField.offsetWidth / ((this.max - this.min) / this.step);
+
+            if (path >= (this.toddler2Pos - stepLength )) {
+                path = this.toddler2Pos - stepLength;
             }
             this.toddler1Pos = path - this.toddler1.offsetWidth / 2;
             
@@ -111,8 +113,10 @@ class MultiToddler {
                 this.min, this.max, this.step);
             path -= this.toddler2.offsetWidth / 2;
             
-            if (path <= this.toddler1Pos + this.step) {
-                path = this.toddler1Pos + this.step
+            const stepLength = this.sliderField.offsetWidth / ((this.max - this.min) / this.step);
+
+            if (path <= this.toddler1Pos + stepLength) {
+                path = this.toddler1Pos + stepLength + this.toddler2.offsetWidth / 2
             }
             this.toddler2Pos = path - this.toddler2.offsetWidth / 2;
             

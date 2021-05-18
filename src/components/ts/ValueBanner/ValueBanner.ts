@@ -16,8 +16,10 @@ class ValueBanner {
     private toddler: HTMLElement;
     private sliderField: HTMLElement;
     private valueBanner: HTMLElement;
+    private valueBanner2: HTMLElement;
     private valueBannerArrow: HTMLElement;
     private valueSpan: HTMLElement;
+    private valueSpan2: HTMLElement;
 
     constructor(value: number, multiValue: number[], orientation: string, sliderField: HTMLElement,
         toddler: HTMLElement, min:number, max:number, step:number) {
@@ -39,6 +41,62 @@ class ValueBanner {
         } else {
             this.createValueWindow();
         }
+    }
+
+    private createValueWindow(): void {
+        this.valueBannerContainer = document.createElement('div');
+        this.valueBannerContainer.classList.add('js-circle-container');
+
+        this.valueBanner = document.createElement('div');
+        this.valueBanner.classList.add('js-num-circle');
+
+        // need create nothing meters element to get text width
+        this.valueSpan = document.createElement('span');
+        this.valueSpan.innerHTML = String(this.value);
+        this.valueBanner.appendChild(this.valueSpan);
+
+        this.valueBannerArrow = document.createElement('div');
+        this.valueBannerArrow.classList.add('js-numcircle-arrow');
+
+        this.valueBannerContainer.appendChild(this.valueBanner);
+        this.valueBannerContainer.appendChild(this.valueBannerArrow);
+    }
+
+    private createFirstValueWindow(): void {
+        this.valueBannerContainer1 = document.createElement('div');
+        this.valueBannerContainer1.classList.add('js-circle-container');
+
+        this.valueBanner = document.createElement('div');
+        this.valueBanner.classList.add('js-num-circle');
+
+        // need create nothing meters element to get text width
+        this.valueSpan = document.createElement('span');
+        this.valueSpan.innerHTML = String(this.multiValue[0]);
+        this.valueBanner.appendChild(this.valueSpan);
+
+        this.valueBannerArrow = document.createElement('div');
+        this.valueBannerArrow.classList.add('js-numcircle-arrow');
+
+        this.valueBannerContainer1.appendChild(this.valueBanner);
+        this.valueBannerContainer1.appendChild(this.valueBannerArrow);
+    }
+
+    private createSecondValueWindow(): void {
+        this.valueBannerContainer2 = document.createElement('div');
+        this.valueBannerContainer2.classList.add('js-circle-container');
+
+        this.valueBanner2 = document.createElement('div');
+        this.valueBanner2.classList.add('js-num-circle');
+        // need create nothing meters element to get text width
+        this.valueSpan2 = document.createElement('span');
+        this.valueSpan2.innerHTML = String(this.multiValue[1]);
+        this.valueBanner2.appendChild(this.valueSpan2);
+
+        this.valueBannerArrow = document.createElement('div');
+        this.valueBannerArrow.classList.add('js-numcircle-arrow');
+
+        this.valueBannerContainer2.appendChild(this.valueBanner2);
+        this.valueBannerContainer2.appendChild(this.valueBannerArrow);
     }
 
     public setOnPosition(): void {
@@ -90,6 +148,8 @@ class ValueBanner {
         } else {
             // TO DO vertical version
         }
+        this.valueSpan.innerHTML = String(this.multiValue[0]);
+        this.changeBannerWidth(); 
     }
 
     public moveSecondBanner(path: number): void {
@@ -100,6 +160,8 @@ class ValueBanner {
         } else {
             // TO DO vertical version
         }
+        this.valueSpan2.innerHTML = String(this.multiValue[1]);
+        this.changeBannerWidth(); 
     }
 
     private setStartPositionHorizontal(path: number): void {
@@ -128,7 +190,7 @@ class ValueBanner {
         const firstBannerLeft = path[0] - this.valueBanner.offsetWidth / 2 ;
         this.valueBannerContainer1.style.left = String(firstBannerLeft) + 'px';
          
-        const secondBannerLeft = path[1] - this.valueBanner.offsetWidth - this.valueBanner.offsetWidth / 2;
+        const secondBannerLeft = path[1] - this.valueBanner2.offsetWidth - this.valueBanner2.offsetWidth / 2;
         
         this.valueBannerContainer2.style.left = String(secondBannerLeft) + 'px';
         
@@ -147,7 +209,7 @@ class ValueBanner {
         this.valueBannerContainer.style.bottom = String(firstBannerBottom) + 'px';
         this.valueBannerContainer2.style.bottom = String(secondBannerBottom) + 'px';
 
-        const bannerRight = Math.max(this.sliderField.offsetWidth, this.toddler.offsetHeight) + this.valueBanner.offsetHeight - 10//margin for customization;
+        const bannerRight = Math.max(this.sliderField.offsetWidth, this.toddler.offsetHeight) + this.valueBanner.offsetHeight - 10 //margin for customization;
         this.valueBannerContainer.style.right = String(bannerRight) + 'px';
         this.valueBannerContainer2.style.right = String(bannerRight) + 'px';
     }
@@ -170,62 +232,6 @@ class ValueBanner {
             const arrowLeft = (this.valueBanner.offsetWidth / 2) - (this.valueBannerArrow.offsetWidth / 2);
             this.valueBannerArrow.style.left = String(arrowLeft) + 'px';
         } 
-    }
-
-    private createValueWindow(): void {
-        this.valueBannerContainer = document.createElement('div');
-        this.valueBannerContainer.classList.add('js-circle-container');
-
-        this.valueBanner = document.createElement('div');
-        this.valueBanner.classList.add('js-num-circle');
-
-        // need create nothing meters element to get text width
-        this.valueSpan = document.createElement('span');
-        this.valueSpan.innerHTML = String(this.value);
-        this.valueBanner.appendChild(this.valueSpan);
-
-        this.valueBannerArrow = document.createElement('div');
-        this.valueBannerArrow.classList.add('js-numcircle-arrow');
-
-        this.valueBannerContainer.appendChild(this.valueBanner);
-        this.valueBannerContainer.appendChild(this.valueBannerArrow);
-    }
-
-    private createFirstValueWindow(): void {
-        this.valueBannerContainer1 = document.createElement('div');
-        this.valueBannerContainer1.classList.add('js-circle-container');
-
-        this.valueBanner = document.createElement('div');
-        this.valueBanner.classList.add('js-num-circle');
-
-        // need create nothing meters element to get text width
-        this.valueSpan = document.createElement('span');
-        this.valueSpan.innerHTML = String(this.multiValue[0]);
-        this.valueBanner.appendChild(this.valueSpan);
-
-        this.valueBannerArrow = document.createElement('div');
-        this.valueBannerArrow.classList.add('js-numcircle-arrow');
-
-        this.valueBannerContainer1.appendChild(this.valueBanner);
-        this.valueBannerContainer1.appendChild(this.valueBannerArrow);
-    }
-
-    private createSecondValueWindow(): void {
-        this.valueBannerContainer2 = document.createElement('div');
-        this.valueBannerContainer2.classList.add('js-circle-container');
-
-        this.valueBanner = document.createElement('div');
-        this.valueBanner.classList.add('js-num-circle');
-        // need create nothing meters element to get text width
-        this.valueSpan = document.createElement('span');
-        this.valueSpan.innerHTML = String(this.multiValue[1]);
-        this.valueBanner.appendChild(this.valueSpan);
-
-        this.valueBannerArrow = document.createElement('div');
-        this.valueBannerArrow.classList.add('js-numcircle-arrow');
-
-        this.valueBannerContainer2.appendChild(this.valueBanner);
-        this.valueBannerContainer2.appendChild(this.valueBannerArrow);
     }
 }
 
