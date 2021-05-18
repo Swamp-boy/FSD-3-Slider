@@ -27,7 +27,7 @@ import Presenter from './components/ts/Presenter/Presenter';
 
 const sl1 = $('#slider1').slider({
     min: 0,
-    max: 100,
+    max: 100000,
     step: 15,
     //multiValue: [30, 60],
     value: 0,
@@ -63,9 +63,9 @@ const sl3 = $('#slider3').slider({
 
 const sl4 = $('#slider4').slider({
     min: 0,
-    max: 100,
+    max: 100000,
     step: 1,
-    multiValue: [20, 40],
+    multiValue: [0, 4000],
     orientation: 'horizontal',
     progressBar: true,
     valueBanner: true,

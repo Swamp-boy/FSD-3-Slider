@@ -18,6 +18,7 @@ class ValueBanner {
     private valueBanner: HTMLElement;
     private valueBanner2: HTMLElement;
     private valueBannerArrow: HTMLElement;
+    private valueBannerArrow2: HTMLElement;
     private valueSpan: HTMLElement;
     private valueSpan2: HTMLElement;
 
@@ -68,7 +69,6 @@ class ValueBanner {
 
         this.valueBanner = document.createElement('div');
         this.valueBanner.classList.add('js-num-circle');
-
         // need create nothing meters element to get text width
         this.valueSpan = document.createElement('span');
         this.valueSpan.innerHTML = String(this.multiValue[0]);
@@ -92,11 +92,11 @@ class ValueBanner {
         this.valueSpan2.innerHTML = String(this.multiValue[1]);
         this.valueBanner2.appendChild(this.valueSpan2);
 
-        this.valueBannerArrow = document.createElement('div');
-        this.valueBannerArrow.classList.add('js-numcircle-arrow');
+        this.valueBannerArrow2 = document.createElement('div');
+        this.valueBannerArrow2.classList.add('js-numcircle-arrow');
 
         this.valueBannerContainer2.appendChild(this.valueBanner2);
-        this.valueBannerContainer2.appendChild(this.valueBannerArrow);
+        this.valueBannerContainer2.appendChild(this.valueBannerArrow2);
     }
 
     public setOnPosition(): void {
@@ -161,7 +161,7 @@ class ValueBanner {
             // TO DO vertical version
         }
         this.valueSpan2.innerHTML = String(this.multiValue[1]);
-        this.changeBannerWidth(); 
+        this.changeBanner2Width(); 
     }
 
     private setStartPositionHorizontal(path: number): void {
@@ -231,6 +231,26 @@ class ValueBanner {
 
             const arrowLeft = (this.valueBanner.offsetWidth / 2) - (this.valueBannerArrow.offsetWidth / 2);
             this.valueBannerArrow.style.left = String(arrowLeft) + 'px';
+        } 
+    }
+
+    private changeBanner2Width() {
+        // get text width
+        const valueWidth = this.valueSpan2.offsetWidth;
+        // change banner width if text is too big
+        if (valueWidth + 15 >= this.valueBanner2.offsetWidth) {
+            this.valueBanner2.style.width = String(valueWidth + 10) + 'px';
+
+            const arrowLeft = (this.valueBanner2.offsetWidth / 2) - (this.valueBannerArrow2.offsetWidth / 2);
+            this.valueBannerArrow2.style.left = String(arrowLeft) + 'px';
+        }
+        // change banner width if text is too small
+        if ((valueWidth + 20) >= this.valueBanner2.offsetWidth && (valueWidth +10) > 35) {
+            
+            this.valueBanner2.style.width = String(valueWidth + 10) + 'px';
+
+            const arrowLeft = (this.valueBanner2.offsetWidth / 2) - (this.valueBannerArrow2.offsetWidth / 2);
+            this.valueBannerArrow2.style.left = String(arrowLeft) + 'px';
         } 
     }
 }
