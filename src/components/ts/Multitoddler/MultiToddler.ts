@@ -6,8 +6,9 @@ class MultiToddler {
     private min: number;
     private max: number;
     private step: number;
-    private firstToddlerPushed: boolean;
-    private lastToddlerPushed: boolean;
+    // have to be public for value banners
+    public firstToddlerPushed: boolean;
+    public lastToddlerPushed: boolean;
 
     public toddler1: HTMLElement;
     public toddler2: HTMLElement;
@@ -96,11 +97,12 @@ class MultiToddler {
                 path = this.toddler2Pos - this.step
             }
             this.toddler1Pos = path - this.toddler1.offsetWidth / 2;
+            
 
             this.orientation === 'horizontal' ?
             this.toddler1.style.left = `${path}px` :
             this.toddler1.style.bottom = `${path}px`;
-        
+            
             this.givePresenterValue([this.toddler1Pos, this.toddler2Pos]);
             
         }

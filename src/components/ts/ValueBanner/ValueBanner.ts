@@ -81,26 +81,26 @@ class ValueBanner {
 
         this.changeBannerWidth(); 
     }
-    // ====================================================
-    public bannerMoveMulti(path: number[]): void {
+    
+    public moveFirstBanner(path: number): void {
         if (this.orientation === 'horizontal') {
-            
             const centring = 5;
-            const firstBannerLeft = path[0] + centring;
-            const secondBannerLeft = path[1] - this.valueBanner.offsetWidth + centring;
-
-            this.valueBannerContainer1.style.left = String(firstBannerLeft) + 'px';
-            this.valueBannerContainer2.style.left = String(secondBannerLeft) + 'px';
-            console.log(secondBannerLeft)
-        }    
-        else {
-            const centering = 6;
-            const bannerBottom = path[1] + this.toddler.offsetWidth / 2 + this.valueBanner.offsetWidth / 2 - centering;
-            this.valueBannerContainer.style.bottom = String(bannerBottom) + 'px';
+            const bannerLeft = path + centring;
+            this.valueBannerContainer1.style.left = String(bannerLeft) + 'px';
+        } else {
+            // TO DO vertical version
         }
     }
 
-    
+    public moveSecondBanner(path: number): void {
+        if (this.orientation === 'horizontal') {
+            const centring = 5;
+            const bannerLeft = path - this.valueBanner.offsetWidth + centring;
+            this.valueBannerContainer2.style.left = String(bannerLeft) + 'px';
+        } else {
+            // TO DO vertical version
+        }
+    }
 
     private setStartPositionHorizontal(path: number): void {
         // set banner center over toddler

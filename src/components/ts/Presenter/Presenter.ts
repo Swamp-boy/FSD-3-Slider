@@ -106,12 +106,12 @@ class Presenter {
         // TO DO: check and send value to value banner
         if (this.mainView.valueBanner !== undefined) {
             this.changeRangeObs.subscribe(this.mainView.sendValueToValueBanner.bind(this.mainView));
-            this.changeRangeObs.subscribe(this.mainView.valueBanner.bannerMoveMulti.bind(this.mainView.valueBanner));
+            this.changeRangeObs.subscribe(this.mainView.moveBannerMulti.bind(this.mainView));
         }
         
         // TO DO: check and send value to progress bar
         if (this.mainView.progressBar !== undefined) {
-            this.changeRangeObs.subscribe(this.mainView.progressBar.progressBarChangeRange.bind(this.mainView.progressBar));
+            this.changeRangeObs.subscribe(this.mainView.moveProgressBarMulti.bind(this.mainView));
         }
     }
 

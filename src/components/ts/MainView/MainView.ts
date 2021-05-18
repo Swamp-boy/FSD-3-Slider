@@ -98,11 +98,11 @@ class MainView {
         if (this.sliderType === 'multi') {
             const pathArray = [];
             pathArray.push(getPathFromValue(this.multiValue[0],
-                this.sliderField, this.toddler, this.orientation, this.min, this.max, this.step) - this.toddler.offsetWidth / 2 );
+                this.sliderField, this.toddler, this.orientation, this.min, this.max, this.step) - this.toddler.offsetWidth);
             pathArray.push(getPathFromValue(this.multiValue[1],
-                this.sliderField, this.toddler, this.orientation, this.min, this.max, this.step) - this.toddler.offsetWidth / 2);
+                this.sliderField, this.toddler, this.orientation, this.min, this.max, this.step) - this.toddler.offsetWidth);
             
-            this.progressBar.progressBarChangeRange(pathArray);
+            this.progressBar.setRangeProgressBar(pathArray);
         }
         
         this.sliderField.appendChild(this.progressBar.progressBar);
@@ -156,6 +156,30 @@ class MainView {
         this.scale = this.valueScale.valueScale;
         this.container.appendChild(this.scale);
     }
+
+    public moveBannerMulti(path: number[]): void {
+        if (this.baseSlider instanceof MultiToddler) {
+            if (this.baseSlider.firstToddlerPushed === true) {
+                this.valueBanner.moveFirstBanner(path[0]);
+            }
+            if (this.baseSlider.lastToddlerPushed === true) {
+                this.valueBanner.moveSecondBanner(path[1]);
+            }
+        }
+    }
+
+    public moveProgressBarMulti(path: number[]): void {
+        if (this.baseSlider instanceof MultiToddler) {
+            if (this.baseSlider.firstToddlerPushed === true) {
+                this.progressBar.progressBarChangeLeft(path[0]);
+            }
+            if (this.baseSlider.lastToddlerPushed === true) {
+                this.progressBar.progressBarChangeRight(path[1]);
+            }
+        }
+    }
+    
+        
 }
 
 export default MainView;

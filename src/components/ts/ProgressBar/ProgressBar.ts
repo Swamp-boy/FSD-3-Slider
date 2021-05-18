@@ -35,16 +35,36 @@ export default class ProgressBar {
         }
     }
 
-    public progressBarChangeRange(path: number[]): void {
+    public setRangeProgressBar(path: number[]): void {
         if (this.orientation === 'vertical') {
             const top = path[0] - this.toddlerWidth / 2;
             const bot = path[1] - this.toddlerWidth / 2;
             this.progressBar.style.top = String(top) + 'px';
             this.progressBar.style.bottom = String(bot) + 'px';
         } else {
-            const left = path[0] + this.toddlerWidth / 2;
-            const right = this.sliderFieldWidth - path[1] - this.toddlerWidth / 2;
+            const left = path[0] + this.toddlerWidth ;
+            const right = this.sliderFieldWidth - path[1] - this.toddlerWidth;
             this.progressBar.style.left = String(left) + 'px';
+            this.progressBar.style.right = String(right) + 'px';
+        }
+    }
+
+    public progressBarChangeLeft(path: number): void {
+        if (this.orientation === 'vertical') {
+            const top = path - this.toddlerWidth / 2;
+            this.progressBar.style.top = String(top) + 'px';
+        } else {
+            const left = path + this.toddlerWidth;
+            this.progressBar.style.left = String(left) + 'px';
+        }
+    }
+
+    public progressBarChangeRight(path: number): void {
+        if (this.orientation === 'vertical') {
+            const bot = path - this.toddlerWidth / 2;
+            this.progressBar.style.bottom = String(bot) + 'px';
+        } else {
+            const right = this.sliderFieldWidth - path - this.toddlerWidth ;
             this.progressBar.style.right = String(right) + 'px';
         }
     }
