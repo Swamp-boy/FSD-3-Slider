@@ -37,10 +37,10 @@ export default class ProgressBar {
 
     public setRangeProgressBar(path: number[]): void {
         if (this.orientation === 'vertical') {
-            const top = path[0] - this.toddlerWidth / 2;
-            const bot = path[1] - this.toddlerWidth / 2;
+            const bottom = path[0] + this.toddlerWidth;
+            this.progressBar.style.bottom = String(bottom) + 'px';
+            const top = this.sliderFieldWidth - path[1] - this.toddlerWidth;
             this.progressBar.style.top = String(top) + 'px';
-            this.progressBar.style.bottom = String(bot) + 'px';
         } else {
             const left = path[0] + this.toddlerWidth ;
             const right = this.sliderFieldWidth - path[1] - this.toddlerWidth;
@@ -51,8 +51,8 @@ export default class ProgressBar {
 
     public progressBarChangeLeft(path: number): void {
         if (this.orientation === 'vertical') {
-            const top = path - this.toddlerWidth / 2;
-            this.progressBar.style.top = String(top) + 'px';
+            const bottom = path + this.toddlerWidth;
+            this.progressBar.style.bottom = String(bottom) + 'px';
         } else {
             const left = path + this.toddlerWidth;
             this.progressBar.style.left = String(left) + 'px';
@@ -61,8 +61,8 @@ export default class ProgressBar {
 
     public progressBarChangeRight(path: number): void {
         if (this.orientation === 'vertical') {
-            const bot = path - this.toddlerWidth / 2;
-            this.progressBar.style.bottom = String(bot) + 'px';
+            const top = this.sliderFieldWidth - path - this.toddlerWidth;
+            this.progressBar.style.top = String(top) + 'px';
         } else {
             const right = this.sliderFieldWidth - path - this.toddlerWidth ;
             this.progressBar.style.right = String(right) + 'px';

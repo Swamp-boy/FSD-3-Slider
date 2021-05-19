@@ -194,23 +194,23 @@ class ValueBanner {
         
         this.valueBannerContainer2.style.left = String(secondBannerLeft) + 'px';
         
-        const bannerBottom = Math.max(this.sliderField.offsetHeight, this.toddler.offsetHeight) + this.valueBanner.offsetHeight + 10//margin for customization;  
+        const bannerBottom = Math.max(this.sliderField.offsetHeight, this.toddler.offsetHeight) + this.valueBanner.offsetHeight + 10 // margin for customization;  
         this.valueBannerContainer1.style.bottom = String(bannerBottom) + 'px';
         this.valueBannerContainer2.style.bottom = String(bannerBottom) + 'px';
     }
 
     private setStartPositionVerticalMulti(path: number[]): void {
-        this.valueBannerContainer.classList.add('js-value-banner-container_vertical');
+        this.valueBannerContainer1.classList.add('js-value-banner-container_vertical');
         this.valueBannerContainer2.classList.add('js-value-banner-container_vertical');
         
-        const firstBannerBottom = path[0] + this.toddler.offsetWidth / 2;
-        const secondBannerBottom = path[1] + this.toddler.offsetWidth / 2;
+        const firstBannerBottom = path[0] + this.toddler.offsetWidth / 2 + 1;
+        const secondBannerBottom = path[1] + this.valueBanner2.offsetWidth  + 2;
 
-        this.valueBannerContainer.style.bottom = String(firstBannerBottom) + 'px';
+        this.valueBannerContainer1.style.bottom = String(firstBannerBottom) + 'px';
         this.valueBannerContainer2.style.bottom = String(secondBannerBottom) + 'px';
 
-        const bannerRight = Math.max(this.sliderField.offsetWidth, this.toddler.offsetHeight) + this.valueBanner.offsetHeight - 10 //margin for customization;
-        this.valueBannerContainer.style.right = String(bannerRight) + 'px';
+        const bannerRight = Math.max(this.sliderField.offsetWidth, this.toddler.offsetHeight) + this.valueBanner.offsetHeight; 
+        this.valueBannerContainer1.style.right = String(bannerRight) + 'px';
         this.valueBannerContainer2.style.right = String(bannerRight) + 'px';
     }
 
@@ -226,7 +226,6 @@ class ValueBanner {
         }
         // change banner width if text is too small
         if ((valueWidth + 20) >= this.valueBanner.offsetWidth && (valueWidth +10) > 35) {
-            
             this.valueBanner.style.width = String(valueWidth + 10) + 'px';
 
             const arrowLeft = (this.valueBanner.offsetWidth / 2) - (this.valueBannerArrow.offsetWidth / 2);

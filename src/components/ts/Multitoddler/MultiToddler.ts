@@ -55,7 +55,7 @@ class MultiToddler {
         if (this.orientation === 'horizontal') {
             const fieldHeight = this.sliderField.offsetHeight;
             const firstToddlerHeight = this.toddler1.offsetHeight;
-            const secondToddlerHeight = this.toddler1.offsetHeight;
+            const secondToddlerHeight = this.toddler2.offsetHeight;
             
             const marginTopForFirst = fieldHeight / 2 - firstToddlerHeight / 2;
             const marginTopForSecond = fieldHeight / 2 - secondToddlerHeight / 2;
@@ -70,7 +70,21 @@ class MultiToddler {
             this.toddler2.style.left = String(this.toddler2Pos) + 'px';
         }
         if (this.orientation === 'vertical') {
-            
+            const fieldHeight = this.sliderField.offsetWidth;
+            const firstToddlerHeight = this.toddler1.offsetWidth;
+            const secondToddlerHeight = this.toddler2.offsetWidth;
+
+            const marginTopForFirst = fieldHeight / 2 - firstToddlerHeight / 2;
+            const marginTopForSecond = fieldHeight / 2 - secondToddlerHeight / 2;
+
+            this.toddler1.style.left = String(marginTopForFirst) + 'px';
+            this.toddler2.style.left = String(marginTopForSecond) + 'px';
+
+            this.toddler1Pos = path[0] - this.toddler1.offsetWidth / 2;
+            this.toddler2Pos = path[1] - this.toddler2.offsetWidth / 2;
+
+            this.toddler1.style.bottom = String(this.toddler1Pos) + 'px';
+            this.toddler2.style.bottom = String(this.toddler2Pos) + 'px';
         }
     }
     // Events methods
