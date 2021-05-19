@@ -146,7 +146,8 @@ class ValueBanner {
             const bannerLeft = path + centring;
             this.valueBannerContainer1.style.left = String(bannerLeft) + 'px';
         } else {
-            // TO DO vertical version
+            const bannerBottom = path + this.valueBanner.offsetWidth;
+            this.valueBannerContainer1.style.bottom = String(bannerBottom) + 'px';
         }
         this.valueSpan.innerHTML = String(this.multiValue[0]);
         this.changeBannerWidth(); 
@@ -158,7 +159,9 @@ class ValueBanner {
             const bannerLeft = path - this.valueBanner.offsetWidth + centring;
             this.valueBannerContainer2.style.left = String(bannerLeft) + 'px';
         } else {
-            // TO DO vertical version
+            const centring = 7;
+            const bannerTop = path + this.valueBanner2.offsetWidth + this.valueBanner2.offsetWidth / 2 + centring;
+            this.valueBannerContainer2.style.bottom = String(bannerTop) + 'px';
         }
         this.valueSpan2.innerHTML = String(this.multiValue[1]);
         this.changeBanner2Width(); 
