@@ -137,7 +137,7 @@ class ValueBanner {
             
         this.valueSpan.innerHTML = String(this.value);
 
-        this.changeBannerWidth(); 
+        
     }
     
     public moveFirstBanner(path: number): void {
@@ -150,7 +150,7 @@ class ValueBanner {
             this.valueBannerContainer1.style.bottom = String(bannerBottom) + 'px';
         }
         this.valueSpan.innerHTML = String(this.multiValue[0]);
-        this.changeBannerWidth(); 
+        
     }
 
     public moveSecondBanner(path: number): void {
@@ -164,7 +164,7 @@ class ValueBanner {
             this.valueBannerContainer2.style.bottom = String(bannerTop) + 'px';
         }
         this.valueSpan2.innerHTML = String(this.multiValue[1]);
-        this.changeBanner2Width(); 
+        
     }
 
     private setStartPositionHorizontal(path: number): void {
@@ -217,6 +217,9 @@ class ValueBanner {
         this.valueBannerContainer2.style.right = String(bannerRight) + 'px';
     }
 
+    // TO DO this method dosnt work with vertical orientation
+    // and display inline-block 
+    /*
     private changeBannerWidth() {
         // get text width
         const valueWidth = this.valueSpan.offsetWidth;
@@ -227,13 +230,15 @@ class ValueBanner {
             const arrowLeft = (this.valueBanner.offsetWidth / 2) - (this.valueBannerArrow.offsetWidth / 2);
             this.valueBannerArrow.style.left = String(arrowLeft) + 'px';
         }
+        
         // change banner width if text is too small
-        if ((valueWidth + 20) >= this.valueBanner.offsetWidth && (valueWidth +10) > 35) {
-            this.valueBanner.style.width = String(valueWidth + 10) + 'px';
+        if ((valueWidth + 20) >= this.valueBanner.offsetWidth && (valueWidth - 10) > 35) {
+            this.valueBanner.style.width = String(valueWidth - 10) + 'px';
 
             const arrowLeft = (this.valueBanner.offsetWidth / 2) - (this.valueBannerArrow.offsetWidth / 2);
             this.valueBannerArrow.style.left = String(arrowLeft) + 'px';
         } 
+        
     }
 
     private changeBanner2Width() {
@@ -254,7 +259,8 @@ class ValueBanner {
             const arrowLeft = (this.valueBanner2.offsetWidth / 2) - (this.valueBannerArrow2.offsetWidth / 2);
             this.valueBannerArrow2.style.left = String(arrowLeft) + 'px';
         } 
-    }
+}
+    */
 }
 
 export default ValueBanner;

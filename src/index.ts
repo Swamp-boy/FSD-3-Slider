@@ -24,7 +24,7 @@ import Presenter from './components/ts/Presenter/Presenter';
         
     };
 })(jQuery);
-
+/*
 const sl1 = $('#slider1').slider({
     min: 0,
     max: 100000,
@@ -41,34 +41,35 @@ const sl1 = $('#slider1').slider({
 
 const sl2 = $('#slider2').slider({
     min: 0,
-    max: 100,
+    max: 100000,
     step: 1,
-    //value: 50,
-    multiValue: [30, 60],
+    value: 50,
+    //multiValue: [30, 60],
     orientation: 'vertical',
     progressBar: true,
     valueBanner: true,
-    minMaxFields: true,
+    //minMaxFields: true,
 });
-
+*/
 const sl3 = $('#slider3').slider({
     min: 0,
     max: 100,
     step: 15,
-    multiValue: [30, 60],
+    multiValue: [45, 60],
     orientation: 'horizontal',
-    progressBar: true,
+    progressBar: false,
     valueBanner: true,
     minMaxFields: true,
 });
-
+/*
 const sl4 = $('#slider4').slider({
     min: 0,
-    max: 100000,
+    max: 100,
     step: 1,
-    multiValue: [0, 4000],
+    multiValue: [0, 50],
     orientation: 'vertical',
     progressBar: true,
     valueBanner: true,
     minMaxFields: true,
 });
+*/

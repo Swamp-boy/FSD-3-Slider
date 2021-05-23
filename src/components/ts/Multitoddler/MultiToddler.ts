@@ -86,6 +86,8 @@ class MultiToddler {
             this.toddler1.style.bottom = String(this.toddler1Pos) + 'px';
             this.toddler2.style.bottom = String(this.toddler2Pos) + 'px';
         }
+        console.log(`toddler1 = ${this.toddler1Pos}`);
+        console.log(`toddler2 = ${this.toddler2Pos}`);
     }
     // Events methods
     private mouseOnStartToddler(): void {
@@ -108,39 +110,46 @@ class MultiToddler {
             path -= this.toddler1.offsetWidth / 2;
             
             const stepLength = this.sliderField.offsetWidth / ((this.max - this.min) / this.step);
-
-            if (path >= (this.toddler2Pos - stepLength )) {
-                path = this.toddler2Pos - stepLength;
-            }
-            this.toddler1Pos = path - this.toddler1.offsetWidth / 2;
+            const stepPath = Math.floor(this.sliderField.offsetWidth / stepLength) * stepLength
             
+            if (path >= (this.toddler2Pos + this.toddler1.offsetWidth / 2 - stepLength)) {
+                path = this.toddler2Pos - stepLength;
+                this.toddler1Pos = path - this.toddler1.offsetWidth / 2;
+            } else {
+                
+                this.toddler1Pos = path - this.toddler1.offsetWidth / 2;
+                
+            }
+            this.givePresenterValue([this.toddler1Pos, this.toddler2Pos]);
 
             this.orientation === 'horizontal' ?
             this.toddler1.style.left = `${path}px` :
             this.toddler1.style.bottom = `${path}px`;
             
-            this.givePresenterValue([this.toddler1Pos, this.toddler2Pos]);
-            
+            this.toddler1Pos += this.toddler1.offsetWidth / 2;
         }
         if (this.lastToddlerPushed === true) {
             let path = getPathFromMousePosMulti(e, this.sliderField, this.toddler2, this.orientation,
                 this.min, this.max, this.step);
-            path -= this.toddler2.offsetWidth / 2;
             
             const stepLength = this.sliderField.offsetWidth / ((this.max - this.min) / this.step);
-
-            if (path <= this.toddler1Pos + stepLength) {
-                path = this.toddler1Pos + stepLength + this.toddler2.offsetWidth / 2
-            }
-            this.toddler2Pos = path - this.toddler2.offsetWidth / 2;
             
+            if (path <= this.toddler1Pos + this.toddler2.offsetWidth / 2 + stepLength) {
+                path = this.toddler1Pos + stepLength;
+                this.toddler2Pos = path - this.toddler2.offsetWidth / 2;
+            } else {
+                path -= this.toddler2.offsetWidth / 2;
+                this.toddler2Pos = path - this.toddler1.offsetWidth / 2;
+            }
+            this.givePresenterValue([this.toddler1Pos, this.toddler2Pos]);
+
             this.orientation === 'horizontal' ?
             this.toddler2.style.left = `${path}px` :
-            this.toddler2.style.bottom = `${path}px`;
-        
-            this.givePresenterValue([this.toddler1Pos, this.toddler2Pos]);
+                this.toddler2.style.bottom = `${path}px`;
+            
+            this.toddler2Pos += this.toddler2.offsetWidth / 2;
+            
         }
-        
     }
 }
 
