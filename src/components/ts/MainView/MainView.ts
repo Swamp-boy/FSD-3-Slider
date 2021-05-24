@@ -8,6 +8,8 @@ import ValueScale from './../ValueScale/ValueScale';
 
 import { getPathFromValue, getIntervalsNum } from './../CalculateFunctions';
 
+import ScaleSettings from './../interfaces/ScaleSettings';
+
 class MainView {
     public sliderType: string;
     public container: HTMLElement;
@@ -19,23 +21,23 @@ class MainView {
     public orientation: string;
 
     //slider elements
-    sliderField: HTMLElement;
-    toddler: HTMLElement;
+    public sliderField: HTMLElement;
+    public toddler: HTMLElement;
     //if multi toddlers
-    toddler1: HTMLElement;
-    toddler2: HTMLElement;
-    bar: HTMLElement;
-    banner: HTMLElement;
-    minField: HTMLElement;
-    maxField: HTMLElement;
-    scale: HTMLElement;
+    public toddler1: HTMLElement;
+    public toddler2: HTMLElement;
+    public bar: HTMLElement;
+    public banner: HTMLElement;
+    public minField: HTMLElement;
+    public maxField: HTMLElement;
+    public scale: HTMLElement;
 
     // Sub views
-    baseSlider: DefaultToddlerField | MultiToddler;
-    progressBar: ProgressBar;
-    valueBanner: ValueBanner
-    minMaxField: MinMaxFields;
-    valueScale: ValueScale;
+    public baseSlider: DefaultToddlerField | MultiToddler;
+    public progressBar: ProgressBar;
+    public valueBanner: ValueBanner
+    public minMaxField: MinMaxFields;
+    public valueScale: ValueScale;
 
     constructor(container: HTMLElement) {
         this.container = container;
@@ -147,12 +149,9 @@ class MainView {
         this.maxField = this.minMaxField.maxField;
     }
 
-    public createValueScale(valueMarks:number): void {
-        this.valueScale = new ValueScale(this.sliderField, valueMarks);
-        
-        this.valueScale.createScale();
-        this.valueScale.createLineMarks();
-
+    public createValueScale(scaleSettings:ScaleSettings): void {
+        this.valueScale = new ValueScale(this.sliderField, scaleSettings);
+        this.valueScale.execute();
         this.scale = this.valueScale.valueScale;
         this.container.appendChild(this.scale);
     }

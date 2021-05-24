@@ -86,8 +86,6 @@ class MultiToddler {
             this.toddler1.style.bottom = String(this.toddler1Pos) + 'px';
             this.toddler2.style.bottom = String(this.toddler2Pos) + 'px';
         }
-        console.log(`toddler1 = ${this.toddler1Pos}`);
-        console.log(`toddler2 = ${this.toddler2Pos}`);
     }
     // Events methods
     private mouseOnStartToddler(): void {
@@ -110,7 +108,6 @@ class MultiToddler {
             path -= this.toddler1.offsetWidth / 2;
             
             const stepLength = this.sliderField.offsetWidth / ((this.max - this.min) / this.step);
-            const stepPath = Math.floor(this.sliderField.offsetWidth / stepLength) * stepLength
             
             if (path >= (this.toddler2Pos + this.toddler1.offsetWidth / 2 - stepLength)) {
                 path = this.toddler2Pos - stepLength;

@@ -24,21 +24,29 @@ import Presenter from './components/ts/Presenter/Presenter';
         
     };
 })(jQuery);
-/*
+
 const sl1 = $('#slider1').slider({
     min: 0,
-    max: 100000,
-    step: 15,
+    max: 100,
+    step: 10,
     //multiValue: [30, 60],
     value: 0,
     orientation: 'horizontal',
     progressBar: true,
     valueBanner: true,
     minMaxFields: false,
-    //valueScale: true,
-    //marksNum: 3,
+    valueScale: true,
+    /*
+    scaleSettings: {
+        separatorsHeight: 20,
+        separatorsWidth: 5,
+        separatorsNum: 3,
+    }
+    */
+    
 });
 
+/*
 const sl2 = $('#slider2').slider({
     min: 0,
     max: 100000,
@@ -50,18 +58,18 @@ const sl2 = $('#slider2').slider({
     valueBanner: true,
     //minMaxFields: true,
 });
-*/
+
 const sl3 = $('#slider3').slider({
     min: 0,
     max: 100,
     step: 15,
-    multiValue: [45, 60],
+    multiValue: [45, 100],
     orientation: 'horizontal',
     progressBar: false,
     valueBanner: true,
     minMaxFields: true,
 });
-/*
+
 const sl4 = $('#slider4').slider({
     min: 0,
     max: 100,

@@ -1,37 +1,65 @@
+import ScaleSettings from '../interfaces/ScaleSettings';
+
 class ValueScale {
-    private valueMarks: number;
+    private scaleSettings: ScaleSettings;
     private sliderField: HTMLElement;
+    private scaleType: string;
+    private separatorsNum: number;
+    private separatorsHeight: number;
+    private separatorsWidth: number;
 
     public valueScale: HTMLElement;
 
-    constructor(sliderField: HTMLElement, valueMarks: number) {
+    constructor(sliderField: HTMLElement, scaleSettings: ScaleSettings) {
+        this.scaleSettings = scaleSettings;
         this.sliderField = sliderField;
-        this.valueMarks = valueMarks;
     }
 
-    public createScale(): void {
-        this.valueScale = document.createElement('div');
-        this.valueScale.classList.add('default-value-scale');
-    }
-
-    public createLineMarks(): void {
-        const intervalsBlock = document.createElement('div');
-        intervalsBlock.classList.add('slider-line-block')
-        const interval = this.sliderField.getBoundingClientRect().width / this.valueMarks;
-        
-        for (let i = 0; i <= this.valueMarks; i++) {
-            const lineMark = document.createElement('div');
-            lineMark.classList.add('slider-line-mark');
-            if (i === 0) {
-                lineMark.style.left = `${i * interval}px`;
-            }
-            lineMark.style.left = `${i * interval}px`;
-            intervalsBlock.appendChild(lineMark);
+    public execute() {
+        this.checkSetDefaultSettings();
+        if (this.scaleType === 'default') {
+            this.createScale();
+            this.createSeparators();
         }
-        this.valueScale.appendChild(intervalsBlock);
     }
 
-    public createValueMarks(): void {
+    private createScale(): void {
+        this.valueScale = document.createElement('div');
+        this.valueScale.classList.add('js-default-value-scale');
+    }
+
+    private checkSetDefaultSettings(): void {
+        const scaleType = 'default';
+        const separatorsNum = 10;
+        const separatorsHeight = 8;
+        const separatorsWidth = 1;
+
+        this.scaleType = this.scaleSettings.scaleType === undefined ?
+            scaleType : this.scaleSettings.scaleType;
+
+        this.separatorsNum = this.scaleSettings.separatorsNum === undefined ?
+            separatorsNum : this.scaleSettings.separatorsNum;
+        
+        this.separatorsHeight = this.scaleSettings.separatorsHeight === undefined ?
+            separatorsHeight : this.scaleSettings.separatorsHeight;
+    
+        this.separatorsWidth = this.scaleSettings.separatorsWidth === undefined ?
+            separatorsWidth : this.scaleSettings.separatorsWidth;
+    }
+
+    private createSeparators(): void {
+        const interval = (this.sliderField.offsetWidth - this.separatorsWidth) / (this.separatorsNum);
+        
+        for (let i = 0; i <= this.separatorsNum; i++) {
+            const separator = document.createElement('div');
+            separator.classList.add('js-slider-separator');
+            // set width
+            separator.style.borderRight = `${this.separatorsWidth}px solid black`;
+            // set height
+            separator.style.paddingTop = `${this.separatorsHeight}px`;
+            separator.style.left = `${i * interval}px`;
+            this.valueScale.appendChild(separator);
+        }
 
     }
 }

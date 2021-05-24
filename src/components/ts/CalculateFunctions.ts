@@ -59,9 +59,15 @@ export function getPathFromMousePos(e: MouseEvent, sliderField: HTMLElement,
     
     let mousePos: number;
     if (orientation === 'horizontal') {
-        mousePos  = e.clientX - startPoint;
+        if (e.clientX > sliderField.getBoundingClientRect().right)
+            mousePos = sliderField.getBoundingClientRect().right - startPoint;
+        else
+            mousePos = e.clientX - startPoint;
     } else {
-        mousePos = startPoint - e.clientY;
+        if (e.clientY > sliderField.getBoundingClientRect().bottom)
+            mousePos = sliderField.getBoundingClientRect().bottom - startPoint;
+        else
+            mousePos = startPoint - e.clientY;
     }
     
     const stepInPx = fieldWidth / ((max - min) / step);
@@ -88,11 +94,16 @@ export function getPathFromMousePosMulti(e: MouseEvent, sliderField: HTMLElement
     
     let mousePos: number;
     if (orientation === 'horizontal') {
-        mousePos  = e.clientX - startPoint;
+        if (e.clientX > sliderField.getBoundingClientRect().right)
+            mousePos = sliderField.getBoundingClientRect().right - startPoint;
+        else
+            mousePos = e.clientX - startPoint;
     } else {
-        mousePos = startPoint - e.clientY;
+        if (e.clientY > sliderField.getBoundingClientRect().bottom)
+            mousePos = sliderField.getBoundingClientRect().bottom - startPoint;
+        else
+            mousePos = startPoint - e.clientY;
     }
-    
     const stepInPx = fieldWidth / ((max - min) / step);
     
     let path = Math.floor(mousePos / stepInPx) * stepInPx;

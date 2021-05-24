@@ -79,7 +79,7 @@ class Presenter {
         if (this.model.valueBanner === true) this.mainView.createBanner();
         if (this.model.minMaxFields === true) this.mainView.createMinMax();
         if (this.model.progressBar === true) this.mainView.createProgressBar();
-        if (this.model.valueScale === true) this.mainView.createValueScale(this.model.marksNum);
+        if (this.model.valueScale === true) this.mainView.createValueScale(this.model.scaleSettings);
         
     }
     

@@ -1,5 +1,6 @@
 import Options from './../interfaces/Options';
 import DefaultSettings from './../interfaces/DefaultSettigs';
+import ScaleSettings from '../interfaces/ScaleSettings';
 
 export default class Model {
     private options: Options;
@@ -20,6 +21,7 @@ export default class Model {
     public valueBanner?: boolean;
     public minMaxFields: boolean;
     public progressBar: boolean;
+    public scaleSettings: ScaleSettings;
     public valueScale: boolean;
 
     constructor(options: Options) {
@@ -32,6 +34,7 @@ export default class Model {
             step: 1,
             value: 0,
             multiValue: [],
+            scaleSettings: {},
             valueScale: false,
             
             marksNum:  this.getMarksNum(),
@@ -40,7 +43,8 @@ export default class Model {
             multiple: false,
             minMaxFields: false,
             progressBar: false,
-            orientation: 'horizontal', 
+            orientation: 'horizontal',
+            
         }
     }
 
@@ -51,7 +55,7 @@ export default class Model {
         this.valueBannerCheck();
         this.progressBarCheck();
         this.orientationCheck();
-        this.valueScaleCheck();
+        this.scaleSettingsCheck();
     }
     // TO DO: change all if bla === undef on obj.hasOwnProperty('prop') 
     private setValue(): void{
@@ -83,9 +87,9 @@ export default class Model {
         this.progressBar = this.options.progressBar === undefined ? this.defaultSet.progressBar : this.options.progressBar;
     }
 
-    private valueScaleCheck(): void{
+    private scaleSettingsCheck(): void {
         this.valueScale = this.options.valueScale === undefined ? this.defaultSet.valueScale : this.options.valueScale;
-        this.marksNum = this.options.marksNum === undefined ? (Math.round((this.max - this.min) / 10)) : this.options.marksNum;
+        this.scaleSettings = this.options.scaleSettings === undefined ? this.defaultSet.scaleSettings : this.options.scaleSettings;
     }
 
     private orientationCheck(): void {

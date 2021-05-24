@@ -1,3 +1,5 @@
+import ScaleSettings from './ScaleSettings';
+
 interface DefaultSettings {
     sliderType: string;
     min: number;
@@ -5,6 +7,7 @@ interface DefaultSettings {
     step: number;
     value: number;
     multiValue: number[],
+    scaleSettings: ScaleSettings,
     valueScale: boolean,
     marksNum: number,
     valueBanner: boolean,
@@ -13,7 +16,7 @@ interface DefaultSettings {
     minMaxFields: boolean,
     progressBar: boolean,
     
-    orientation: string, 
+    orientation: string,
 }
 
 export default DefaultSettings;
