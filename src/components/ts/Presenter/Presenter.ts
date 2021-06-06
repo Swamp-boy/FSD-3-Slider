@@ -65,11 +65,15 @@ class Presenter {
 
     private valueToView(model: Model) {
         if (this.sliderType === 'single'){
-            this.mainView.value = this.floorStep(model.value);    
+            this.mainView.value = this.floorStep(model.value);
+            this.mainView.valueInput.value = String(this.floorStep(model.value));
         }
         if (this.sliderType === 'multi') {
             this.mainView.multiValue = [this.floorStep(model.multiValue[0]),
-                                     this.floorStep(model.multiValue[1])];
+                this.floorStep(model.multiValue[1])];
+            
+            this.mainView.valueInput.value = String([this.floorStep(model.multiValue[0]),
+                this.floorStep(model.multiValue[1])]);
         }
     }
 
@@ -140,6 +144,8 @@ class Presenter {
         this.value = value;
         this.model.value = value;
         this.mainView.value = value;
+        
+        this.mainView.valueInput.value = String(value);
     }
 }
 

@@ -39,10 +39,16 @@ class MainView {
     public minMaxField: MinMaxFields;
     public valueScale: ValueScale;
 
+    //
+    public valueInput: HTMLInputElement;
+
     constructor(container: HTMLElement) {
         this.container = container;
-        this.container.classList.add('js-slider-container_def')
-        this.orientation === 'vertical' && this.container.classList.add('js-slider-container_vertical')
+        this.container.classList.add('js-container-clear');
+        this.container.classList.add('js-slider-container_def');
+        this.orientation === 'vertical' && this.container.classList.add('js-slider-container_vertical');
+
+        this.initInputField();
     }
     public sendValueToValueBanner(): void {
         this.sliderType === 'single' ? 
@@ -50,7 +56,7 @@ class MainView {
             this.valueBanner.multiValue = this.multiValue;
     }
     public createBaseSlider(): void {
-        this.baseSlider = new DefaultToddlerField( this.min, this.max, this.step, this.orientation);
+        this.baseSlider = new DefaultToddlerField(this.min, this.max, this.step, this.orientation);
         this.baseSlider.createField();
         this.baseSlider.createToddler();
         this.baseSlider.initializeEvents();
@@ -178,7 +184,12 @@ class MainView {
         }
     }
     
-        
+    private initInputField() {
+        this.valueInput = document.createElement('input');
+        this.valueInput.type = 'hidden';
+        this.valueInput.classList.add('js-slider-value-container');
+        this.container.appendChild(this.valueInput);
+    }    
 }
 
 export default MainView;

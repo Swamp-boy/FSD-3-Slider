@@ -6,31 +6,49 @@ import Model from './components/ts/Model/Model';
 import Presenter from './components/ts/Presenter/Presenter';      
 
 (function ($) {
-    jQuery.fn.slider = function (options: Options) {
-        /*
-        return this.each(function () {
-            if (!$.data(this, 'slider')) {
-                $.data(this, 'slider');
-            }
-        });
-        */
+    /*
+    const methods = {
+        slider: function (options: Options) {
+            return this.each(function () {
+                const view = new MainView(this);
+                const model = new Model(options);
+                const presenter = new Presenter(view, model);
+                presenter.slider();
+               
+            })
+        },
         
+    }
+    jQuery.fn.slider = function (method) {
+
+    }
+    */
+    
+    jQuery.fn.slider = function (options: Options) {
         return this.each(function () {
             const view = new MainView(this);
             const model = new Model(options);
             const presenter = new Presenter(view, model);
             presenter.slider();
+            
         })
-        
-    };
+    }
+
+    jQuery.fn.destroySlider = function () {
+        return this.get(0).innerHTML = '';
+    }
+
+    jQuery.fn.sliderVal = function () {
+        return Number(this.children('.js-slider-value-container').val())
+    }
 })(jQuery);
 
-const sl1 = $('#slider1').slider({
+$('#slider1').slider({
     min: 0,
     max: 100,
     step: 10,
     //multiValue: [30, 60],
-    value: 0,
+    value: 50,
     orientation: 'horizontal',
     progressBar: true,
     valueBanner: true,
@@ -45,6 +63,13 @@ const sl1 = $('#slider1').slider({
     */
     
 });
+console.log($('#slider1').sliderVal());
+
+
+
+// ================================================================================
+//$('#slider1 input').on('change', console.log($('#slider1 input').val()))
+
 
 /*
 const sl2 = $('#slider2').slider({
