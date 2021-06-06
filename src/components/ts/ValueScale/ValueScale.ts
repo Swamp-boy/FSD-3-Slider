@@ -15,7 +15,7 @@ class ValueScale {
         this.sliderField = sliderField;
     }
 
-    public execute() {
+    public execute(): void {
         this.checkSetDefaultSettings();
         if (this.scaleType === 'default') {
             this.createScale();
@@ -23,9 +23,16 @@ class ValueScale {
         }
     }
 
+    public givePath(e: MouseEvent):void {}
+
+    private getPath(e: MouseEvent) {
+        this.givePath(e);
+    }
+
     private createScale(): void {
         this.valueScale = document.createElement('div');
         this.valueScale.classList.add('js-default-value-scale');
+        this.valueScale.addEventListener('mousedown', this.getPath.bind(this));
     }
 
     private checkSetDefaultSettings(): void {

@@ -17,7 +17,13 @@ class DefaultToddlerField {
         this.orientation = orientation;
     }
     
-    public givePresenterValue(path: number): void {}
+    public givePresenterValue(path: number): void { }
+
+    public getPathAndMoveToddler(e: MouseEvent): void {
+        this.toddlerPushed = true;
+        this.elementDrag(e);
+        this.toddlerPushed = false;
+    }
     
     public setToddlerStartPosition(path: number): void {
         if (this.orientation === 'horizontal') {

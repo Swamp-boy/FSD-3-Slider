@@ -160,6 +160,9 @@ class MainView {
         this.valueScale.execute();
         this.scale = this.valueScale.valueScale;
         this.container.appendChild(this.scale);
+        // binding slider move on scale click
+        
+        this.valueScale.givePath = this.baseSlider.getPathAndMoveToddler.bind(this.baseSlider);
     }
 
     public moveBannerMulti(path: number[]): void {

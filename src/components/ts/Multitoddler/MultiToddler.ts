@@ -25,7 +25,17 @@ class MultiToddler {
         this.step = step;
     }
 
-    public givePresenterValue(path: number[]): void {}
+    public givePresenterValue(path: number[]): void { }
+    
+    public getPathAndMoveToddler(e: MouseEvent): void {
+        const fromLeft = e.clientX - this.sliderField.getBoundingClientRect().left;
+        fromLeft - this.toddler1Pos < this.toddler2Pos - fromLeft ?
+            this.firstToddlerPushed = true : this.lastToddlerPushed = true
+        
+        this.elementDrag(e);
+        this.firstToddlerPushed = false;
+        this.lastToddlerPushed = false;
+    }
     
     public createToddlers(): void {
         this.toddler1 = document.createElement('div');
